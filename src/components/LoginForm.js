@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+
+import UserContext from '../contexts/UserContext';
 
 import apiCall from '../utils/apiCall';
 import setErrMsgs from '../utils/setErrMsgs';
 
 const LoginForm = () => {
+  const { setToken } = useContext(UserContext);
+
   const [input, setInput] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState();
 
@@ -32,9 +36,7 @@ const LoginForm = () => {
 
       if (res.ok) {
         setInput({ email: '', password: '' });
-
-        // Handle successful login
-        console.log(data);
+        setToken(data);
       }
     } catch (err) {
       console.log(err);
@@ -51,7 +53,7 @@ const LoginForm = () => {
         value={input.email}
         onChange={handleInput}
       />
-      { errors && errors.email && <p className='error'>{errors.email}</p> }
+      {errors && errors.email && <p className='error'>{errors.email}</p>}
     </div>
   )
 
@@ -65,7 +67,7 @@ const LoginForm = () => {
         value={input.password}
         onChange={handleInput}
       />
-      { errors && errors.password && <p className='error'>{errors.password}</p> }
+      {errors && errors.password && <p className='error'>{errors.password}</p>}
     </div>
   )
   
