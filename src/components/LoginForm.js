@@ -2,6 +2,8 @@ import { useState, useContext } from 'react';
 
 import UserContext from '../contexts/UserContext';
 
+import GoogleLogin from './GoogleLogin';
+
 import apiCall from '../utils/apiCall';
 import setErrMsgs from '../utils/setErrMsgs';
 
@@ -72,11 +74,14 @@ const LoginForm = () => {
   )
   
   return (
-    <form onSubmit={handleSignIn}>
-      {emailInput}
-      {pwdInput}
-      <input type='submit' value='Sign in' />
-    </form>
+    <div id='login-form'>
+      <form onSubmit={handleSignIn}>
+        {emailInput}
+        {pwdInput}
+        <input type='submit' value='Sign in' />
+      </form>
+      <GoogleLogin />
+    </div>
   )
 }
 
