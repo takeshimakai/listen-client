@@ -2,8 +2,6 @@ import { useState, useContext } from 'react';
 
 import UserContext from '../contexts/UserContext';
 
-import GoogleLogin from './GoogleLogin';
-
 import apiCall from '../utils/apiCall';
 import setErrMsgs from '../utils/setErrMsgs';
 
@@ -80,7 +78,7 @@ const LoginForm = () => {
         {pwdInput}
         <input type='submit' value='Sign in' />
       </form>
-      <GoogleLogin />
+      <a href='http://localhost:5000/api/auth/google'>Google Sign in</a>
     </div>
   )
 }
