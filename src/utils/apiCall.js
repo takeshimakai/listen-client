@@ -1,7 +1,7 @@
-const apiCall = async (url, method, data, token) => {
+const apiCall = async (path, method, data, token) => {
   try {
     const res = await fetch(
-      url,
+      `${process.env.REACT_APP_API_URL}${path}`,
       {
         method: method,
         headers: {

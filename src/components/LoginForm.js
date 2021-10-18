@@ -19,7 +19,7 @@ const LoginForm = () => {
     try {
       e.preventDefault();
       const res = await apiCall(
-        'http://localhost:5000/api/auth/login',
+        '/auth/login',
         'POST',
         input
       )

@@ -9,7 +9,7 @@ const GoogleOAuthSuccess = () => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/auth/google/success', {
+        const res = await fetch('/auth/google/success', {
           method: 'GET',
           credentials: 'include'
         });
