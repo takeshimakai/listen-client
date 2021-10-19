@@ -6,6 +6,7 @@ import UserContext from './contexts/UserContext';
 import Home from './pages/Home';
 import GoogleOAuthSuccess from './pages/GoogleOAuthSuccess';
 import Forum from './pages/Forum';
+import UserProfile from './pages/UserProfile';
 
 const App = () => {
   const [token, setToken] = useState(JSON.parse(localStorage.getItem('token')));
@@ -21,6 +22,9 @@ const App = () => {
           <Switch>
             <Route path='/auth/google/success'>
               <GoogleOAuthSuccess />
+            </Route>
+            <Route path='/user/:userId'>
+              <UserProfile />
             </Route>
             <Route path='/forum'>
               <Forum />
