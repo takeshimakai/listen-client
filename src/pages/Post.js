@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 
 import UserContext from "../contexts/UserContext";
 
+import getData from '../utils/getData';
+
 import Comment from '../components/Comment';
 
 const Post = ({ posts }) => {
@@ -15,12 +17,7 @@ const Post = ({ posts }) => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/comments/${post._id}`, {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
+        const res = await getData(`/comments/${post._id}`, token);
   
         setComments(await res.json());
       } catch (err) {

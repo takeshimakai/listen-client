@@ -3,6 +3,7 @@ import { useState, useContext } from 'react';
 import UserContext from '../contexts/UserContext';
 
 import setErrMsgs from '../utils/setErrMsgs';
+import postData from '../utils/postData';
 
 const LoginForm = () => {
   const { setToken } = useContext(UserContext);
@@ -17,13 +18,7 @@ const LoginForm = () => {
   const handleSignIn = async (e) => {
     try {
       e.preventDefault();
-      const res = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(input)
-      })
+      const res = await postData('/auth/login', input);
 
       const data = await res.json();
 

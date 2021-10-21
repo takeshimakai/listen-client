@@ -3,6 +3,8 @@ import { Switch, Route, Link, useRouteMatch } from 'react-router-dom';
 
 import UserContext from '../contexts/UserContext';
 
+import getData from '../utils/getData';
+
 import PostPreview from '../components/PostPreview';
 import Post from '../pages/Post';
 import PostForm from './PostForm';
@@ -21,12 +23,7 @@ const Forum = () => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/posts`, {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
+        const res = await getData('/posts', token);
 
         setPosts(await res.json());
       } catch (err) {

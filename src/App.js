@@ -23,7 +23,7 @@ const App = () => {
             <Route path='/auth/google/success'>
               <GoogleOAuthSuccess />
             </Route>
-            <Route path='/user/:userId'>
+            <Route path='/users/:userId'>
               <UserProfile />
             </Route>
             <Route path='/forum'>

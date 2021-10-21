@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 
 import UserContext from "../contexts/UserContext";
 
+import getData from '../utils/getData';
+
 const UserProfile = () => {
   const { token } = useContext(UserContext);
   const { userId } = useParams();
@@ -19,12 +21,7 @@ const UserProfile = () => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}`, {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
+        const res = await getData(`/users/${userId}`, token);
 
         const { profile } = await res.json();
 
