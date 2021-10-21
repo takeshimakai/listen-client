@@ -11,7 +11,7 @@ const LoginForm = () => {
   const [errors, setErrors] = useState();
 
   const handleInput = (e) => {
-    setInput({...input, [e.target.name]: e.target.value });
+    setInput({ ...input, [e.target.name]: e.target.value });
   };
 
   const handleSignIn = async (e) => {
