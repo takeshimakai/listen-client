@@ -17,10 +17,6 @@ const Forum = () => {
   const [posts, setPosts] = useState();
 
   useEffect(() => {
-    console.log(posts);
-  }, [posts])
-
-  useEffect(() => {
     (async () => {
       try {
         const res = await getData('/posts', token);
