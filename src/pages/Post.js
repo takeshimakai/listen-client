@@ -11,32 +11,45 @@ const Post = ({ posts }) => {
   const { postId } = useParams();
   const { token } = useContext(UserContext);
 
-  const [post] = useState(posts.find(post => post._id === postId));
+  const [post, setPost] = useState();
   const [comments, setComments] = useState();
 
   useEffect(() => {
-    (async () => {
-      try {
-        const res = await getData(`/comments/${post._id}`, token);
-  
-        setComments(await res.json());
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, []);
+    if (posts) {
+      setPost(posts.find(post => post._id === postId));
+    }
+  }, [posts, postId]);
+
+  useEffect(() => {
+    if (post) {
+      (async () => {
+        try {
+          const res = await getData(`/comments/${post._id}`, token);
+    
+          setComments(await res.json());
+        } catch (err) {
+          console.log(err);
+        }
+      })();
+    }
+  }, [post, token]);
 
   return (
     <div id='post'>
-      <div id='post-container'>
-        <h3>{post.title}</h3>
-        <p>Posted by: {post.postedBy.profile.username}</p>
-        <p>Posted on: {post.datePosted}</p>
-        {post.dateEdited && <p>Edited on: {post.dateEdited}</p>}
-        <p>Filed under: {post.topics}</p>
-        <p>{post.content}</p>
-      </div>
-      {comments && comments.map(comment => <Comment comment={comment} key={comment._id} />)}
+      {post
+        ? <div>
+            <div id='post-container'>
+              <h3>{post.title}</h3>
+              <p>Posted by: {post.postedBy.profile.username}</p>
+              <p>Posted on: {post.datePosted}</p>
+              {post.dateEdited && <p>Edited on: {post.dateEdited}</p>}
+              <p>Filed under: {post.topics}</p>
+              <p>{post.content}</p>
+            </div>
+            {comments && comments.map(comment => <Comment comment={comment} key={comment._id} />)}
+          </div>
+        : <p>Unable to find post.</p>
+      }
     </div>
   )
 }
