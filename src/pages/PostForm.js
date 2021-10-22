@@ -4,18 +4,34 @@ import { Redirect } from 'react-router-dom';
 import UserContext from "../contexts/UserContext";
 
 import postData from "../utils/postData";
+import putData from '../utils/putData';
 import setErrMsgs from '../utils/setErrMsgs';
 
-const PostForm = ({ setPosts }) => {
+const PostForm = ({ setPosts, post }) => {
   const { token } = useContext(UserContext);
 
-  const [postId, setPostId] = useState();
+  const [redirectPath, setRedirectPath] = useState();
   const [errors, setErrors] = useState();
   const [input, setInput] = useState({
     topics: [],
     title: '',
     content: ''
   });
+
+  useEffect(() => {
+    if (post) {
+      post.topics.forEach(topic => {
+        const checkboxId = topic.toLowerCase().replaceAll(/\s/g, '-');
+        document.querySelector(`#${checkboxId}`).checked = true;
+      });
+
+      setInput({
+        topics: post.topics,
+        title: post.title,
+        content: post.content
+      });
+    }
+  }, [post]);
 
   useEffect(() => {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -51,7 +67,32 @@ const PostForm = ({ setPosts }) => {
 
       if (res.ok) {
         setPosts(prevPosts => prevPosts.concat(data));
-        setPostId(data._id);
+        setRedirectPath(data._id);
+      }
+
+      if (!res.ok) {
+        setErrors(setErrMsgs(data.errors));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const handleEditSubmit = async (e) => {
+    try {
+      e.preventDefault();
+
+      const res = await putData(`/posts/${post._id}`, input, token);
+      const data = await res.json();
+
+      if (res.ok) {
+        setPosts(prevPosts => {
+          const updated = [...prevPosts];
+          const index = updated.findIndex(post => post._id === data._id);
+          updated.splice(index, 1, data);
+          return updated;
+        });
+        setRedirectPath(data._id);
       }
 
       if (!res.ok) {
@@ -64,13 +105,13 @@ const PostForm = ({ setPosts }) => {
 
   return (
     <div>
-      <form id='post-form' onSubmit={handleSubmit}>
+      <form id='post-form' onSubmit={post ? handleEditSubmit : handleSubmit}>
         <div className='post-form-input'>
           <label htmlFor='title'>Title: </label>
-          <input id='title' type='text' name='title' onChange={handleInput} />
+          <input id='title' type='text' name='title' value={input.title} onChange={handleInput} />
           {errors && errors.title && <p className='error'>{errors.title}</p>}
         </div>
-        <textarea className='post-form-input' name='content' onChange={handleInput} />
+        <textarea className='post-form-input' name='content' value={input.content} onChange={handleInput} />
         {errors && errors.content && <p className='error'>{errors.content}</p>}
         <div className='post-form-input' id='post-form-input-checkbox-container'>
           <p>Categorize under:</p>
@@ -111,7 +152,7 @@ const PostForm = ({ setPosts }) => {
         <input className='post-form-input' type='submit' value='Post' />
       </form>
 
-      {postId && <Redirect to={`/forum/${postId}`} />}
+      {redirectPath && <Redirect to={`/forum/${redirectPath}`} />}
     </div>
   )
 }

@@ -1,13 +1,15 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, useRouteMatch, Switch, Route, Link } from 'react-router-dom';
 
 import UserContext from "../contexts/UserContext";
 
 import getData from '../utils/getData';
 
 import Comment from '../components/Comment';
+import PostForm from "./PostForm";
 
-const Post = ({ posts }) => {
+const Post = ({ posts, setPosts }) => {
+  const match = useRouteMatch();
   const { postId } = useParams();
   const { token } = useContext(UserContext);
 
@@ -35,22 +37,28 @@ const Post = ({ posts }) => {
   }, [post, token]);
 
   return (
-    <div id='post'>
-      {post
-        ? <div>
-            <div id='post-container'>
-              <h3>{post.title}</h3>
-              <p>Posted by: {post.postedBy.profile.username}</p>
-              <p>Posted on: {post.datePosted}</p>
-              {post.dateEdited && <p>Edited on: {post.dateEdited}</p>}
-              <p>Filed under: {post.topics}</p>
-              <p>{post.content}</p>
+    <Switch>
+      <Route path={`${match.path}/edit`}>
+        <PostForm setPosts={setPosts} post={post} />
+      </Route>
+      <Route path={`${match.path}`}>
+        {post
+          ? <div id='post'>
+              <div id='post-container'>
+                <h3>{post.title}</h3>
+                <p>Posted by: {post.postedBy.profile.username}</p>
+                <p>Posted on: {post.datePosted}</p>
+                {post.dateEdited && <p>Edited on: {post.dateEdited}</p>}
+                <p>Filed under: {post.topics}</p>
+                <p>{post.content}</p>
+              </div>
+              <Link to={`${match.url}/edit`}>Edit post</Link>
+              {comments && comments.map(comment => <Comment comment={comment} key={comment._id} />)}
             </div>
-            {comments && comments.map(comment => <Comment comment={comment} key={comment._id} />)}
-          </div>
-        : <p>Unable to find post.</p>
-      }
-    </div>
+          : <p>Unable to find post.</p>
+        }
+      </Route>
+    </Switch>
   )
 }
 

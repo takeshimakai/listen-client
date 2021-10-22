@@ -30,12 +30,14 @@ const Forum = () => {
 
   return (
     <div id='forum'>
+      <Link to={`${match.url}/new`}>Create a new post</Link>
+      
       <Switch>
-        <Route path={`${match.path}/new-post`}>
+        <Route path={`${match.path}/new`}>
           <PostForm setPosts={setPosts} />
         </Route>
         <Route path={`${match.path}/:postId`}>
-          <Post posts={posts} />
+          <Post posts={posts} setPosts={setPosts} />
         </Route>
         <Route path={`${match.path}`}>
           {posts
