@@ -18,10 +18,6 @@ const PostForm = ({ setPosts }) => {
   });
 
   useEffect(() => {
-    console.log(errors);
-  }, [errors]);
-
-  useEffect(() => {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
     checkboxes.forEach(checkbox => {
       checkbox.addEventListener('change', (e) => handleCheckbox(e));
