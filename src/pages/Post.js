@@ -13,8 +13,15 @@ const Post = ({ posts, setPosts }) => {
   const { postId } = useParams();
   const { token } = useContext(UserContext);
 
+  const [user, setUser] = useState();
   const [post, setPost] = useState();
   const [comments, setComments] = useState();
+
+  useEffect(() => {
+    if (token) {
+      setUser(JSON.parse(atob(token.split('.')[1])));
+    }
+  }, [token]);
 
   useEffect(() => {
     if (posts) {
@@ -52,7 +59,7 @@ const Post = ({ posts, setPosts }) => {
                 <p>Filed under: {post.topics}</p>
                 <p>{post.content}</p>
               </div>
-              <Link to={`${match.url}/edit`}>Edit post</Link>
+              {user.id === post.postedBy._id && <Link to={`${match.url}/edit`}>Edit post</Link>}
               {comments && comments.map(comment => <Comment comment={comment} key={comment._id} />)}
             </div>
           : <p>Unable to find post.</p>
