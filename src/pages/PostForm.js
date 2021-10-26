@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 
 import UserContext from "../contexts/UserContext";
 
@@ -8,6 +8,7 @@ import putData from '../utils/putData';
 import setErrMsgs from '../utils/setErrMsgs';
 
 const PostForm = ({ setPosts, post }) => {
+  const history = useHistory();
   const { token } = useContext(UserContext);
 
   const [redirectPath, setRedirectPath] = useState();
@@ -17,6 +18,10 @@ const PostForm = ({ setPosts, post }) => {
     title: '',
     content: ''
   });
+
+  useEffect(() => {
+    console.log(input);
+  }, [input]);
 
   useEffect(() => {
     if (post) {
@@ -149,6 +154,7 @@ const PostForm = ({ setPosts, post }) => {
           <input type='checkbox' id='other' value='Other' />
           <label htmlFor='other'>Other</label>
         </div>
+        <input type='button' value='Cancel' onClick={() => history.goBack()} />
         <input className='post-form-input' type='submit' value='Post' />
       </form>
 
