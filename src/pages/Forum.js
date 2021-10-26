@@ -29,9 +29,7 @@ const Forum = () => {
   }, [token]);
 
   return (
-    <div id='forum'>
-      <Link to={`${match.url}/new`}>Create a new post</Link>
-      
+    <div id='forum'>      
       <Switch>
         <Route path={`${match.path}/new`}>
           <PostForm setPosts={setPosts} />
@@ -40,6 +38,7 @@ const Forum = () => {
           <Post posts={posts} setPosts={setPosts} />
         </Route>
         <Route path={`${match.path}`}>
+          <Link to={`${match.url}/new`}>Create a new post</Link>
           {posts
             ? posts.map(post => (
                 <Link to={`${match.url}/${post._id}`} key={post._id}>
