@@ -77,7 +77,8 @@ const Post = ({ posts, setPosts }) => {
                     />
                   : <div className='comment-container' key={comment._id}>
                       <Comment comment={comment} />
-                      <button onClick={() => setCommentToEditId(comment._id)}>Edit comment</button>
+                      {user.id === comment.postedBy._id
+                        && <button onClick={() => setCommentToEditId(comment._id)}>Edit comment</button>}
                     </div>
               ))}
             </div>
