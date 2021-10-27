@@ -20,10 +20,6 @@ const PostForm = ({ setPosts, post }) => {
   });
 
   useEffect(() => {
-    console.log(input);
-  }, [input]);
-
-  useEffect(() => {
     if (post) {
       post.topics.forEach(topic => {
         const checkboxId = topic.toLowerCase().replaceAll(/\s/g, '-');
@@ -71,6 +67,7 @@ const PostForm = ({ setPosts, post }) => {
       const data = await res.json();
 
       if (res.ok) {
+        console.log(data.datePostedFormatted);
         setPosts(prevPosts => prevPosts.concat(data));
         setRedirectPath(data._id);
       }

@@ -4,6 +4,7 @@ import { useParams, useRouteMatch, Switch, Route, Link } from 'react-router-dom'
 import UserContext from "../contexts/UserContext";
 
 import getData from '../utils/getData';
+import formatDate from "../utils/formatDate";
 
 import Comment from '../components/Comment';
 import PostForm from "./PostForm";
@@ -60,8 +61,8 @@ const Post = ({ posts, setPosts }) => {
               <div id='post-container'>
                 <h3>{post.title}</h3>
                 <p>Posted by: {post.postedBy.profile.username}</p>
-                <p>Posted on: {post.datePosted}</p>
-                {post.dateEdited && <p>Edited on: {post.dateEdited}</p>}
+                <p>Posted on: {formatDate(post.datePosted)}</p>
+                {post.dateEdited && <p>Edited on: {formatDate(post.dateEdited)}</p>}
                 <p>Filed under: {post.topics}</p>
                 <p>{post.content}</p>
               </div>

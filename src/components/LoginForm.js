@@ -68,7 +68,7 @@ const LoginForm = () => {
   )
   
   return (
-    <div id='login-form'>
+    <div id='login'>
       <form onSubmit={handleSignIn}>
         {emailInput}
         {pwdInput}

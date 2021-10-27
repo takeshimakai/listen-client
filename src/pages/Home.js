@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 import UserContext from '../contexts/UserContext';
 
@@ -8,9 +9,9 @@ const Home = () => {
   const { token } = useContext(UserContext);
 
   return (
-    <div id='login'>
+    <div id='home'>
       {token
-        ? <p>{token}</p>
+        ? <Link to='/forum'>Forum</Link>
         : <LoginForm />
       }
     </div>
