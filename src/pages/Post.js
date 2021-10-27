@@ -6,6 +6,7 @@ import UserContext from "../contexts/UserContext";
 import getData from '../utils/getData';
 import formatDate from "../utils/formatDate";
 import convertArrToStr from "../utils/convertArrToStr";
+import sortData from "../utils/sortData";
 
 import Comment from '../components/Comment';
 import PostForm from "./PostForm";
@@ -43,7 +44,7 @@ const Post = ({ posts, setPosts }) => {
         try {
           const res = await getData(`/comments/${post._id}`, token);
     
-          setComments(await res.json());
+          setComments(sortData('newest post', await res.json()));
         } catch (err) {
           console.log(err);
         }
