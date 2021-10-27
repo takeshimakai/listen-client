@@ -4,6 +4,7 @@ import { Switch, Route, Link, useRouteMatch } from 'react-router-dom';
 import UserContext from '../contexts/UserContext';
 
 import getData from '../utils/getData';
+import sortData from '../utils/sortData';
 
 import PostPreview from '../components/PostPreview';
 import Post from '../pages/Post';
@@ -21,7 +22,7 @@ const Forum = () => {
       try {
         const res = await getData('/posts', token);
 
-        setPosts(await res.json());
+        setPosts(sortData('newest post', await res.json()));
       } catch (err) {
         console.log(err);
       }
