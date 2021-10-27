@@ -5,6 +5,7 @@ import UserContext from "../contexts/UserContext";
 
 import getData from '../utils/getData';
 import formatDate from "../utils/formatDate";
+import convertArrToStr from "../utils/convertArrToStr";
 
 import Comment from '../components/Comment';
 import PostForm from "./PostForm";
@@ -63,7 +64,7 @@ const Post = ({ posts, setPosts }) => {
                 <p>Posted by: {post.postedBy.profile.username}</p>
                 <p>Posted on: {formatDate(post.datePosted)}</p>
                 {post.dateEdited && <p>Edited on: {formatDate(post.dateEdited)}</p>}
-                <p>Filed under: {post.topics}</p>
+                <p>Filed under: {convertArrToStr(post.topics)}</p>
                 <p>{post.content}</p>
               </div>
               {user.id === post.postedBy._id && <Link to={`${match.url}/edit`}>Edit post</Link>}
