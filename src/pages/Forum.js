@@ -9,6 +9,7 @@ import sortData from '../utils/sortData';
 import PostPreview from '../components/PostPreview';
 import Post from '../pages/Post';
 import PostForm from './PostForm';
+import ForumMenu from '../components/ForumMenu';
 
 const Forum = () => {
   const match = useRouteMatch();
@@ -16,13 +17,19 @@ const Forum = () => {
   const { token } = useContext(UserContext);
 
   const [posts, setPosts] = useState();
+  const [sortBy, setSortBy] = useState('newest post');
+  const [filters, setFilters] = useState([]);
+
+  useEffect(() => {
+    console.log(filters)
+  }, [filters])
 
   useEffect(() => {
     (async () => {
       try {
         const res = await getData('/posts', token);
 
-        setPosts(sortData('newest post', await res.json()));
+        setPosts(await res.json());
       } catch (err) {
         console.log(err);
       }
@@ -40,8 +47,13 @@ const Forum = () => {
         </Route>
         <Route path={`${match.path}`}>
           <Link to={`${match.url}/new`}>Create a new post</Link>
+          <ForumMenu
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+            setFilters={setFilters}
+          />
           {posts
-            ? posts.map(post => (
+            ? sortData(sortBy, posts).map(post => (
                 <Link to={`${match.url}/${post._id}`} key={post._id}>
                   <PostPreview post={post} />
                 </Link>
