@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const ForumMenu = ({ sortBy, setSortBy, setFilters }) => {
+const ForumMenu = ({ sortBy, setSortBy, filters, setFilters }) => {
   const possibleFilters = [
     'Neurodevelopmental disorders',
     'Bipolar and related disorders',
@@ -22,7 +22,16 @@ const ForumMenu = ({ sortBy, setSortBy, setFilters }) => {
 
   const [filterInput, setFilterInput] = useState([]);
 
-  const handleSort = (e) => setSortBy(e.target.value);
+  useEffect(() => {
+    if (filters) {
+      setFilterInput(filters);
+    }
+  }, [filters]);
+
+  const handleSort = (e) => {
+    setSortBy(e.target.value);
+    sessionStorage.setItem('sortBy', JSON.stringify(e.target.value));
+  };
 
   const handleCheckbox = (e) => {
     filterInput.includes(e.target.id)
@@ -30,7 +39,15 @@ const ForumMenu = ({ sortBy, setSortBy, setFilters }) => {
       : setFilterInput(prevInput => prevInput.concat(e.target.id));
   };
 
-  const applyFilters = () => setFilters(filterInput);
+  const applyFilters = () => {
+    setFilters(filterInput);
+    sessionStorage.setItem('filters', JSON.stringify(filterInput));
+  };
+
+  const clearFilters = () => {
+    setFilters([]);
+    sessionStorage.removeItem('filters');
+  };
 
   return (
     <div id='menu'>
@@ -58,6 +75,7 @@ const ForumMenu = ({ sortBy, setSortBy, setFilters }) => {
             <label htmlFor={filter}>{filter}</label>
           </div>
         ))}
+        <button onClick={clearFilters}>Clear</button>
         <button onClick={applyFilters}>Apply filters</button>
       </div>
     </div>

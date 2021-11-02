@@ -21,8 +21,17 @@ const Forum = () => {
   const [filters, setFilters] = useState([]);
 
   useEffect(() => {
-    console.log(filters)
-  }, [filters])
+    const savedSort = JSON.parse(sessionStorage.getItem('sortBy'));
+    const savedFilters = JSON.parse(sessionStorage.getItem('filters'));
+
+    if (savedSort) {
+      setSortBy(savedSort);
+    }
+
+    if (savedFilters) {
+      setFilters(savedFilters);
+    }
+  }, [])
 
   useEffect(() => {
     (async () => {
@@ -50,14 +59,20 @@ const Forum = () => {
           <ForumMenu
             sortBy={sortBy}
             setSortBy={setSortBy}
+            filters={filters}
             setFilters={setFilters}
           />
           {posts
             ? sortData(sortBy, posts).map(post => (
-                <Link to={`${match.url}/${post._id}`} key={post._id}>
-                  <PostPreview post={post} />
-                </Link>
-              ))
+                filters.length === 0
+                  ? <Link to={`${match.url}/${post._id}`} key={post._id}>
+                      <PostPreview post={post} />
+                    </Link>
+                  : post.topics.some(topic => filters.includes(topic)) &&
+                      <Link to={`${match.url}/${post._id}`} key={post._id}>
+                        <PostPreview post={post} />
+                      </Link>
+            ))
             : <h4>No posts to display</h4>
           }
         </Route>
