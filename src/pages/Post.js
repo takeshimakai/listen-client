@@ -4,6 +4,7 @@ import { useParams, useRouteMatch, Switch, Route, Link } from 'react-router-dom'
 import UserContext from "../contexts/UserContext";
 
 import getData from '../utils/getData';
+import putData from "../utils/putData";
 import formatDate from "../utils/formatDate";
 import convertArrToStr from "../utils/convertArrToStr";
 import sortData from "../utils/sortData";
@@ -52,6 +53,34 @@ const Post = ({ posts, setPosts }) => {
     }
   }, [post, token]);
 
+  const voteRelatable = async (e) => {
+    try {
+      if (e.target.id === 'post-relatable-btn') {
+        const res = await putData(`/posts/${post._id}/relatability`, undefined, token);
+        const data = await res.json();
+  
+        setPosts(prevPosts => {
+          const updated = [...prevPosts];
+          updated.splice(updated.findIndex(post => post._id === data._id), 1, data);
+          return updated;
+        });
+      }
+
+      if (e.target.id === 'comment-relatable-btn') {
+        const res = await putData(`/comments/${e.target.dataset.commentId}/relatability`, undefined, token);
+        const data = await res.json();
+
+        setComments(prevComments => {
+          const updated = [...prevComments];
+          updated.splice(updated.findIndex(comment => comment._id === data._id), 1, data);
+          return updated;
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <Switch>
       <Route path={`${match.path}/edit`}>
@@ -61,6 +90,15 @@ const Post = ({ posts, setPosts }) => {
         {post
           ? <div id='post'>
               <div id='post-container'>
+                <p>Relatability: {post.relatable.length}</p>
+                {post.postedBy._id !== user.id &&
+                  <button id='post-relatable-btn' onClick={voteRelatable}>
+                    {post.relatable.includes(user.id)
+                      ? 'Unrelatable'
+                      : 'Relatable'
+                    }
+                  </button>
+                }
                 <h3>{post.title}</h3>
                 <p>Posted by: {post.postedBy.profile.username}</p>
                 <p>Posted on: {formatDate(post.datePosted)}</p>
@@ -81,7 +119,14 @@ const Post = ({ posts, setPosts }) => {
                   : <div className='comment-container' key={comment._id}>
                       <Comment comment={comment} />
                       {user.id === comment.postedBy._id
-                        && <button onClick={() => setCommentToEditId(comment._id)}>Edit comment</button>}
+                        ? <button onClick={() => setCommentToEditId(comment._id)}>Edit comment</button>
+                        : <button id='comment-relatable-btn' data-comment-id={comment._id} onClick={voteRelatable}>
+                            {comment.relatable.includes(user.id)
+                              ? 'Unrelatable'
+                              : 'Relatable'
+                            }
+                          </button>
+                      }
                     </div>
               ))}
             </div>

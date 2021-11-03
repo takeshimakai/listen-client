@@ -7,6 +7,7 @@ const Comment = ({ comment }) => {
       <p>Comment by: {comment.postedBy.profile.username}</p>
       <p>Comment posted on: {formatDate(comment.datePosted)}</p>
       {comment.dateEdited && <p>Comment edited on: {formatDate(comment.dateEdited)}</p>}
+      <p>Relatability: {comment.relatable.length}</p>
     </div>
   )
 }

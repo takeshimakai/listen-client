@@ -3,6 +3,7 @@ import formatDate from '../utils/formatDate';
 const PostPreview = ({ post }) => {
   return (
     <div className='post-preview'>
+      <p>Relatability: {post.relatable.length}</p>
       <h4 className='post-preview-title'>{post.title}</h4>
       <p className='post-preview-author'>Posted by: {post.postedBy.profile.username}</p>
       <p className='post-preview-date-posted'>Posted on: {formatDate(post.datePosted)}</p>
