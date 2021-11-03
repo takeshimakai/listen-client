@@ -50,10 +50,10 @@ const ForumMenu = ({ sortBy, setSortBy, filters, setFilters }) => {
   };
 
   return (
-    <div id='menu'>
-      <div id='sort-container'>
-        <label htmlFor='sort'>Sort by: </label>
-        <select name='sort' id='sort' value={sortBy} onChange={handleSort}>
+    <div id='forum-menu'>
+      <div className='sort-container'>
+        <label htmlFor='forum-sort'>Sort by: </label>
+        <select name='sort' id='forum-sort' value={sortBy} onChange={handleSort}>
           <option value='newest post'>Newest post</option>
           <option value='oldest post'>Oldest post</option>
           <option value='newest edit'>Newest edit</option>

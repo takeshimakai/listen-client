@@ -12,6 +12,7 @@ import sortData from "../utils/sortData";
 import Comment from '../components/Comment';
 import PostForm from "./PostForm";
 import CommentForm from "../components/CommentForm";
+import CommentMenu from "../components/CommentMenu";
 
 const Post = ({ posts, setPosts }) => {
   const match = useRouteMatch();
@@ -22,6 +23,15 @@ const Post = ({ posts, setPosts }) => {
   const [post, setPost] = useState();
   const [comments, setComments] = useState();
   const [commentToEditId, setCommentToEditId] = useState('');
+  const [commentSort, setCommentSort] = useState('newest comment');
+
+  useEffect(() => {
+    const savedSort = JSON.parse(sessionStorage.getItem('commentSort'));
+
+    if (savedSort) {
+      setCommentSort(savedSort);
+    }
+  }, [])
 
   useEffect(() => {
     setCommentToEditId('');
@@ -45,7 +55,7 @@ const Post = ({ posts, setPosts }) => {
         try {
           const res = await getData(`/comments/${post._id}`, token);
     
-          setComments(sortData('newest post', await res.json()));
+          setComments(await res.json());
         } catch (err) {
           console.log(err);
         }
@@ -108,7 +118,8 @@ const Post = ({ posts, setPosts }) => {
               </div>
               {user.id === post.postedBy._id && <Link to={`${match.url}/edit`}>Edit post</Link>}
               <CommentForm setComments={setComments} />
-              {comments && comments.map(comment => (
+              <CommentMenu commentSort={commentSort} setCommentSort={setCommentSort} />
+              {comments && sortData(commentSort, comments).map(comment => (
                 commentToEditId === comment._id
                   ? <CommentForm
                       comment={comment}
