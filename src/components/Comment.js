@@ -7,6 +7,7 @@ import CommentForm from "./CommentForm";
 
 import formatDate from "../utils/formatDate";
 import putData from "../utils/putData";
+import deleteData from "../utils/deleteData";
 
 const Comment = ({
   user,
@@ -35,6 +36,20 @@ const Comment = ({
     }
   }
 
+  const handleDelete = async () => {
+    try {
+      const res = await deleteData(`/comments/${comment._id}`, token);
+
+      if (res.ok) {
+        setComments(prevComments => prevComments.filter(prevComment => (
+          prevComment._id !== comment._id && prevComment.replyTo !== comment._id
+        )))
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div className='comment-container'>
       {commentToEditId === comment._id
@@ -51,7 +66,10 @@ const Comment = ({
             {comment.dateEdited && <p>Comment edited on: {formatDate(comment.dateEdited)}</p>}
             <p>Relatability: {comment.relatable.length}</p>
             {user.id === comment.postedBy._id
-              ? <button onClick={() => setCommentToEditId(comment._id)}>Edit comment</button>
+              ? <div>
+                  <button onClick={() => setCommentToEditId(comment._id)}>Edit comment</button>
+                  <button onClick={handleDelete}>Delete</button>
+                </div>
               : <button id='comment-relatable-btn' data-comment-id={comment._id} onClick={voteCommentRelatability}>
                   {comment.relatable.includes(user.id)
                     ? 'Unrelatable'
@@ -61,7 +79,7 @@ const Comment = ({
             }
             {reply
               ? <CommentForm setComments={setComments} setReply={setReply} parentId={comment._id} />
-              : <button onClick={() => setReply(true)}>Reply</button>
+              : user.id !== comment.postedBy._id && <button onClick={() => setReply(true)}>Reply</button>
             }
           </div>
       }
