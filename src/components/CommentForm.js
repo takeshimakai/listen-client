@@ -36,12 +36,12 @@ const CommentForm = ({
       const data = await res.json();
 
       if (res.ok) {
+        setInput({ ...input, content: '' });
+        setComments(prevComments => prevComments.concat(data));
+
         if (setReply) {
           setReply(false);
         }
-
-        setInput({ ...input, content: '' });
-        setComments(prevComments => prevComments.concat(data));
       }
 
       if (!res.ok) {
