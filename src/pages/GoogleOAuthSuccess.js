@@ -19,7 +19,7 @@ const GoogleOAuthSuccess = () => {
         console.log(err);
       }
     })();
-  }, []);
+  }, [setToken]);
 
   return (
     <div>

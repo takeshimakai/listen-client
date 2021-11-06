@@ -7,12 +7,17 @@ import postData from '../utils/postData';
 import putData from '../utils/putData';
 import setErrMsgs from '../utils/setErrMsgs';
 
-const CommentForm = ({ comment, setComments, setCommentToEditId }) => {
+const CommentForm = ({
+  comment,
+  setComments,
+  setCommentToEditId,
+  setReply,
+  parentId
+}) => {
   const { postId } = useParams();
-
   const { token } = useContext(UserContext);
 
-  const [input, setInput] = useState({ content: '' });
+  const [input, setInput] = useState({ content: '', replyTo: parentId });
   const [errors, setErrors] = useState();
 
   useEffect(() => {
@@ -21,7 +26,7 @@ const CommentForm = ({ comment, setComments, setCommentToEditId }) => {
     }
   }, [comment]);
 
-  const handleInput = (e) => setInput({ content: e.target.value });
+  const handleInput = (e) => setInput({ ...input, content: e.target.value });
 
   const handleSubmit = async (e) => {
     try {
@@ -31,7 +36,11 @@ const CommentForm = ({ comment, setComments, setCommentToEditId }) => {
       const data = await res.json();
 
       if (res.ok) {
-        setInput({ content: '' });
+        if (setReply) {
+          setReply(false);
+        }
+
+        setInput({ ...input, content: '' });
         setComments(prevComments => prevComments.concat(data));
       }
 
@@ -72,6 +81,7 @@ const CommentForm = ({ comment, setComments, setCommentToEditId }) => {
       <textarea placeholder='Add comment' value={input.content} onChange={handleInput} />
       {errors && <p className='error'>{errors.content}</p>}
       {comment && <input type='button' value='Cancel' onClick={() => setCommentToEditId('')} />}
+      {setReply && <input type='button' value='Cancel' onClick={() => setReply('')} />}
       <input type='submit' value='Save' />
     </form>
   )
