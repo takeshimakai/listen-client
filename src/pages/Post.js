@@ -80,7 +80,7 @@ const Post = ({ posts, setPosts }) => {
   return (
     <Switch>
       <Route path={`${match.path}/edit`}>
-        <PostForm setPosts={setPosts} post={post} />
+        <PostForm setPosts={setPosts} post={post} setComments={setComments} />
       </Route>
       <Route path={`${match.path}`}>
         {post

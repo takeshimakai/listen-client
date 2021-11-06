@@ -5,9 +5,10 @@ import UserContext from "../contexts/UserContext";
 
 import postData from "../utils/postData";
 import putData from '../utils/putData';
+import deleteData from "../utils/deleteData";
 import setErrMsgs from '../utils/setErrMsgs';
 
-const PostForm = ({ setPosts, post }) => {
+const PostForm = ({ setPosts, post, setComments }) => {
   const history = useHistory();
   const { token } = useContext(UserContext);
 
@@ -69,7 +70,7 @@ const PostForm = ({ setPosts, post }) => {
       if (res.ok) {
         console.log(data.datePostedFormatted);
         setPosts(prevPosts => prevPosts.concat(data));
-        setRedirectPath(data._id);
+        setRedirectPath(`/forum/${data._id}`);
       }
 
       if (!res.ok) {
@@ -94,11 +95,25 @@ const PostForm = ({ setPosts, post }) => {
           updated.splice(index, 1, data);
           return updated;
         });
-        setRedirectPath(data._id);
+        setRedirectPath(`/forum/${data._id}`);
       }
 
       if (!res.ok) {
         setErrors(setErrMsgs(data.errors));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const handleDelete = async () => {
+    try {
+      const res = await deleteData(`/posts/${post._id}`, token);
+
+      if (res.ok) {
+        setPosts(prevPosts => prevPosts.filter(prevPost => prevPost._id !== post._id));
+        setComments(prevComments => prevComments.filter(comment => comment.postId !== post._id));
+        setRedirectPath('/forum');
       }
     } catch (err) {
       console.log(err);
@@ -152,10 +167,11 @@ const PostForm = ({ setPosts, post }) => {
           <label htmlFor='other'>Other</label>
         </div>
         <input type='button' value='Cancel' onClick={() => history.goBack()} />
+        {setComments && <input type='button' value='Delete' onClick={handleDelete} />}
         <input className='post-form-input' type='submit' value='Post' />
       </form>
 
-      {redirectPath && <Redirect to={`/forum/${redirectPath}`} />}
+      {redirectPath && <Redirect to={redirectPath} />}
     </div>
   )
 }
