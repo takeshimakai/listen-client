@@ -1,25 +1,8 @@
 import { useState, useEffect } from "react";
 
-const ForumMenu = ({ sortBy, setSortBy, filters, setFilters }) => {
-  const possibleFilters = [
-    'Neurodevelopmental disorders',
-    'Bipolar and related disorders',
-    'Anxiety disorders',
-    'Stress related disorders',
-    'Dissociative disorders',
-    'Somatic symptoms disorders',
-    'Eating disorders',
-    'Sleep disorders',
-    'Disruptive disorders',
-    'Depressive disorders',
-    'Substance related disorders',
-    'Neurocognitive disorders',
-    'Schizophrenia',
-    'Obsessive-compulsive disorders',
-    'Personality disorders',
-    'Other'
-  ];
+import categories from '../data/categories';
 
+const ForumMenu = ({ sortBy, setSortBy, filters, setFilters }) => {
   const [filterInput, setFilterInput] = useState([]);
 
   useEffect(() => {
@@ -63,8 +46,8 @@ const ForumMenu = ({ sortBy, setSortBy, filters, setFilters }) => {
         </select>
       </div>
       <div id='filter-container'>
-        <p>Filters</p>
-        {possibleFilters.map(filter => (
+        <p>Filters:</p>
+        {categories.map(filter => (
           <div className='checkbox' key={filter}>
             <input
               type='checkbox'

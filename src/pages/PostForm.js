@@ -8,6 +8,8 @@ import putData from '../utils/putData';
 import deleteData from "../utils/deleteData";
 import setErrMsgs from '../utils/setErrMsgs';
 
+import categories from '../data/categories';
+
 const PostForm = ({ setPosts, post, setComments }) => {
   const history = useHistory();
   const { token } = useContext(UserContext);
@@ -22,11 +24,6 @@ const PostForm = ({ setPosts, post, setComments }) => {
 
   useEffect(() => {
     if (post) {
-      post.topics.forEach(topic => {
-        const checkboxId = topic.toLowerCase().replaceAll(/\s/g, '-');
-        document.querySelector(`#${checkboxId}`).checked = true;
-      });
-
       setInput({
         topics: post.topics,
         title: post.title,
@@ -35,29 +32,24 @@ const PostForm = ({ setPosts, post, setComments }) => {
     }
   }, [post]);
 
-  useEffect(() => {
-    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    checkboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', (e) => handleCheckbox(e));
-    });
-  }, []);
-
   const handleInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
   const handleCheckbox = (e) => {
-    const { value, checked } = e.target;
-
-    checked
-      ? setInput(prevInput => {
-          const topics = prevInput.topics.concat(value);
-          return { ...prevInput, topics: topics };
-        })
-      : setInput(prevInput => {
-          const topics = prevInput.topics.filter(topic => topic !== value);
-          return { ...prevInput, topics: topics };
-        });
+    input.topics.includes(e.target.id)
+      ? setInput(prevInput => (
+          {
+            ...prevInput,
+            topics: prevInput.topics.filter(topic => topic !== e.target.id)
+          }
+        ))
+      : setInput(prevInput => (
+          {
+            ...prevInput,
+            topics: prevInput.topics.concat(e.target.id)
+          }
+        ));
   };
 
   const handleSubmit = async (e) => {
@@ -120,6 +112,20 @@ const PostForm = ({ setPosts, post, setComments }) => {
     }
   }
 
+  const checkboxes = (
+    categories.map(category => (
+      <div className='checkbox' key={category}>
+        <input
+          type='checkbox'
+          id={category}
+          checked={input.topics.includes(category)}
+          onChange={handleCheckbox}
+        />
+        <label htmlFor={category}>{category}</label>
+      </div>
+    ))
+  )
+
   return (
     <div>
       <form id='post-form' onSubmit={post ? handleEditSubmit : handleSubmit}>
@@ -133,41 +139,10 @@ const PostForm = ({ setPosts, post, setComments }) => {
         <div className='post-form-input' id='post-form-input-checkbox-container'>
           <p>Categorize under:</p>
           {errors && errors.topics && <p className='error'>{errors.topics}</p>}
-          <input type='checkbox' id='neurodevelopmental-disorders' value='Neurodevelopmental disorders' />
-          <label htmlFor='neurodevelopmental-disorders'>Neurodevelopmental disorders</label>
-          <input type='checkbox' id='bipolar-and-related-disorders' value='Bipolar and related disorders' />
-          <label htmlFor='bipolar-and-related-disorders'>Bipolar and related disorders</label>
-          <input type='checkbox' id='anxiety-disorders' value='Anxiety disorders' />
-          <label htmlFor='anxiety-disorders'>Anxiety disorders</label>
-          <input type='checkbox' id='stress-related-disorders' value='Stress related disorders' />
-          <label htmlFor='stress-related-disorders'>Stress related disorders</label>
-          <input type='checkbox' id='dissociative-disorders' value='Dissociative disorders' />
-          <label htmlFor='dissociative-disorders'>Dissociative disorders</label>
-          <input type='checkbox' id='somatic-symptoms-disorders' value='Somatic symptoms disorders' />
-          <label htmlFor='somatic-symptoms-disorders'>Somatic symptoms disorders</label>
-          <input type='checkbox' id='eating-disorders' value='Eating disorders' />
-          <label htmlFor='eating-disorders'>Eating disorders</label>
-          <input type='checkbox' id='sleep-disorders' value='Sleep disorders' />
-          <label htmlFor='sleep-disorders'>Sleep disorders</label>
-          <input type='checkbox' id='disruptive-disorders' value='Disruptive disorders' />
-          <label htmlFor='disruptive-disorders'>Disruptive disorders</label>
-          <input type='checkbox' id='depressive-disorders' value='Depressive disorders' />
-          <label htmlFor='depressive-disorders'>Depressive disorders</label>
-          <input type='checkbox' id='substance-related-disorders' value='Substance related disorders' />
-          <label htmlFor='substance-related-disorders'>Substance related disorders</label>
-          <input type='checkbox' id='neurocognitive-disorders' value='Neurocognitive disorders' />
-          <label htmlFor='neurocognitive-disorders'>Neurocognitive disorders</label>
-          <input type='checkbox' id='schizophrenia' value='Schizophrenia' />
-          <label htmlFor='schizophrenia'>Schizophrenia</label>
-          <input type='checkbox' id='obsessive-compulsive-disorders' value='Obsessive-compulsive disorders' />
-          <label htmlFor='obsessive-compulsive-disorders'>Obsessive-compulsive disorders</label>
-          <input type='checkbox' id='personality-disorders' value='Personality disorders' />
-          <label htmlFor='personality-disorders'>Personality disorders</label>
-          <input type='checkbox' id='other' value='Other' />
-          <label htmlFor='other'>Other</label>
+          {checkboxes}
         </div>
-        <input type='button' value='Cancel' onClick={() => history.goBack()} />
         {setComments && <input type='button' value='Delete' onClick={handleDelete} />}
+        <input type='button' value='Cancel' onClick={() => history.goBack()} />
         <input className='post-form-input' type='submit' value='Post' />
       </form>
 
