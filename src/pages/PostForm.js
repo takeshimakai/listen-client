@@ -8,7 +8,7 @@ import putData from '../utils/putData';
 import deleteData from "../utils/deleteData";
 import setErrMsgs from '../utils/setErrMsgs';
 
-import categories from '../data/categories';
+import data from '../data/data';
 
 const PostForm = ({ setPosts, post, setComments }) => {
   const history = useHistory();
@@ -113,7 +113,7 @@ const PostForm = ({ setPosts, post, setComments }) => {
   }
 
   const checkboxes = (
-    categories.map(category => (
+    data.categories.map(category => (
       <div className='checkbox' key={category}>
         <input
           type='checkbox'

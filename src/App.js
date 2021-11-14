@@ -6,7 +6,9 @@ import UserContext from './contexts/UserContext';
 import Home from './pages/Home';
 import GoogleOAuthSuccess from './pages/GoogleOAuthSuccess';
 import Forum from './pages/Forum';
-import UserProfile from './pages/UserProfile';
+import Profile from './pages/Profile';
+import Dashboard from './pages/dashboard/Dashboard';
+import Login from './pages/Login';
 
 const App = () => {
   const [token, setToken] = useState(JSON.parse(localStorage.getItem('token')));
@@ -24,10 +26,16 @@ const App = () => {
               <GoogleOAuthSuccess />
             </Route>
             <Route path='/users/:userId'>
-              <UserProfile />
+              <Profile />
             </Route>
             <Route path='/forum'>
               <Forum />
+            </Route>
+            <Route path='/dashboard'>
+              <Dashboard />
+            </Route>
+            <Route path='/login'>
+              <Login />
             </Route>
             <Route path='/'>
               <Home />

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import categories from '../data/categories';
+import data from '../data/data';
 
 const ForumMenu = ({ sortBy, setSortBy, filters, setFilters }) => {
   const [filterInput, setFilterInput] = useState([]);
@@ -47,7 +47,7 @@ const ForumMenu = ({ sortBy, setSortBy, filters, setFilters }) => {
       </div>
       <div id='filter-container'>
         <p>Filters:</p>
-        {categories.map(filter => (
+        {data.categories.map(filter => (
           <div className='checkbox' key={filter}>
             <input
               type='checkbox'

@@ -1,18 +1,17 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
 
 import UserContext from '../contexts/UserContext';
 
-import LoginForm from '../components/LoginForm';
-
 const Home = () => {
   const { token } = useContext(UserContext);
+  const history = useHistory();
 
   return (
     <div id='home'>
       {token
-        ? <Link to='/forum'>Forum</Link>
-        : <LoginForm />
+        ? history.push('/dashboard')
+        : history.push('/login')
       }
     </div>
   )

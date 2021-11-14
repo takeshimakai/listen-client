@@ -5,7 +5,7 @@ import UserContext from '../contexts/UserContext';
 import setErrMsgs from '../utils/setErrMsgs';
 import postData from '../utils/postData';
 
-const LoginForm = () => {
+const Login = () => {
   const { setToken } = useContext(UserContext);
 
   const [input, setInput] = useState({ email: '', password: '' });
@@ -79,4 +79,4 @@ const LoginForm = () => {
   )
 }
 
-export default LoginForm;
+export default Login;

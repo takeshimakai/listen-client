@@ -1,5 +1,5 @@
 const formatDate = (date) => {
-  const formatted = new Date(date);
+  const formatted = new Date(date.replace(/-/g, '/').replace(/T.+/, ''));
   let dd = formatted.getDate().toString();
   let mm = (formatted.getMonth()+1).toString();
   const year = formatted.getFullYear().toString();
@@ -12,7 +12,7 @@ const formatDate = (date) => {
     mm = `0${mm}`;
   }
   
-  return `${dd}-${mm}-${year}`;
+  return `${year}-${mm}-${dd}`;
 }
 
 export default formatDate;
