@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Switch, Route, useRouteMatch, Link } from 'react-router-dom';
+import { Switch, Route, useRouteMatch, Link, useParams } from 'react-router-dom';
 
 import UserContext from "../contexts/UserContext";
 
@@ -9,8 +9,9 @@ import formatDate from "../utils/formatDate";
 
 import ProfileForm from "./dashboard/ProfileForm";
 
-const Profile = ({ userId }) => {
+const Profile = () => {
   const match = useRouteMatch();
+  const { userId } = useParams();
   const { token } = useContext(UserContext);
 
   const [profile, setProfile] = useState({
@@ -22,21 +23,19 @@ const Profile = ({ userId }) => {
     hidden: []
   });
 
-  const isMyProfile = userId === decodeToken(token).id;
-
   useEffect(() => {
     (async () => {
       try {
-        const res = await getData(`/users/${userId}`, token);
+        const res = await getData(`/users/${userId ? userId : decodeToken(token).id}`, token);
         const { profile } = await res.json();
 
         setProfile({
           username: profile.username,
-          dob: !profile.dob ? '' : formatDate(profile.dob),
-          gender: profile.gender,
-          interests: profile.interests,
-          problemTopics: profile.problemTopics,
-          hidden: profile.hidden
+          dob: profile.dob ? formatDate(profile.dob) : '',
+          gender: profile.gender || '',
+          interests: profile.interests || [],
+          problemTopics: profile.problemTopics || [],
+          hidden: profile.hidden || []
         })
       } catch (err) {
         console.log(err);
@@ -62,19 +61,23 @@ const Profile = ({ userId }) => {
           </div>
           <div className='user-profile-category'>
             <h4 className='user-profile-category-title'>Interests:</h4>
-            <p className='user-profile-category-description'>{profile.interests}</p>
+            <ul className='user-profile-category-description'>
+              {profile.interests.map(interest => <li key={interest}>{interest}</li>)}
+            </ul>
           </div>
           <div className='user-profile-category'>
             <h4 className='user-profile-category-title'>Problem topics:</h4>
-            <p className='user-profile-category-description'>{profile.problemTopics}</p>
+            <ul className='user-profile-category-description'>
+              {profile.problemTopics.map(topic => <li key={topic}>{topic}</li>)}
+            </ul>
           </div>
-          {isMyProfile &&
+          {!userId &&
             <div className='user-profile-category'>
               <h4 className='user-profile-category-title'>Hidden fields:</h4>
               <p className='user-profile-category-description'>{profile.hidden}</p>
             </div>
           }
-          {isMyProfile &&
+          {!userId &&
             <Link to={`${match.url}/edit`}>Edit</Link>
           }
         </div>

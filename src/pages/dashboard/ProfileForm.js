@@ -75,10 +75,11 @@ const ProfileForm = ({ profile, setProfile }) => {
   };
 
   const addInterest = () => {
-    if (interestsInput && !input.interests.includes(interestsInput)) {
+    const formatted = interestsInput.trim().charAt(0).toUpperCase() + interestsInput.trim().slice(1).toLowerCase();
+    if (formatted && !input.interests.includes(formatted)) {
       setInput(prevInput => ({
         ...prevInput,
-        interests: prevInput.interests.concat(interestsInput)
+        interests: prevInput.interests.concat(formatted)
       }));
       setInterestsInput('');
     }
@@ -130,13 +131,19 @@ const ProfileForm = ({ profile, setProfile }) => {
             name='interests'
             value={interestsInput}
             onChange={handleInput}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                document.querySelector('#add-btn').click();
+              }
+            }}
           />
-          <input type='button' value='Add' disabled={!interestsInput} onClick={addInterest} />
+          <input id='add-btn' type='button' value='Add' disabled={!interestsInput} onClick={addInterest} />
           <div id='profile-form-interests-list'>
             {input.interests.map(interest => (
-              <input type='button' value={interest} key={interest} onClick={removeInterest}>
+              <button type='button' value={interest} key={interest} onClick={removeInterest}>
                 {interest} &#x2715;
-              </input>
+              </button>
             ))}
           </div>
         </div>
