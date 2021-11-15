@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { Switch, Route, Link, useRouteMatch } from 'react-router-dom';
 
 import UserContext from '../../contexts/UserContext';
@@ -12,8 +12,7 @@ import Profile from '../Profile';
 const Dashboard = () => {
   const match = useRouteMatch();
   const { token } = useContext(UserContext);
-
-  const [user] = useState(decodeToken(token));
+  const { username } = decodeToken(token);
 
   return (
     <div>
@@ -23,16 +22,16 @@ const Dashboard = () => {
 
       <Switch>
         <Route path={`${match.path}/profile`}>
-          <Profile userId={user.id} />
+          <Profile />
         </Route>
         <Route path={`${match.path}/friends`}>
-          <Friends userId={user.id} />
+          <Friends />
         </Route>
         <Route path={`${match.path}/forum-activity`}>
-          <ForumActivity userId={user.id} />
+          <ForumActivity />
         </Route>
         <Route path={match.path}>
-          <h3>Hey {user.username}!</h3>
+          <h3>Hey {username}!</h3>
           <p>What do you feel like doing today?</p>
         </Route>
       </Switch>
