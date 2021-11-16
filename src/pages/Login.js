@@ -1,4 +1,5 @@
 import { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 import UserContext from '../contexts/UserContext';
 
@@ -75,6 +76,8 @@ const Login = () => {
         <input type='submit' value='Sign in' />
       </form>
       <a href='http://localhost:5000/api/auth/google'>Google Sign in</a>
+      <p>Don't have an account?</p>
+      <Link to='/signup'>Create an account</Link>
     </div>
   )
 }

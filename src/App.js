@@ -9,6 +9,7 @@ import Forum from './pages/Forum';
 import Profile from './pages/Profile';
 import Dashboard from './pages/dashboard/Dashboard';
 import Login from './pages/Login';
+import SignUp from './pages/SignUp';
 
 const App = () => {
   const [token, setToken] = useState(JSON.parse(localStorage.getItem('token')));
@@ -36,6 +37,9 @@ const App = () => {
             </Route>
             <Route path='/login'>
               <Login />
+            </Route>
+            <Route path='/signup'>
+              <SignUp />
             </Route>
             <Route path='/'>
               <Home />
