@@ -16,6 +16,7 @@ const Dashboard = () => {
 
   return (
     <div>
+      <Link to={`${match.url}`}>Dashboard</Link>
       <Link to={`${match.url}/profile`}>Profile</Link>
       <Link to={`${match.url}/friends`}>Friends</Link>
       <Link to={`${match.url}/forum-activity`}>Forum Activity</Link>
