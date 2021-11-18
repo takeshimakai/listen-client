@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import UserContext from '../contexts/UserContext';
 
@@ -7,7 +7,7 @@ import setErrMsgs from '../utils/setErrMsgs';
 import postData from '../utils/postData';
 
 const Login = () => {
-  const { setToken } = useContext(UserContext);
+  const { token, setToken } = useContext(UserContext);
 
   const [input, setInput] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState();
@@ -24,17 +24,14 @@ const Login = () => {
       const data = await res.json();
 
       if (!res.ok && data.errors) {
-        setErrors(setErrMsgs(data.errors));
+        return setErrors(setErrMsgs(data.errors));
       }
 
       if (!res.ok && !data.errors) {
-        setErrors(data);
+        return setErrors(data);
       }
 
-      if (res.ok) {
-        setInput({ email: '', password: '' });
-        setToken(data);
-      }
+      setToken(data);
     } catch (err) {
       console.log(err);
     }
@@ -70,6 +67,7 @@ const Login = () => {
   
   return (
     <div id='login'>
+      {token && <Redirect to='/dashboard' />}
       <form onSubmit={handleSignIn}>
         {emailInput}
         {pwdInput}

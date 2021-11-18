@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 import UserContext from './contexts/UserContext';
 
+import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import GoogleOAuthSuccess from './pages/GoogleOAuthSuccess';
 import Forum from './pages/Forum';
@@ -10,6 +11,7 @@ import Profile from './pages/Profile';
 import Dashboard from './pages/dashboard/Dashboard';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
+import AccountSetUp from './pages/AccountSetUp';
 
 const App = () => {
   const [token, setToken] = useState(JSON.parse(localStorage.getItem('token')));
@@ -23,27 +25,14 @@ const App = () => {
       <div className="App">
         <UserContext.Provider value={{ token, setToken }}>
           <Switch>
-            <Route path='/auth/google/success'>
-              <GoogleOAuthSuccess />
-            </Route>
-            <Route path='/users/:userId'>
-              <Profile />
-            </Route>
-            <Route path='/forum'>
-              <Forum />
-            </Route>
-            <Route path='/dashboard'>
-              <Dashboard />
-            </Route>
-            <Route path='/login'>
-              <Login />
-            </Route>
-            <Route path='/signup'>
-              <SignUp />
-            </Route>
-            <Route path='/'>
-              <Home />
-            </Route>
+            <ProtectedRoute path='/users/:userId' component={Profile} />
+            <ProtectedRoute path='/forum' component={Forum} />
+            <ProtectedRoute path='/dashboard' component={Dashboard} />
+            <Route path='/account-setup' component={AccountSetUp} />
+            <Route path='/auth/google/success' component={GoogleOAuthSuccess} />
+            <Route path='/login' component={Login} />
+            <Route path='/signup' component={SignUp} />
+            <Route path='/' component={Home} />
           </Switch>
         </UserContext.Provider>
       </div>
