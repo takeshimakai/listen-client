@@ -7,13 +7,16 @@ import data from '../../data/data';
 import putData from '../../utils/putData';
 import formatDate from "../../utils/formatDate";
 
+import InterestsInput from "../../components/InterestsInput";
+import ProblemTopicsInput from "../../components/ProblemTopicsInput";
+import HiddenFieldsInput from "../../components/HiddenFieldsInput";
+
 const ProfileForm = ({ profile, setProfile }) => {
   const history = useHistory();
   const { token } = useContext(UserContext);
 
   const [redirectPath, setRedirectPath] = useState();
-  const [interestsInput, setInterestsInput] = useState('');
-  const [input, setInput] = useState({
+  const [profileInput, setProfileInput] = useState({
     dob: '',
     gender: '',
     interests: [],
@@ -22,7 +25,7 @@ const ProfileForm = ({ profile, setProfile }) => {
   });
 
   useEffect(() => {
-    setInput({
+    setProfileInput({
       dob: profile.dob,
       gender: profile.gender,
       interests: profile.interests,
@@ -35,7 +38,7 @@ const ProfileForm = ({ profile, setProfile }) => {
     try {
       e.preventDefault();
 
-      const res = await putData('/users', input, token);
+      const res = await putData('/users', profileInput, token);
       const data = await res.json();
 
       setProfile({
@@ -55,41 +58,7 @@ const ProfileForm = ({ profile, setProfile }) => {
   const handleInput = (e) => {
     const { name, value } = e.target;
 
-    name === 'interests'
-      ? setInterestsInput(value)
-      : setInput(prevInput => ({ ...prevInput, [name]: value }));
-  };
-
-  const handleCheckbox = (e) => {
-    const { name, value } = e.target;
-
-    input[name].includes(value)
-      ? setInput(prevInput => ({
-          ...prevInput,
-          [name]: prevInput[name].filter(prevValue => prevValue !== value)
-        }))
-      : setInput(prevInput => ({
-          ...prevInput,
-          [name]: prevInput[name].concat(value)
-        }))
-  };
-
-  const addInterest = () => {
-    const formatted = interestsInput.trim().charAt(0).toUpperCase() + interestsInput.trim().slice(1).toLowerCase();
-    if (formatted && !input.interests.includes(formatted)) {
-      setInput(prevInput => ({
-        ...prevInput,
-        interests: prevInput.interests.concat(formatted)
-      }));
-      setInterestsInput('');
-    }
-  };
-
-  const removeInterest = (e) => {
-    setInput(prevInput => ({
-      ...prevInput,
-      interests: prevInput.interests.filter(interest => interest !== e.target.value)
-    }));
+    setProfileInput(prevInput => ({ ...prevInput, [name]: value }));
   };
 
   return (
@@ -103,7 +72,7 @@ const ProfileForm = ({ profile, setProfile }) => {
             type='date'
             id='dob'
             name='dob'
-            value={input.dob}
+            value={profileInput.dob}
             onChange={handleInput}
           />
         </div>
@@ -116,7 +85,7 @@ const ProfileForm = ({ profile, setProfile }) => {
                 id={gender}
                 name='gender'
                 value={gender}
-                checked={input.gender === gender}
+                checked={profileInput.gender === gender}
                 onChange={handleInput}
               />
               <label htmlFor={gender}>{gender}</label>
@@ -124,65 +93,13 @@ const ProfileForm = ({ profile, setProfile }) => {
           ))}
         </div>
         <div id='profile-form-interests'>
-          <label htmlFor='interests'>What are your interests? </label>
-          <input
-            type='text'
-            id='interests'
-            name='interests'
-            value={interestsInput}
-            onChange={handleInput}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault();
-                document.querySelector('#add-btn').click();
-              }
-            }}
-          />
-          <input id='add-btn' type='button' value='Add' disabled={!interestsInput} onClick={addInterest} />
-          <div id='profile-form-interests-list'>
-            {input.interests.map(interest => (
-              <button type='button' value={interest} key={interest} onClick={removeInterest}>
-                {interest} &#x2715;
-              </button>
-            ))}
-          </div>
+          <InterestsInput profileInput={profileInput} setProfileInput={setProfileInput} />
         </div>
         <div id='profile-form-problem-topics'>
-          <p>Please select all topics that are relevant to you:</p>
-          {data.categories.map(category => (
-            <div className='profile-form-problem-topic' key={category}>
-              <input
-                type='checkbox'
-                name='problemTopics'
-                id={category}
-                value={category}
-                checked={input.problemTopics.includes(category)}
-                onChange={handleCheckbox}
-              />
-              <label htmlFor={category}>{category}</label>
-            </div>
-          ))}
+          <ProblemTopicsInput profileInput={profileInput} setProfileInput={setProfileInput} />
         </div>
         <div id='profile-form-hidden'>
-          <p>Please select fields you would like to hide from your public profile:</p>
-          {data.hidden.map(field => (
-            <div className='profile-form-hidden-checkbox' key={`${field}-hidden`}>
-              <input
-                type='checkbox'
-                name='hidden'
-                id={`${field}-hidden`}
-                value={field}
-                checked={input.hidden.includes(field)}
-                onChange={handleCheckbox}
-              />
-              <label htmlFor={`${field}-hidden`}>
-                {field === 'dob' && 'Date of birth'}
-                {field === 'gender' && 'Gender'}
-                {field === 'interests' && 'Interests'}
-                {field === 'problemTopics' && 'Problem topics'}
-              </label>
-            </div>
-          ))}
+          <HiddenFieldsInput profileInput={profileInput} setProfileInput={setProfileInput} />
         </div>
         <input type='button' value='Cancel' onClick={() => history.goBack()} />
         <input type='submit' value='Save' />
