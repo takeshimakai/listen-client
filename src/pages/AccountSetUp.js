@@ -5,8 +5,8 @@ import UserContext from '../contexts/UserContext';
 
 import data from '../data/data';
 import decodeToken from '../utils/decodeToken';
-import putData from '../utils/putData';
 import setErrMsgs from '../utils/setErrMsgs';
+import postData from '../utils/postData';
 
 import InterestsInput from '../components/InterestsInput';
 import ProblemTopicsInput from '../components/ProblemTopicsInput';
@@ -15,20 +15,19 @@ const AccountSetUp = () => {
   const history = useHistory();
   const { token, setToken } = useContext(UserContext);
 
-  const [usernameError, setUsernameError] = useState();
+  const [error, setError] = useState();
   const [step, setStep] = useState('username');
-  const [username, setUsername] = useState('');
   const [profileInput, setProfileInput] = useState({
+    username: '',
     dob: '',
     gender: '',
     interests: [],
-    problemTopics: [],
-    hidden: []
+    problemTopics: []
   });
 
   useEffect(() => {
-    usernameError && setStep('username');
-  }, [usernameError]);
+    error && setStep('username');
+  }, [error]);
 
   useEffect(() => {
     decodeToken(token).username && history.replace('/dashboard');
@@ -37,16 +36,9 @@ const AccountSetUp = () => {
   const handleInput = (e) => {
     const { name, value } = e.target;
 
-    switch (name) {
-      case 'username':
-        setUsername(value);
-        break;
-      case 'dob':
-      case 'gender':
-        setProfileInput(prev => ({ ...prev, [name]: value }));
-        break;
-      default:
-        profileInput[name].includes(value)
+    ['username', 'dob', 'gender'].includes(name)
+      ? setProfileInput(prev => ({ ...prev, [name]: value }))
+      : profileInput[name].includes(value)
           ? setProfileInput(prev => ({
               ...prev,
               [name]: prev[name].filter(val => val !== value)
@@ -54,22 +46,18 @@ const AccountSetUp = () => {
           : setProfileInput(prev => ({
               ...prev,
               [name]: prev[name].concat(value)
-            }))
-    }
+            }));
   }
 
   const changeStep = (e) => setStep(e.target.value);
 
   const handleSubmit = async () => {
     try {
-      const res = await Promise.all([
-        putData('/users/username', { username }, token),
-        putData('/users', profileInput, token)
-      ]);
-      const data = await res[0].json();
+      const res = await postData('/users', profileInput, token);
+      const data = await res.json();
 
-      if (!res[0].ok) {
-        return setUsernameError(setErrMsgs(data.errors));
+      if (!res.ok) {
+        return setError(setErrMsgs(data.errors));
       }
 
       setToken(data);
@@ -86,11 +74,11 @@ const AccountSetUp = () => {
           <input
             type='text'
             name='username'
-            value={username}
+            value={profileInput.username}
             onChange={handleInput}
           />
-          {usernameError && <p>{usernameError.username}</p>}
-          <button value='dob' disabled={!username} onClick={changeStep}>Next</button>
+          {error && <p>{error.username}</p>}
+          <button value='dob' disabled={!profileInput.username} onClick={changeStep}>Next</button>
         </div>
       );
     case 'dob':
@@ -147,7 +135,7 @@ const AccountSetUp = () => {
     case 'confirm':
       return (
         <div id='account-setup'>
-          <p>Username: {username}</p>
+          <p>Username: {profileInput.username}</p>
           <p>Date of birth: {profileInput.dob || 'undisclosed'}</p>
           <p>Gender: {profileInput.gender || 'undisclosed'}</p>
           <div>
