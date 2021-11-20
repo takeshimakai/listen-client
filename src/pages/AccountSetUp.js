@@ -26,12 +26,14 @@ const AccountSetUp = () => {
   });
 
   useEffect(() => {
-    error && setStep('username');
-  }, [error]);
+    token && decodeToken(token).username
+      ? history.replace('/dashboard')
+      : history.replace('/login');
+  }, [token, history]);
 
   useEffect(() => {
-    decodeToken(token).username && history.replace('/dashboard');
-  }, [token, history]);
+    error && setStep('username');
+  }, [error]);
 
   const handleInput = (e) => {
     const { name, value } = e.target;
