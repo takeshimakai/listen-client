@@ -24,7 +24,7 @@ const GoogleOAuthSuccess = () => {
   return (
     <div>
       <p>Redirecting...</p>
-      {token && <Redirect to='/' />}
+      {token && <Redirect to='/dashboard' />}
     </div>
   )
 }
