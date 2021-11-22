@@ -20,7 +20,6 @@ const Login = () => {
     try {
       e.preventDefault();
       const res = await postData('/auth/login', input);
-
       const data = await res.json();
 
       if (!res.ok && data.errors) {
@@ -36,42 +35,43 @@ const Login = () => {
       console.log(err);
     }
   };
-
-  const emailInput = (
-    <div id='email-container'>
-      <input
-        id='email'
-        type='text'
-        name='email'
-        placeholder='Email'
-        value={input.email}
-        onChange={handleInput}
-      />
-      {errors && errors.email && <p className='error'>{errors.email}</p>}
-    </div>
-  )
-
-  const pwdInput = (
-    <div id='pwd-container'>
-      <input
-        id='password'
-        type='password'
-        name='password'
-        placeholder='Password'
-        value={input.password}
-        onChange={handleInput}
-      />
-      {errors && errors.password && <p className='error'>{errors.password}</p>}
-    </div>
-  )
   
   return (
     <div id='login'>
       {token && <Redirect to='/dashboard' />}
       <form onSubmit={handleSignIn}>
-        {emailInput}
-        {pwdInput}
-        <input type='submit' value='Sign in' />
+        <div id='email-container'>
+          <input
+            id='email'
+            type='text'
+            name='email'
+            placeholder='Email'
+            value={input.email}
+            onChange={handleInput}
+          />
+          {errors && errors.email &&
+            <p>{errors.email}</p>
+          }
+        </div>
+        <div id='pwd-container'>
+          <input
+            id='password'
+            type='password'
+            name='password'
+            placeholder='Password'
+            value={input.password}
+            onChange={handleInput}
+          />
+          {errors && errors.password &&
+            <p>{errors.password}</p>
+          }
+        </div>
+        <div>
+          <input
+            type='submit'
+            value='Sign in'
+          />
+        </div>
       </form>
       <a href='http://localhost:5000/api/auth/google'>Google Sign in</a>
       <p>Don't have an account?</p>
