@@ -32,7 +32,6 @@ const App = () => {
             <Route path='/auth/google/success' component={GoogleOAuthSuccess} />
             <Route path='/login' component={Login} />
             <Route path='/signup' component={SignUp} />
-            <Route path='/' component={Home} />
           </Switch>
         </UserContext.Provider>
       </div>
