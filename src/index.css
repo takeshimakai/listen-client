@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .login-input {
+    @apply w-full py-1 border-b border-gray-500 text-sm text-gray-900 bg-transparent focus:outline-none focus:border-gray-900;
+  }
+
+  .login-label {
+    @apply text-xs text-gray-500;
+  }
+
+  .error-msg {
+    @apply text-red-600 text-xs h-4;
+  }
+
+  .primary-btn {
+    @apply w-full h-8 rounded-md cursor-pointer bg-green-700 text-gray-100 text-sm hover:bg-green-800 active:shadow-inner-2;
+  }
+
+  .secondary-btn {
+    @apply w-full h-8 rounded-md cursor-pointer bg-gray-100 text-sm text-gray-600 hover:bg-gray-200 active:shadow-inner-2;
+  }
+
+  .rounded-btn {
+    @apply w-full h-8 rounded-full cursor-pointer text-gray-600 bg-gray-100 text-sm hover:bg-gray-200 active:shadow-inner-2;
+  }
+}

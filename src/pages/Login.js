@@ -1,81 +1,15 @@
-import { useState, useContext } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-
-import UserContext from '../contexts/UserContext';
-
-import setErrMsgs from '../utils/setErrMsgs';
-import postData from '../utils/postData';
+import LoginForm from '../components/LoginForm';
 
 const Login = () => {
-  const { token, setToken } = useContext(UserContext);
-
-  const [input, setInput] = useState({ email: '', password: '' });
-  const [errors, setErrors] = useState();
-
-  const handleInput = (e) => {
-    setInput({ ...input, [e.target.name]: e.target.value });
-  };
-
-  const handleSignIn = async (e) => {
-    try {
-      e.preventDefault();
-      const res = await postData('/auth/login', input);
-      const data = await res.json();
-
-      if (!res.ok && data.errors) {
-        return setErrors(setErrMsgs(data.errors));
-      }
-
-      if (!res.ok && !data.errors) {
-        return setErrors(data);
-      }
-
-      setToken(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  
   return (
-    <div id='login'>
-      {token && <Redirect to='/dashboard' />}
-      <form onSubmit={handleSignIn}>
-        <div id='email-container'>
-          <input
-            id='email'
-            type='text'
-            name='email'
-            placeholder='Email'
-            value={input.email}
-            onChange={handleInput}
-          />
-          {errors && errors.email &&
-            <p>{errors.email}</p>
-          }
-        </div>
-        <div id='pwd-container'>
-          <input
-            id='password'
-            type='password'
-            name='password'
-            placeholder='Password'
-            value={input.password}
-            onChange={handleInput}
-          />
-          {errors && errors.password &&
-            <p>{errors.password}</p>
-          }
-        </div>
-        <div>
-          <input
-            type='submit'
-            value='Sign in'
-          />
-        </div>
-      </form>
-      <a href='http://localhost:5000/api/auth/google'>Google Sign in</a>
-      <p>Don't have an account?</p>
-      <Link to='/signup'>Create an account</Link>
+    <div className='w-full h-full md:flex md:items-center overflow-auto'>
+      <div className='relative flex items-center justify-center md:justify-end h-2/5 md:h-auto z-10 md:flex-1 md:mr-14'>
+        <h1 className='text-gray-800 font-serif text-6xl md:text-8xl'>listen</h1>
+      </div>
+      <div className='relative z-10 px-12 md:px-0 md:flex-1 md:ml-14'>
+        <LoginForm />
+      </div>
+      <div className='w-full h-full absolute top-0 z-0 bg-base bg-cover bg-top 2xl:bg-center opacity-70' />
     </div>
   )
 }
