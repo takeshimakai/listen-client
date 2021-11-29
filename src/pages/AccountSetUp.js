@@ -28,7 +28,7 @@ const AccountSetUp = () => {
   useEffect(() => {
     token && decodeToken(token).username
       ? history.replace('/dashboard')
-      : history.replace('/login');
+      : history.replace('/');
   }, [token, history]);
 
   useEffect(() => {

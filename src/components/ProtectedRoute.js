@@ -18,11 +18,11 @@ const ProtectedRoute = ({ ...props }) => {
   }
 
   if (user && !user.verified) {
-    return <Redirect to='/signup/verify' />
+    return <Redirect to='/verify' />
   }
 
   if (!user) {
-    return <Redirect to='/login' />
+    return <Redirect to='/' />
   }
 }
 

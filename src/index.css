@@ -3,11 +3,19 @@
 @tailwind utilities;
 
 @layer components {
-  .login-input {
-    @apply w-full py-1 border-b border-gray-500 text-sm text-gray-900 bg-transparent focus:outline-none focus:border-gray-900;
+  .bg-image {
+    @apply w-full h-full absolute top-0 bg-base bg-cover bg-top 2xl:bg-center opacity-70;
   }
 
-  .login-label {
+  .auth-container {
+    @apply flex flex-col justify-between mb-10 sm:mb-0 sm:w-64;
+  }
+
+  .input {
+    @apply max-w-xs block w-full py-1 border-b border-gray-500 text-sm text-gray-900 bg-transparent focus:outline-none focus:border-gray-900;
+  }
+
+  .label {
     @apply text-xs text-gray-500;
   }
 
@@ -16,14 +24,24 @@
   }
 
   .primary-btn {
-    @apply w-full h-8 rounded-md cursor-pointer bg-green-700 text-gray-100 text-sm hover:bg-green-800 active:shadow-inner-2;
+    @apply max-w-xs w-full h-8 rounded-md cursor-pointer bg-green-700 text-gray-100 text-sm hover:bg-green-800 active:shadow-inner-2;
   }
 
   .secondary-btn {
-    @apply w-full h-8 rounded-md cursor-pointer bg-gray-100 text-sm text-gray-600 hover:bg-gray-200 active:shadow-inner-2;
+    @apply max-w-xs w-full h-8 rounded-md cursor-pointer bg-gray-100 text-sm text-gray-600 hover:bg-gray-200 active:shadow-inner-2;
   }
 
   .rounded-btn {
-    @apply w-full h-8 rounded-full cursor-pointer text-gray-600 bg-gray-100 text-sm hover:bg-gray-200 active:shadow-inner-2;
+    @apply max-w-xs w-full h-8 rounded-full cursor-pointer text-gray-600 bg-gray-100 text-sm hover:bg-gray-200 active:shadow-inner-2;
   }
+
+  .btn-icon {
+    @apply float-left h-3/5 ml-2;
+  }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
