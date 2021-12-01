@@ -1,10 +1,11 @@
 import { useEffect, useContext } from "react";
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import UserContext from "../contexts/UserContext";
 
 const GoogleOAuthSuccess = () => {
-  const { token, setToken } = useContext(UserContext);
+  const history = useHistory();
+  const { setToken } = useContext(UserContext);
 
   useEffect(() => {
     (async () => {
@@ -14,17 +15,21 @@ const GoogleOAuthSuccess = () => {
           credentials: 'include'
         });
         
+        if (!res.ok) {
+          return history.replace('/');
+        }
+
         setToken(await res.json());
+        history.replace('/dashboard');
       } catch (err) {
         console.log(err);
       }
     })();
-  }, [setToken]);
+  }, [setToken, history]);
 
   return (
     <div>
       <p>Redirecting...</p>
-      {token && <Redirect to='/dashboard' />}
     </div>
   )
 }

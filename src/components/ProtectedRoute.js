@@ -21,9 +21,7 @@ const ProtectedRoute = ({ ...props }) => {
     return <Redirect to='/verify' />
   }
 
-  if (!user) {
-    return <Redirect to='/' />
-  }
+  return <Redirect to='/' />
 }
 
 export default ProtectedRoute;

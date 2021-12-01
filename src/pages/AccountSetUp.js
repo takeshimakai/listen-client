@@ -26,9 +26,14 @@ const AccountSetUp = () => {
   });
 
   useEffect(() => {
-    token && decodeToken(token).username
-      ? history.replace('/dashboard')
-      : history.replace('/');
+    if (token) {
+      const { username, verified } = decodeToken(token);
+
+      !verified && history.replace('/verify');
+      username && history.replace('/dashboard');
+    } else {
+      history.replace('/');
+    }
   }, [token, history]);
 
   useEffect(() => {
