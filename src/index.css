@@ -7,8 +7,32 @@
     @apply w-full h-full absolute top-0 bg-base bg-cover bg-top 2xl:bg-center opacity-70;
   }
 
+  .logo-main {
+    @apply text-gray-800 font-serif text-6xl sm:text-8xl;
+  }
+
   .auth-container {
     @apply flex flex-col justify-between mb-10 sm:mb-0 sm:w-64;
+  }
+
+  .account-setup-container {
+    @apply flex-grow flex flex-col items-center justify-between w-full mx-auto pb-12 px-12 sm:px-0;
+  }
+
+  .account-setup-input-container {
+    @apply relative bg-white shadow-xl rounded-lg w-full sm:max-w-lg text-center pb-10 pt-20 px-5 sm:px-10 my-auto;
+  }
+
+  .account-setup-input-title {
+    @apply text-lg mb-20 font-light;
+  }
+
+  .progress-bar {
+    @apply h-full w-1/6 border border-gray-300 mx-px;
+  }
+
+  .progress-bar-fill {
+    @apply bg-green-900 bg-opacity-40;
   }
 
   .input {

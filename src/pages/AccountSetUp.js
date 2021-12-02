@@ -7,9 +7,11 @@ import data from '../data/data';
 import decodeToken from '../utils/decodeToken';
 import setErrMsgs from '../utils/setErrMsgs';
 import postData from '../utils/postData';
+import formatDate from '../utils/formatDate';
 
 import InterestsInput from '../components/InterestsInput';
 import ProblemTopicsInput from '../components/ProblemTopicsInput';
+import ProgressBar from '../components/ProgressBar';
 
 const AccountSetUp = () => {
   const history = useHistory();
@@ -73,74 +75,121 @@ const AccountSetUp = () => {
     }
   };
 
-  switch (step) {
-    case 'username':
-      return (
-        <div id='account-setup'>
-          <p>Please choose a username.</p>
-          <input
-            type='text'
-            name='username'
-            value={profileInput.username}
-            onChange={handleInput}
-          />
-          {error && <p>{error.username}</p>}
-          <button value='dob' disabled={!profileInput.username} onClick={changeStep}>Next</button>
-        </div>
-      );
-    case 'dob':
-      return (
-        <div id='account-setup'>
-          <p>When is your birthday?</p>
-          <input
-            type='date'
-            name='dob'
-            value={profileInput.dob}
-            onChange={handleInput}
-          />
-          <button value='username' onClick={changeStep}>Back</button>
-          <button value='gender' onClick={changeStep}>Next</button>
-        </div>
-      );
-    case 'gender':
-      return (
-        <div id='account-setup'>
-          <p>What is your gender?</p>
-          {data.genders.map(gender => (
-            <div className='account-setup-gender-radio' key={gender}>
+  return (
+    <div className='h-full flex flex-col'>
+      <div className='flex justify-between py-2 px-4'>
+        <h1 className='text-gray-800 font-serif text-2xl'>listen</h1>
+        <button className='font-light text-sm' onClick={() => setToken('')}>Sign out</button>
+      </div>
+      {step === 'username' &&
+        <div className='account-setup-container'>
+          <div className='account-setup-input-container'>
+            <ProgressBar step={step} />
+            <p className='account-setup-input-title'>Please choose a username.</p>
+            <div className='flex flex-col justify-center items-center'>
               <input
-                type='radio'
-                id={gender}
-                name='gender'
-                value={gender}
-                checked={profileInput.gender === gender}
+                className='text-center w-full py-1 border-b border-gray-500 text-lg text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
+                type='text'
+                name='username'
+                value={profileInput.username}
                 onChange={handleInput}
               />
-              <label htmlFor={gender}>{gender}</label>
+              <p className='text-xs mt-1 text-gray-500'>This field is required.</p>
+              <p className='error-msg mt-1'>{error && error.username}</p>
             </div>
-          ))}
-          <button value='dob' onClick={changeStep}>Back</button>
-          <button value='interests' onClick={changeStep}>Next</button>
+          </div>
+          <button
+              className='primary-btn disabled:opacity-50 disabled:bg-green-700'
+              value='dob'
+              disabled={!profileInput.username}
+              onClick={changeStep}
+            >
+              Next
+            </button>
         </div>
-      );
-    case 'interests':
-      return (
+      }
+      {step === 'dob' &&
+        <div className='account-setup-container'>
+          <div className='account-setup-input-container'>
+            <ProgressBar step={step} />
+            <p className='account-setup-input-title'>When is your birthday?</p>
+            <div className='flex justify-center items-center mb-8'>
+              <input
+                className='py-1 border-b border-gray-500 text-lg text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
+                type='date'
+                name='dob'
+                max={formatDate(Date.now())}
+                value={profileInput.dob}
+                onChange={handleInput}
+              />
+            </div>
+          </div>
+          <div className='w-full flex max-w-xs'>
+            <button className='secondary-btn mr-1' value='username' onClick={changeStep}>Back</button>
+            <button
+              className='primary-btn ml-1'
+              value='gender'
+              onClick={changeStep}
+            >
+              {profileInput.dob ? 'Next' : 'Skip'}
+            </button>
+          </div>
+        </div>
+      }
+      {step === 'gender' &&
+        <div className='account-setup-container'>
+          <p className='text-lg'>What is your gender?</p>
+          <div className='w-full h-60 flex items-center justify-center'>
+            <div>
+              {data.genders.map(gender => (
+                <div className='flex items-center my-2' key={gender}>
+                  <input
+                    className='h-4 w-4 mr-1.5'
+                    type='radio'
+                    id={gender}
+                    name='gender'
+                    value={gender}
+                    checked={profileInput.gender === gender}
+                    onChange={handleInput}
+                  />
+                  <label htmlFor={gender}>{gender}</label>
+                </div>
+              ))}
+              <div className='flex items-center my-2'>
+                <input
+                  className='h-4 w-4 mr-1.5'
+                  type='radio'
+                  id='undisclosed'
+                  name='gender'
+                  value='undisclosed'
+                  checked={profileInput.gender === 'undisclosed'}
+                  onChange={handleInput}
+                />
+                <label htmlFor='undisclosed'>Rather not say</label>
+              </div>
+            </div>
+          </div>
+          <div className='w-full flex max-w-xs'>
+            <button className='secondary-btn mr-1' value='dob' onClick={changeStep}>Back</button>
+            <button className='primary-btn ml-1' value='interests' onClick={changeStep}>Next</button>
+          </div>
+        </div>
+      }
+      {step === 'interests' &&
         <div id='account-setup'>
           <InterestsInput profileInput={profileInput} setProfileInput={setProfileInput} />
           <button value='gender' onClick={changeStep}>Back</button>
           <button value='problemTopics' onClick={changeStep}>Next</button>
         </div>
-      );
-    case 'problemTopics':
-      return (
+      }
+      {step === 'problemTopics' &&
         <div id='account-setup'>
           <ProblemTopicsInput profileInput={profileInput} setProfileInput={setProfileInput} />
           <button value='interests' onClick={changeStep}>Back</button>
           <button value='confirm' onClick={changeStep}>Next</button>
         </div>
-      );
-    case 'confirm':
-      return (
+      }
+      {step === 'confirm' &&
         <div id='account-setup'>
           <p>Username: {profileInput.username}</p>
           <p>Date of birth: {profileInput.dob || 'undisclosed'}</p>
@@ -164,10 +213,9 @@ const AccountSetUp = () => {
           <button value='problemTopics' onClick={changeStep}>Back</button>
           <button onClick={handleSubmit}>Save profile</button>
         </div>
-      )
-    default:
-      return null;
-  }
+      }
+    </div>
+  )
 }
 
 export default AccountSetUp;

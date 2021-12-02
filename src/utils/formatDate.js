@@ -1,14 +1,14 @@
 const formatDate = (date) => {
-  const formatted = new Date(date.replace(/-/g, '/').replace(/T.+/, ''));
-  let dd = formatted.getDate().toString();
-  let mm = (formatted.getMonth()+1).toString();
-  const year = formatted.getFullYear().toString();
+  const formatted = new Date(date);
+  let dd = formatted.getDate();
+  let mm = formatted.getMonth() + 1;
+  const year = formatted.getFullYear();
 
-  if (dd.length < 2) {
+  if (dd < 10) {
     dd = `0${dd}`;
   }
 
-  if (mm.length < 2) {
+  if (mm < 10) {
     mm = `0${mm}`;
   }
   
