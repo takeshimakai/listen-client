@@ -86,7 +86,7 @@ const AccountSetUp = () => {
           <div className='account-setup-input-container'>
             <ProgressBar step={step} />
             <p className='account-setup-input-title'>Please choose a username.</p>
-            <div className='flex flex-col justify-center items-center'>
+            <div className='flex flex-col justify-center items-center mt-11'>
               <input
                 className='text-center w-full py-1 border-b border-gray-500 text-lg text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
                 type='text'
@@ -113,7 +113,7 @@ const AccountSetUp = () => {
           <div className='account-setup-input-container'>
             <ProgressBar step={step} />
             <p className='account-setup-input-title'>When is your birthday?</p>
-            <div className='flex justify-center items-center mb-8'>
+            <div className='flex justify-center items-center mt-11'>
               <input
                 className='py-1 border-b border-gray-500 text-lg text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
                 type='date'
@@ -138,48 +138,68 @@ const AccountSetUp = () => {
       }
       {step === 'gender' &&
         <div className='account-setup-container'>
-          <p className='text-lg'>What is your gender?</p>
-          <div className='w-full h-60 flex items-center justify-center'>
-            <div>
-              {data.genders.map(gender => (
-                <div className='flex items-center my-2' key={gender}>
+          <div className='account-setup-input-container'>
+            <ProgressBar step={step} />
+            <p className='account-setup-input-title'>What is your gender?</p>
+            <div className='flex items-center justify-center mt-11'>
+              <div>
+                {data.genders.map(gender => (
+                  <div className='flex items-center my-2' key={gender}>
+                    <input
+                      className='h-4 w-4 mr-1.5'
+                      type='radio'
+                      id={gender}
+                      name='gender'
+                      value={gender}
+                      checked={profileInput.gender === gender}
+                      onChange={handleInput}
+                    />
+                    <label htmlFor={gender}>{gender}</label>
+                  </div>
+                ))}
+                <div className='flex items-center my-2'>
                   <input
                     className='h-4 w-4 mr-1.5'
                     type='radio'
-                    id={gender}
+                    id='undisclosed'
                     name='gender'
-                    value={gender}
-                    checked={profileInput.gender === gender}
+                    value='undisclosed'
+                    checked={profileInput.gender === 'undisclosed'}
                     onChange={handleInput}
                   />
-                  <label htmlFor={gender}>{gender}</label>
+                  <label htmlFor='undisclosed'>Rather not say</label>
                 </div>
-              ))}
-              <div className='flex items-center my-2'>
-                <input
-                  className='h-4 w-4 mr-1.5'
-                  type='radio'
-                  id='undisclosed'
-                  name='gender'
-                  value='undisclosed'
-                  checked={profileInput.gender === 'undisclosed'}
-                  onChange={handleInput}
-                />
-                <label htmlFor='undisclosed'>Rather not say</label>
               </div>
             </div>
           </div>
           <div className='w-full flex max-w-xs'>
             <button className='secondary-btn mr-1' value='dob' onClick={changeStep}>Back</button>
-            <button className='primary-btn ml-1' value='interests' onClick={changeStep}>Next</button>
+            <button
+              className='primary-btn ml-1'
+              value='interests'
+              onClick={changeStep}
+            >
+              {profileInput.gender ? 'Next' : 'Skip'}
+            </button>
           </div>
         </div>
       }
       {step === 'interests' &&
-        <div id='account-setup'>
-          <InterestsInput profileInput={profileInput} setProfileInput={setProfileInput} />
-          <button value='gender' onClick={changeStep}>Back</button>
-          <button value='problemTopics' onClick={changeStep}>Next</button>
+        <div className='account-setup-container'>
+          <div className='account-setup-input-container'>
+            <ProgressBar step={step} />
+            <InterestsInput profileInput={profileInput} setProfileInput={setProfileInput} />
+          </div>
+          <div className='w-full flex max-w-xs'>
+            <button className='secondary-btn mr-1' value='gender' onClick={changeStep}>Back</button>
+            <button
+              className='primary-btn ml-1'
+              value='problemTopics'
+              onClick={changeStep}
+            >
+              {profileInput.interests.length > 0 ? 'Next' : 'Skip'}
+            </button>
+          </div>
         </div>
       }
       {step === 'problemTopics' &&

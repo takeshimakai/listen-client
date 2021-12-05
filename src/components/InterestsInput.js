@@ -11,10 +11,12 @@ const InterestsInput = ({ profileInput, setProfileInput }) => {
     const formatted = sanitized.charAt(0).toUpperCase() + sanitized.slice(1).toLowerCase();
 
     if (formatted && !profileInput.interests.includes(formatted)) {
-      setProfileInput(prev => ({
-        ...prev,
-        interests: prev.interests.concat(formatted)
-      }));
+      setProfileInput(prev => {
+        prev.interests.unshift(formatted);
+        return prev;
+      });
+
+      duplicate && setDuplicate();
       setInput('');
     } else {
       setDuplicate(formatted);
@@ -30,25 +32,43 @@ const InterestsInput = ({ profileInput, setProfileInput }) => {
   };
  
   return (
-    <div id='interests-input'>
-      <p>What are your interests?</p>
-      <input
-        type='text'
-        name='interests'
-        value={input}
-        onChange={handleInput}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            e.preventDefault();
-            document.querySelector('#add-btn').click();
-          }
-        }}
-      />
-      {duplicate && <p>{duplicate} has already been added.</p>}
-      <input id='add-btn' type='button' value='Add' disabled={!input} onClick={addInterest} />
-      <div id='interests-input-list'>
+    <div className='h-full flex flex-col'>
+      <p className='account-setup-input-title'>What are your interests?</p>
+      <div className='relative w-full mt-11'>
+        <input
+          className='text-center pr-10 w-full py-1 border-b border-gray-500 text-lg text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
+          type='text'
+          name='interests'
+          value={input}
+          onChange={handleInput}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              document.querySelector('#add-btn').click();
+            }
+          }}
+        />
+        <input
+          className='absolute w-8 inset-y-0 right-0 text-sm font-light bg-transparent cursor-pointer disabled:opacity-50'
+          id='add-btn'
+          type='button'
+          value='Add'
+          disabled={!input}
+          onClick={addInterest}
+        />
+      </div>
+      <div>
+        <p className='error-msg mt-1'>{duplicate && `${duplicate} has already been added.`}</p>
+      </div>
+      <div className='mt-4 overflow-auto'>
         {profileInput.interests.map(interest => (
-          <button type='button' value={interest} key={interest} onClick={removeInterest}>
+          <button
+            className='text-sm border-green-900 border-opacity-40 border rounded-full border-gray-500 py-0.5 px-2.5 m-1'
+            type='button'
+            value={interest}
+            key={interest}
+            onClick={removeInterest}
+          >
             {interest} &#x2715;
           </button>
         ))}

@@ -16,15 +16,15 @@
   }
 
   .account-setup-container {
-    @apply flex-grow flex flex-col items-center justify-between w-full mx-auto pb-12 px-12 sm:px-0;
+    @apply min-h-0 flex-grow flex flex-col items-center justify-between w-full mx-auto pb-12 px-12 sm:px-0;
   }
 
   .account-setup-input-container {
-    @apply relative bg-white shadow-xl rounded-lg w-full sm:max-w-lg text-center pb-10 pt-20 px-5 sm:px-10 my-auto;
+    @apply max-h-3/4 relative bg-white shadow-xl rounded-lg w-full sm:max-w-lg text-center pt-20 pb-10 px-5 sm:px-10 my-auto;
   }
 
   .account-setup-input-title {
-    @apply text-lg mb-20 font-light;
+    @apply text-lg font-light;
   }
 
   .progress-bar {

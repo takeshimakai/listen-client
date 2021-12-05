@@ -11,6 +11,10 @@ module.exports = {
       },
       height: {
         login: '22rem'
+      },
+      maxHeight: {
+        '1/2': '50%',
+        '3/4': '75%'
       }
     },
   },
