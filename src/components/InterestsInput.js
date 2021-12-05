@@ -27,7 +27,7 @@ const InterestsInput = ({ profileInput, setProfileInput }) => {
   const removeInterest = (e) => {
     setProfileInput(prev => ({
       ...prev,
-      interests: prev.interests.filter(interest => interest !== e.target.value)
+      interests: prev.interests.filter(interest => interest !== e.target.getAttribute('value'))
     }));
   };
  
@@ -61,17 +61,18 @@ const InterestsInput = ({ profileInput, setProfileInput }) => {
         <p className='error-msg mt-1'>{duplicate && `${duplicate} has already been added.`}</p>
       </div>
       <div className='mt-4 overflow-auto'>
-        {profileInput.interests.map(interest => (
-          <button
-            className='text-sm border-green-900 border-opacity-40 border rounded-full border-gray-500 py-0.5 px-2.5 m-1'
-            type='button'
-            value={interest}
-            key={interest}
-            onClick={removeInterest}
-          >
-            {interest} &#x2715;
-          </button>
-        ))}
+        <ul>
+          {profileInput.interests.map(interest => (
+            <li
+              className='inline-block text-sm border-green-900 border-opacity-40 border rounded-full border-gray-500 py-0.5 px-2.5 m-1'
+              value={interest}
+              key={interest}
+              onClick={removeInterest}
+            >
+              {interest} &#x2715;
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   )
