@@ -81,7 +81,7 @@ const LoginForm = ({ setIsLogin }) => {
         </button>
       </form>
       <div className='flex flex-col items-center mt-11'>
-        <p className='mb-1.5 text-xs text-gray-100'>Don't have an account?</p>
+        <p className='mb-1.5 text-xs text-white'>Don't have an account?</p>
         <button className='rounded-btn' onClick={() => setIsLogin(false)}>
           Create an account
         </button>
