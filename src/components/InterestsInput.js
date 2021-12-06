@@ -63,7 +63,7 @@ const InterestsInput = ({ profileInput, setProfileInput }) => {
       <ul className='mt-4 overflow-auto'>
         {profileInput.interests.map(interest => (
           <li
-            className='cursor-pointer inline-block text-sm border-green-900 border-opacity-40 border rounded-full border-gray-500 py-0.5 px-2.5 m-1'
+            className='cursor-pointer inline-block text-sm hover:text-white border-green-900 border-opacity-40 hover:border-opacity-0 border rounded-full py-0.5 px-2.5 m-1 hover:bg-green-900 hover:bg-opacity-40 active:bg-opacity-40 active:bg-opacity-40'
             value={interest}
             key={interest}
             onClick={removeInterest}

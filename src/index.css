@@ -60,11 +60,11 @@
   }
 
   .secondary-btn {
-    @apply max-w-xs w-full h-8 rounded-md cursor-pointer bg-gray-100 text-sm text-gray-600 hover:bg-gray-200 active:shadow-inner-2;
+    @apply max-w-xs w-full h-8 rounded-md cursor-pointer bg-white text-sm text-gray-600 hover:bg-gray-200 active:shadow-inner-2;
   }
 
   .rounded-btn {
-    @apply max-w-xs w-full h-8 rounded-full cursor-pointer text-gray-600 bg-gray-100 text-sm hover:bg-gray-200 active:shadow-inner-2;
+    @apply max-w-xs w-full h-8 rounded-full cursor-pointer text-gray-600 bg-white text-sm hover:bg-gray-200 active:shadow-inner-2;
   }
 
   .btn-icon {

@@ -22,7 +22,8 @@ module.exports = {
     extend: {
       boxShadow: ['active'],
       opacity: ['disabled'],
-      backgroundColor: ['disabled']
+      backgroundColor: ['disabled'],
+      borderWidth: ['hover']
     },
   },
   plugins: [],
