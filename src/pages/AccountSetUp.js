@@ -221,28 +221,53 @@ const AccountSetUp = () => {
         </div>
       }
       {step === 'confirm' &&
-        <div id='account-setup'>
-          <p>Username: {profileInput.username}</p>
-          <p>Date of birth: {profileInput.dob || 'undisclosed'}</p>
-          <p>Gender: {profileInput.gender || 'undisclosed'}</p>
-          <div>
-            <p>Interests: {profileInput.interests.length === 0 && 'undisclosed'}</p>
-            {profileInput.interests.length > 0 &&
-              <ul>
-                {profileInput.interests.map(interest => <li key={interest}>{interest}</li>)}
-              </ul>
-            }
+        <div className='account-setup-container'>
+          <div className='account-setup-input-container'>
+            <ProgressBar step={step} />
+            <div className='h-full flex flex-col'>
+              <p className='account-setup-input-title'>Please confirm your information.</p>
+              <div className='mt-11 space-y-0.5 overflow-auto'>
+                <div>
+                  <p className='account-setup-confirm-title'>Username</p>
+                  <p>{profileInput.username}</p>
+                </div>
+                <p className='separator'>&middot;</p>
+                <div>
+                  <p className='account-setup-confirm-title'>Date of birth</p>
+                  <p>{profileInput.dob || 'undisclosed'}</p>
+                </div>
+                <p className='separator'>&middot;</p>
+                <div>
+                  <p className='account-setup-confirm-title'>Gender</p>
+                  <p>{profileInput.gender || 'undisclosed'}</p>
+                </div>
+                <p className='separator'>&middot;</p>
+                <div>
+                  <p className='account-setup-confirm-title'>Interests</p>
+                  {profileInput.interests.length > 0
+                    ? <ul>
+                        {profileInput.interests.map(interest => <li key={interest}>{interest}</li>)}
+                      </ul>
+                    : <p>undisclosed</p>
+                  }
+                </div>
+                <p className='separator'>&middot;</p>
+                <div>
+                  <p className='account-setup-confirm-title'>Problem topics</p>
+                  {profileInput.problemTopics.length > 0
+                    ? <ul>
+                        {profileInput.problemTopics.map(topic => <li key={topic}>{topic}</li>)}
+                      </ul>
+                    : <p>undisclosed</p>
+                  }
+                </div>
+              </div>
+            </div>
           </div>
-          <div>
-            <p>Problem topics: {profileInput.problemTopics.length === 0 && 'undisclosed'}</p>
-            {profileInput.problemTopics.length > 0 &&
-              <ul>
-                {profileInput.problemTopics.map(topic => <li key={topic}>{topic}</li>)}
-              </ul>
-            }
+          <div className='w-full flex max-w-xs'>
+            <button className='secondary-btn mr-1' value='problemTopics' onClick={changeStep}>Back</button>
+            <button className='primary-btn ml-1' onClick={handleSubmit}>Save profile</button>
           </div>
-          <button value='problemTopics' onClick={changeStep}>Back</button>
-          <button onClick={handleSubmit}>Save profile</button>
         </div>
       }
     </div>
