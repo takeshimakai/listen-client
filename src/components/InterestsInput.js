@@ -60,20 +60,18 @@ const InterestsInput = ({ profileInput, setProfileInput }) => {
       <div>
         <p className='error-msg mt-1'>{duplicate && `${duplicate} has already been added.`}</p>
       </div>
-      <div className='mt-4 overflow-auto'>
-        <ul>
-          {profileInput.interests.map(interest => (
-            <li
-              className='inline-block text-sm border-green-900 border-opacity-40 border rounded-full border-gray-500 py-0.5 px-2.5 m-1'
-              value={interest}
-              key={interest}
-              onClick={removeInterest}
-            >
-              {interest} &#x2715;
-            </li>
-          ))}
-        </ul>
-      </div>
+      <ul className='mt-4 overflow-auto'>
+        {profileInput.interests.map(interest => (
+          <li
+            className='cursor-pointer inline-block text-sm border-green-900 border-opacity-40 border rounded-full border-gray-500 py-0.5 px-2.5 m-1'
+            value={interest}
+            key={interest}
+            onClick={removeInterest}
+          >
+            {interest} &#x2715;
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }

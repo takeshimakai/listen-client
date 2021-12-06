@@ -154,7 +154,7 @@ const AccountSetUp = () => {
                       checked={profileInput.gender === gender}
                       onChange={handleInput}
                     />
-                    <label htmlFor={gender}>{gender}</label>
+                    <label className='text-base' htmlFor={gender}>{gender}</label>
                   </div>
                 ))}
                 <div className='flex items-center my-2'>
@@ -167,7 +167,7 @@ const AccountSetUp = () => {
                     checked={profileInput.gender === 'undisclosed'}
                     onChange={handleInput}
                   />
-                  <label htmlFor='undisclosed'>Rather not say</label>
+                  <label className='text-base' htmlFor='undisclosed'>Rather not say</label>
                 </div>
               </div>
             </div>
@@ -203,10 +203,21 @@ const AccountSetUp = () => {
         </div>
       }
       {step === 'problemTopics' &&
-        <div id='account-setup'>
-          <ProblemTopicsInput profileInput={profileInput} setProfileInput={setProfileInput} />
-          <button value='interests' onClick={changeStep}>Back</button>
-          <button value='confirm' onClick={changeStep}>Next</button>
+        <div className='account-setup-container'>
+          <div className='account-setup-input-container'>
+            <ProgressBar step={step} />
+            <ProblemTopicsInput profileInput={profileInput} setProfileInput={setProfileInput} />
+          </div>
+          <div className='w-full flex max-w-xs'>
+            <button className='secondary-btn mr-1' value='interests' onClick={changeStep}>Back</button>
+            <button
+              className='primary-btn ml-1'
+              value='confirm'
+              onClick={changeStep}
+            >
+              {profileInput.problemTopics.length > 0 ? 'Next' : 'Skip'}
+            </button>
+          </div>
         </div>
       }
       {step === 'confirm' &&

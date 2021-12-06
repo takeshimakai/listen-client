@@ -16,21 +16,26 @@ const ProblemTopicsInput = ({ profileInput, setProfileInput }) => {
   };
 
   return (
-    <div id='problem-topics-input'>
-      <p>Please select all topics that are relevant to you:</p>
-      {data.categories.map(category => (
-        <div className='problem-topics-checkbox' key={category}>
-          <input
-            type='checkbox'
-            name='problemTopics'
-            id={category}
-            value={category}
-            checked={profileInput.problemTopics.includes(category)}
-            onChange={handleCheckbox}
-          />
-          <label htmlFor={category}>{category}</label>
-        </div>
-      ))}
+    <div className='h-full flex flex-col'>
+      <p className='account-setup-input-title'>Please select all relevant topics.</p>
+      <div className='mx-auto mt-11 overflow-auto'>
+        {data.categories.map(category => (
+          <div className='my-2 flex items-center' key={category}>
+            <input
+              className='h-4 w-4 mr-1.5'
+              type='checkbox'
+              name='problemTopics'
+              id={category}
+              value={category}
+              checked={profileInput.problemTopics.includes(category)}
+              onChange={handleCheckbox}
+            />
+            <label
+              className='text-base text-left leading-snug'
+              htmlFor={category}>{category}</label>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
