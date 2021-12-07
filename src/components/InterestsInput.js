@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const InterestsInput = ({ profileInput, setProfileInput }) => {
+const InterestsInput = ({ profileInput, setProfileInput, goNext }) => {
   const [input, setInput] = useState('');
   const [duplicate, setDuplicate] = useState();
 
@@ -12,8 +12,9 @@ const InterestsInput = ({ profileInput, setProfileInput }) => {
 
     if (formatted && !profileInput.interests.includes(formatted)) {
       setProfileInput(prev => {
-        prev.interests.unshift(formatted);
-        return prev;
+        const updated = { ...prev };
+        updated.interests.unshift(formatted);
+        return updated;
       });
 
       duplicate && setDuplicate();
@@ -42,9 +43,11 @@ const InterestsInput = ({ profileInput, setProfileInput }) => {
           value={input}
           onChange={handleInput}
           onKeyDown={(e) => {
-            if (e.key === 'Enter') {
+            if (e.key === 'Enter' && input) {
               e.preventDefault();
               document.querySelector('#add-btn').click();
+            } else {
+              goNext(e);
             }
           }}
         />

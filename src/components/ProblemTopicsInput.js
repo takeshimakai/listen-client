@@ -1,6 +1,6 @@
 import data from "../data/data";
 
-const ProblemTopicsInput = ({ profileInput, setProfileInput }) => {
+const ProblemTopicsInput = ({ profileInput, setProfileInput, goNext }) => {
   const handleCheckbox = (e) => {
     const { name, value } = e.target;
 
@@ -29,6 +29,7 @@ const ProblemTopicsInput = ({ profileInput, setProfileInput }) => {
               value={category}
               checked={profileInput.problemTopics.includes(category)}
               onChange={handleCheckbox}
+              onKeyDown={goNext}
             />
             <label
               className='text-base text-left leading-snug'
