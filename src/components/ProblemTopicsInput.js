@@ -1,20 +1,6 @@
 import data from "../data/data";
 
-const ProblemTopicsInput = ({ profileInput, setProfileInput, goNext }) => {
-  const handleCheckbox = (e) => {
-    const { name, value } = e.target;
-
-    profileInput[name].includes(value)
-      ? setProfileInput(prev => ({
-          ...prev,
-          [name]: prev[name].filter(prevVal => prevVal !== value)
-        }))
-      : setProfileInput(prev => ({
-          ...prev,
-          [name]: prev[name].concat(value)
-        }))
-  };
-
+const ProblemTopicsInput = ({ profileInput, handleInput, goNext }) => {
   return (
     <div className='h-full flex flex-col'>
       <p className='account-setup-input-title'>Please select all relevant topics.</p>
@@ -28,7 +14,7 @@ const ProblemTopicsInput = ({ profileInput, setProfileInput, goNext }) => {
               id={category}
               value={category}
               checked={profileInput.problemTopics.includes(category)}
-              onChange={handleCheckbox}
+              onChange={handleInput}
               onKeyDown={goNext}
             />
             <label

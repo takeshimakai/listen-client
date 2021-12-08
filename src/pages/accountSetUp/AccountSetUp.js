@@ -3,16 +3,14 @@ import { useHistory } from 'react-router-dom';
 
 import UserContext from '../../contexts/UserContext';
 
-import data from '../../data/data';
 import decodeToken from '../../utils/decodeToken';
-import setErrMsgs from '../../utils/setErrMsgs';
-import postData from '../../utils/postData';
-import getData from '../../utils/getData';
-import formatDate from '../../utils/formatDate';
 
-import InterestsInput from '../../components/InterestsInput';
-import ProblemTopicsInput from '../../components/ProblemTopicsInput';
-import ProgressBar from '../../components/ProgressBar';
+import UsernameInput from './UsernameInput';
+import DobInput from './DobInput';
+import GenderInput from './GenderInput';
+import InterestsInput from './InterestsInput';
+import ProblemTopicsInput from './ProblemTopicsInput';
+import ConfirmInput from './ConfirmInput';
 
 const AccountSetUp = () => {
   const history = useHistory();
@@ -61,37 +59,6 @@ const AccountSetUp = () => {
 
   const changeStep = (e) => setStep(e.target.value);
 
-  const handleSubmit = async () => {
-    try {
-      const res = await postData('/users', profileInput, token);
-      const data = await res.json();
-
-      if (!res.ok) {
-        return setError(setErrMsgs(data.errors));
-      }
-
-      setToken(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const usernameValidation = async () => {
-    try {
-      const res = await getData(`/users/username/${profileInput.username}`, token);
-
-      if (!res.ok) {
-        const data = await res.json();
-        return setError(setErrMsgs(data.errors));
-      }
-
-      setError();
-      setStep('dob');
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const goNext = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -106,196 +73,60 @@ const AccountSetUp = () => {
         <button className='font-light text-sm' onClick={() => setToken('')}>Sign out</button>
       </div>
       <div className='account-setup-container'>
-        <div className='account-setup-input-container'>
-          <ProgressBar step={step} />
-          {step === 'username' &&
-            <>
-              <p className='account-setup-input-title'>Please choose a username.</p>
-              <div className='flex flex-col justify-center items-center mt-11'>
-                <input
-                  className='text-center w-full py-1 border-b border-gray-500 text-lg text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
-                  type='text'
-                  name='username'
-                  value={profileInput.username}
-                  onChange={handleInput}
-                  onKeyDown={goNext}
-                />
-                <p className='text-xs mt-1 text-gray-500'>This field is required.</p>
-                <p className='error-msg mt-1'>{error && error.username}</p>
-              </div>
-            </>
-          }
-          {step === 'dob' &&
-            <>
-              <p className='account-setup-input-title'>When is your birthday?</p>
-              <div className='flex justify-center items-center mt-11'>
-                <input
-                  className='py-1 border-b border-gray-500 text-lg text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
-                  type='date'
-                  name='dob'
-                  max={formatDate(Date.now())}
-                  value={profileInput.dob}
-                  onChange={handleInput}
-                  onKeyDown={goNext}
-                />
-              </div>
-            </>
-          }
-          {step === 'gender' &&
-            <>
-              <p className='account-setup-input-title'>What is your gender?</p>
-              <div className='flex items-center justify-center mt-11'>
-                <div>
-                  {data.genders.map(gender => (
-                    <div className='flex items-center my-2' key={gender}>
-                      <input
-                        className='h-4 w-4 mr-1.5'
-                        type='radio'
-                        id={gender}
-                        name='gender'
-                        value={gender}
-                        checked={profileInput.gender === gender}
-                        onChange={handleInput}
-                        onKeyDown={goNext}
-                      />
-                      <label className='text-base' htmlFor={gender}>{gender}</label>
-                    </div>
-                  ))}
-                  <div className='flex items-center my-2'>
-                    <input
-                      className='h-4 w-4 mr-1.5'
-                      type='radio'
-                      id='undisclosed'
-                      name='gender'
-                      value='undisclosed'
-                      checked={profileInput.gender === 'undisclosed'}
-                      onChange={handleInput}
-                      onKeyDown={goNext}
-                    />
-                    <label className='text-base' htmlFor='undisclosed'>Rather not say</label>
-                  </div>
-                </div>
-              </div>
-            </>
-          }
-          {step === 'interests' &&
-            <InterestsInput profileInput={profileInput} setProfileInput={setProfileInput} goNext={goNext} />
-          }
-          {step === 'problemTopics' &&
-            <ProblemTopicsInput profileInput={profileInput} setProfileInput={setProfileInput} goNext={goNext} />
-          }
-          {step === 'confirm' &&
-            <div className='h-full flex flex-col'>
-              <p className='account-setup-input-title'>Please confirm your information.</p>
-              <div className='mt-11 space-y-0.5 overflow-auto'>
-                <div>
-                  <p className='account-setup-confirm-title'>Username</p>
-                  <p>{profileInput.username}</p>
-                </div>
-                <p className='separator'>&middot;</p>
-                <div>
-                  <p className='account-setup-confirm-title'>Date of birth</p>
-                  <p>{profileInput.dob || 'undisclosed'}</p>
-                </div>
-                <p className='separator'>&middot;</p>
-                <div>
-                  <p className='account-setup-confirm-title'>Gender</p>
-                  <p>{profileInput.gender || 'undisclosed'}</p>
-                </div>
-                <p className='separator'>&middot;</p>
-                <div>
-                  <p className='account-setup-confirm-title'>Interests</p>
-                  {profileInput.interests.length > 0
-                    ? <ul>
-                        {profileInput.interests.map(interest => <li key={interest}>{interest}</li>)}
-                      </ul>
-                    : <p>undisclosed</p>
-                  }
-                </div>
-                <p className='separator'>&middot;</p>
-                <div>
-                  <p className='account-setup-confirm-title'>Problem topics</p>
-                  {profileInput.problemTopics.length > 0
-                    ? <ul>
-                        {profileInput.problemTopics.map(topic => <li key={topic}>{topic}</li>)}
-                      </ul>
-                    : <p>undisclosed</p>
-                  }
-                </div>
-              </div>
-            </div>
-          }
-        </div>
-        {step === 'username'
-          ? <button
-              className='primary-btn disabled:opacity-50 disabled:bg-green-700'
-              id='next-btn'
-              value='dob'
-              disabled={!profileInput.username}
-              onClick={usernameValidation}
-            >
-              Next
-            </button>
-          : <div className='w-full flex max-w-xs'>
-              {step === 'dob' &&
-                <>
-                  <button className='secondary-btn mr-1' value='username' onClick={changeStep}>Back</button>
-                  <button
-                    className='primary-btn ml-1'
-                    id='next-btn'
-                    value='gender'
-                    onClick={changeStep}
-                  >
-                    {profileInput.dob ? 'Next' : 'Skip'}
-                  </button>
-                </>
-              }
-              {step === 'gender' &&
-                <>
-                  <button className='secondary-btn mr-1' value='dob' onClick={changeStep}>Back</button>
-                  <button
-                    className='primary-btn ml-1'
-                    id='next-btn'
-                    value='interests'
-                    onClick={changeStep}
-                  >
-                    {profileInput.gender ? 'Next' : 'Skip'}
-                  </button>
-                </>
-              }
-              {step === 'interests' &&
-                <>
-                  <button className='secondary-btn mr-1' value='gender' onClick={changeStep}>Back</button>
-                  <button
-                    className='primary-btn ml-1'
-                    id='next-btn'
-                    value='problemTopics'
-                    onClick={changeStep}
-                  >
-                    {profileInput.interests.length > 0 ? 'Next' : 'Skip'}
-                  </button>
-                </>
-              }
-              {step === 'problemTopics' &&
-                <>
-                  <button className='secondary-btn mr-1' value='interests' onClick={changeStep}>Back</button>
-                  <button
-                    className='primary-btn ml-1'
-                    id='next-btn'
-                    value='confirm'
-                    onClick={changeStep}
-                  >
-                    {profileInput.problemTopics.length > 0 ? 'Next' : 'Skip'}
-                  </button>
-                </>
-              }
-              {step === 'confirm' &&
-                <>
-                  <button className='secondary-btn mr-1' value='problemTopics' onClick={changeStep}>Back</button>
-                  <button className='primary-btn ml-1' onClick={handleSubmit}>Save profile</button>
-                </>
-              }
-            </div>
+        {step === 'username' &&
+          <UsernameInput
+            profileInput={profileInput}
+            handleInput={handleInput}
+            goNext={goNext}
+            error={error}
+            setError={setError}
+            step={step}
+            setStep={setStep}
+          />
+        }
+        {step === 'dob' &&
+          <DobInput
+            profileInput={profileInput}
+            handleInput={handleInput}
+            goNext={goNext}
+            step={step}
+            changeStep={changeStep}
+          />
+        }
+        {step === 'gender' &&
+          <GenderInput
+            profileInput={profileInput}
+            handleInput={handleInput}
+            goNext={goNext}
+            step={step}
+            changeStep={changeStep}
+          />
+        }
+        {step === 'interests' &&
+          <InterestsInput
+            profileInput={profileInput}
+            setProfileInput={setProfileInput}
+            goNext={goNext}
+            step={step}
+            changeStep={changeStep}
+          />
+        }
+        {step === 'problemTopics' &&
+          <ProblemTopicsInput
+            profileInput={profileInput}
+            handleInput={handleInput}
+            goNext={goNext}
+            step={step}
+            changeStep={changeStep}
+          />
+        }
+        {step === 'confirm' &&
+          <ConfirmInput
+            profileInput={profileInput}
+            step={step}
+            changeStep={changeStep}
+            setError={setError}
+          />
         }
       </div>
     </div>
