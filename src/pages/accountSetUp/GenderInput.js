@@ -2,7 +2,15 @@ import data from "../../data/data";
 
 import ProgressBar from "../../components/ProgressBar";
 
-const GenderInput = ({ profileInput, handleInput, goNext, step, changeStep }) => {
+const GenderInput = ({
+  profileInput,
+  handleInput,
+  goNext,
+  step,
+  changeStep,
+  moreInfo,
+  setMoreInfo
+}) => {
   return (
     <>
       <div className='account-setup-input-container'>
@@ -40,6 +48,9 @@ const GenderInput = ({ profileInput, handleInput, goNext, step, changeStep }) =>
             </div>
           </div>
         </div>
+        <p className='account-setup-moreinfo' onClick={() => setMoreInfo(!moreInfo)}>
+          What's this for?
+        </p>
       </div>
       <div className='w-full flex max-w-xs'>
         <button className='secondary-btn mr-1' value='dob' onClick={changeStep}>Back</button>

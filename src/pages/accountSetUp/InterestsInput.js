@@ -2,7 +2,15 @@ import { useState } from "react";
 
 import ProgressBar from "../../components/ProgressBar";
 
-const InterestsInput = ({ profileInput, setProfileInput, goNext, step, changeStep }) => {
+const InterestsInput = ({
+  profileInput,
+  setProfileInput,
+  goNext,
+  step,
+  changeStep,
+  moreInfo,
+  setMoreInfo
+}) => {
   const [input, setInput] = useState('');
   const [duplicate, setDuplicate] = useState();
 
@@ -81,6 +89,9 @@ const InterestsInput = ({ profileInput, setProfileInput, goNext, step, changeSte
             ))}
           </ul>
         </div>
+        <p className='account-setup-moreinfo' onClick={() => setMoreInfo(!moreInfo)}>
+          What's this for?
+        </p>
       </div>
       <div className='w-full flex max-w-xs'>
         <button className='secondary-btn mr-1' value='gender' onClick={changeStep}>Back</button>

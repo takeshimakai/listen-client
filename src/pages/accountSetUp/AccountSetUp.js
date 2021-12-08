@@ -11,11 +11,13 @@ import GenderInput from './GenderInput';
 import InterestsInput from './InterestsInput';
 import ProblemTopicsInput from './ProblemTopicsInput';
 import ConfirmInput from './ConfirmInput';
+import MoreInfo from './MoreInfo';
 
 const AccountSetUp = () => {
   const history = useHistory();
   const { token, setToken } = useContext(UserContext);
 
+  const [moreInfo, setMoreInfo] = useState(false);
   const [error, setError] = useState();
   const [step, setStep] = useState('username');
   const [profileInput, setProfileInput] = useState({
@@ -91,6 +93,8 @@ const AccountSetUp = () => {
             goNext={goNext}
             step={step}
             changeStep={changeStep}
+            moreInfo={moreInfo}
+            setMoreInfo={setMoreInfo}
           />
         }
         {step === 'gender' &&
@@ -100,6 +104,8 @@ const AccountSetUp = () => {
             goNext={goNext}
             step={step}
             changeStep={changeStep}
+            moreInfo={moreInfo}
+            setMoreInfo={setMoreInfo}
           />
         }
         {step === 'interests' &&
@@ -109,6 +115,8 @@ const AccountSetUp = () => {
             goNext={goNext}
             step={step}
             changeStep={changeStep}
+            moreInfo={moreInfo}
+            setMoreInfo={setMoreInfo}
           />
         }
         {step === 'problemTopics' &&
@@ -118,6 +126,8 @@ const AccountSetUp = () => {
             goNext={goNext}
             step={step}
             changeStep={changeStep}
+            moreInfo={moreInfo}
+            setMoreInfo={setMoreInfo}
           />
         }
         {step === 'confirm' &&
@@ -129,6 +139,7 @@ const AccountSetUp = () => {
           />
         }
       </div>
+      {moreInfo && <MoreInfo moreInfo={moreInfo} setMoreInfo={setMoreInfo} />}
     </div>
   )
 }

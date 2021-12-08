@@ -2,7 +2,15 @@ import formatDate from "../../utils/formatDate";
 
 import ProgressBar from "../../components/ProgressBar";
 
-const DobInput = ({ profileInput, handleInput, goNext, step, changeStep }) => {
+const DobInput = ({
+  profileInput,
+  handleInput,
+  goNext,
+  step,
+  changeStep,
+  moreInfo,
+  setMoreInfo
+}) => {
   return (
     <>
       <div className='account-setup-input-container'>
@@ -19,6 +27,9 @@ const DobInput = ({ profileInput, handleInput, goNext, step, changeStep }) => {
             onKeyDown={goNext}
           />
         </div>
+        <p className='account-setup-moreinfo' onClick={() => setMoreInfo(!moreInfo)}>
+          What's this for?
+        </p>
       </div>
       <div className='w-full flex max-w-xs'>
         <button
