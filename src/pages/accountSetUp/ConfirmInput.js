@@ -31,7 +31,8 @@ const ConfirmInput = ({ profileInput, step, changeStep, setError }) => {
         <ProgressBar step={step} />
         <div className='h-full flex flex-col'>
           <p className='account-setup-input-title'>Please confirm your information.</p>
-          <div className='mt-11 space-y-0.5 overflow-auto'>
+          <p className='account-setup-input-title'>The username can't be changed once saved.</p>
+          <div className='mt-10 space-y-0.5 overflow-auto'>
             <div>
               <p className='account-setup-confirm-title'>Username</p>
               <p>{profileInput.username}</p>

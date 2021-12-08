@@ -8,7 +8,7 @@ const DobInput = ({ profileInput, handleInput, goNext, step, changeStep }) => {
       <div className='account-setup-input-container'>
         <ProgressBar step={step} />
         <p className='account-setup-input-title'>When is your birthday?</p>
-        <div className='flex justify-center items-center mt-11'>
+        <div className='flex justify-center items-center mt-10'>
           <input
             className='py-1 border-b border-gray-500 text-lg text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
             type='date'

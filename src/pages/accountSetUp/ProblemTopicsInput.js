@@ -9,7 +9,7 @@ const ProblemTopicsInput = ({ profileInput, handleInput, goNext, step, changeSte
         <ProgressBar step={step} />
         <div className='h-full flex flex-col'>
           <p className='account-setup-input-title'>Please select all relevant topics.</p>
-          <div className='mx-auto mt-11 overflow-auto'>
+          <div className='mx-auto mt-10 overflow-auto'>
             {data.categories.map(category => (
               <div className='my-2 flex items-center' key={category}>
                 <input

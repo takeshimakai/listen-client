@@ -8,7 +8,7 @@ const GenderInput = ({ profileInput, handleInput, goNext, step, changeStep }) =>
       <div className='account-setup-input-container'>
         <ProgressBar step={step} />
         <p className='account-setup-input-title'>What is your gender?</p>
-        <div className='flex items-center justify-center mt-11'>
+        <div className='flex items-center justify-center mt-10'>
           <div>
             {data.genders.map(gender => (
               <div className='flex items-center my-2' key={gender}>

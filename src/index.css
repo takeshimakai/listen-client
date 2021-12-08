@@ -20,11 +20,11 @@
   }
 
   .account-setup-input-container {
-    @apply max-h-3/4 relative bg-white shadow-xl rounded-lg w-full sm:max-w-lg text-center pt-20 pb-10 px-5 sm:px-10 my-auto;
+    @apply max-h-3/4 relative bg-white shadow-xl rounded-lg w-full sm:max-w-lg text-center pt-14 pb-10 px-5 sm:px-10 my-auto;
   }
 
   .account-setup-input-title {
-    @apply text-lg font-light;
+    @apply text-base font-light;
   }
 
   .account-setup-confirm-title {

@@ -40,7 +40,7 @@ const InterestsInput = ({ profileInput, setProfileInput, goNext, step, changeSte
         <ProgressBar step={step} />
         <div className='h-full flex flex-col'>
           <p className='account-setup-input-title'>What are your interests?</p>
-          <div className='relative w-full mt-11'>
+          <div className='relative w-full mt-10'>
             <input
               className='text-center pr-10 w-full py-1 border-b border-gray-500 text-lg text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
               type='text'
