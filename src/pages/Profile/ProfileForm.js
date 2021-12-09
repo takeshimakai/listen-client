@@ -9,7 +9,6 @@ import formatDate from "../../utils/formatDate";
 
 import InterestsInput from "../../components/InterestsInput";
 import ProblemTopicsInput from "../../components/ProblemTopicsInput";
-import HiddenFieldsInput from "../../components/HiddenFieldsInput";
 
 const ProfileForm = ({ profile, setProfile }) => {
   const history = useHistory();
@@ -97,9 +96,6 @@ const ProfileForm = ({ profile, setProfile }) => {
         </div>
         <div id='profile-form-problem-topics'>
           <ProblemTopicsInput profileInput={profileInput} setProfileInput={setProfileInput} />
-        </div>
-        <div id='profile-form-hidden'>
-          <HiddenFieldsInput profileInput={profileInput} setProfileInput={setProfileInput} />
         </div>
         <input type='button' value='Cancel' onClick={() => history.goBack()} />
         <input type='submit' value='Save' />

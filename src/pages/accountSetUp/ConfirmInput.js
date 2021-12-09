@@ -5,7 +5,7 @@ import UserContext from "../../contexts/UserContext";
 import postData from "../../utils/postData";
 import setErrMsgs from "../../utils/setErrMsgs";
 
-import ProgressBar from "../../components/ProgressBar";
+import ProgressBar from "./ProgressBar";
 
 const ConfirmInput = ({ profileInput, step, changeStep, setError }) => {
   const { token, setToken } = useContext(UserContext);

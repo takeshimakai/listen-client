@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { Redirect, useHistory } from 'react-router-dom';
 
-import UserContext from "../contexts/UserContext";
+import UserContext from "../../contexts/UserContext";
 
-import postData from "../utils/postData";
-import putData from '../utils/putData';
-import deleteData from "../utils/deleteData";
-import setErrMsgs from '../utils/setErrMsgs';
+import postData from "../../utils/postData";
+import putData from '../../utils/putData';
+import deleteData from "../../utils/deleteData";
+import setErrMsgs from '../../utils/setErrMsgs';
 
-import data from '../data/data';
+import data from '../../data/data';
 
 const PostForm = ({ setPosts, post, setComments }) => {
   const history = useHistory();

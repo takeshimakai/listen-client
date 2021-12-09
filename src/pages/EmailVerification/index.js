@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import UserContext from '../contexts/UserContext';
+import UserContext from '../../contexts/UserContext';
 
-import postData from '../utils/postData';
-import decodeToken from '../utils/decodeToken';
+import postData from '../../utils/postData';
+import decodeToken from '../../utils/decodeToken';
 
 const EmailVerification = () => {
   const history = useHistory();

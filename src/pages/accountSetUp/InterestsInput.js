@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import ProgressBar from "../../components/ProgressBar";
+import ProgressBar from "./ProgressBar";
 
 const InterestsInput = ({
   profileInput,

@@ -1,17 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams, useRouteMatch, Switch, Route, Link } from 'react-router-dom';
 
-import UserContext from "../contexts/UserContext";
+import UserContext from "../../contexts/UserContext";
 
-import getData from '../utils/getData';
-import putData from "../utils/putData";
-import formatDate from "../utils/formatDate";
-import convertArrToStr from "../utils/convertArrToStr";
+import getData from '../../utils/getData';
+import putData from "../../utils/putData";
+import formatDate from "../../utils/formatDate";
+import convertArrToStr from "../../utils/convertArrToStr";
 
-import Comments from '../components/Comments';
-import PostForm from "./PostForm";
-import CommentForm from "../components/CommentForm";
-import CommentMenu from "../components/CommentMenu";
+import Comments from './Comments';
+import PostForm from "../PostForm";
+import CommentForm from "./CommentForm";
+import CommentMenu from "./CommentMenu";
 
 const Post = ({ posts, setPosts }) => {
   const match = useRouteMatch();

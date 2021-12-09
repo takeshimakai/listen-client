@@ -1,13 +1,13 @@
 import { useState, useEffect, useContext } from "react";
 import { Switch, Route, useRouteMatch, Link, useParams } from 'react-router-dom';
 
-import UserContext from "../contexts/UserContext";
+import UserContext from "../../contexts/UserContext";
 
-import getData from '../utils/getData';
-import decodeToken from "../utils/decodeToken";
-import formatDate from "../utils/formatDate";
+import getData from '../../utils/getData';
+import decodeToken from "../../utils/decodeToken";
+import formatDate from "../../utils/formatDate";
 
-import ProfileForm from "./dashboard/ProfileForm";
+import ProfileForm from "./ProfileForm";
 
 const Profile = () => {
   const match = useRouteMatch();

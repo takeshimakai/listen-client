@@ -1,6 +1,6 @@
 import formatDate from "../../utils/formatDate";
 
-import ProgressBar from "../../components/ProgressBar";
+import ProgressBar from "./ProgressBar";
 
 const DobInput = ({
   profileInput,

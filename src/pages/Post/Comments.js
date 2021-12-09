@@ -1,6 +1,6 @@
 import Comment from "./Comment";
 
-import sortData from '../utils/sortData';
+import sortData from '../../utils/sortData';
 
 const Comments = ({
   parentId,

@@ -9,8 +9,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 import GoogleOAuthSuccess from './pages/GoogleOAuthSuccess';
 import Forum from './pages/Forum';
 import Profile from './pages/Profile';
-import Dashboard from './pages/dashboard/Dashboard';
-import AccountSetUp from './pages/accountSetUp/AccountSetUp';
+import Dashboard from './pages/Dashboard';
+import AccountSetUp from './pages/AccountSetUp';
 import Home from './pages/Home';
 import EmailVerification from './pages/EmailVerification';
 

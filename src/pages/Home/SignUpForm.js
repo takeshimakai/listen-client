@@ -1,10 +1,10 @@
 import { useState, useContext } from 'react';
 
-import UserContext from '../contexts/UserContext';
+import UserContext from '../../contexts/UserContext';
 
-import postData from '../utils/postData';
-import setErrMsgs from '../utils/setErrMsgs';
-import googleIcon from '../assets/G.png';
+import postData from '../../utils/postData';
+import setErrMsgs from '../../utils/setErrMsgs';
+import googleIcon from '../../assets/G.png';
 
 const SignUpForm = ({ setIsLogin }) => {
   const { setToken } = useContext(UserContext);

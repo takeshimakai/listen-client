@@ -5,7 +5,7 @@ import UserContext from "../../contexts/UserContext";
 import getData from "../../utils/getData";
 import setErrMsgs from "../../utils/setErrMsgs";
 
-import ProgressBar from "../../components/ProgressBar";
+import ProgressBar from "./ProgressBar";
 
 const UsernameInput = ({
   profileInput,

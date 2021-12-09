@@ -1,15 +1,15 @@
 import { useState, useEffect, useContext } from 'react';
 import { Switch, Route, Link, useRouteMatch } from 'react-router-dom';
 
-import UserContext from '../contexts/UserContext';
+import UserContext from '../../contexts/UserContext';
 
-import getData from '../utils/getData';
-import sortData from '../utils/sortData';
+import getData from '../../utils/getData';
+import sortData from '../../utils/sortData';
 
-import PostPreview from '../components/PostPreview';
-import Post from '../pages/Post';
-import PostForm from './PostForm';
-import ForumMenu from '../components/ForumMenu';
+import PostPreview from './PostPreview';
+import Post from '../Post';
+import PostForm from '../PostForm';
+import ForumMenu from './ForumMenu';
 
 const Forum = () => {
   const match = useRouteMatch();

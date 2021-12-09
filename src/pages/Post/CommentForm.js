@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import UserContext from '../contexts/UserContext';
+import UserContext from '../../contexts/UserContext';
 
-import postData from '../utils/postData';
-import putData from '../utils/putData';
-import setErrMsgs from '../utils/setErrMsgs';
+import postData from '../../utils/postData';
+import putData from '../../utils/putData';
+import setErrMsgs from '../../utils/setErrMsgs';
 
 const CommentForm = ({
   comment,

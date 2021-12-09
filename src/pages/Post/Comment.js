@@ -1,13 +1,13 @@
 import { useContext, useState } from "react";
 
-import UserContext from "../contexts/UserContext";
+import UserContext from "../../contexts/UserContext";
 
 import Comments from "./Comments";
 import CommentForm from "./CommentForm";
 
-import formatDate from "../utils/formatDate";
-import putData from "../utils/putData";
-import deleteData from "../utils/deleteData";
+import formatDate from "../../utils/formatDate";
+import putData from "../../utils/putData";
+import deleteData from "../../utils/deleteData";
 
 const Comment = ({
   user,

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import data from '../data/data';
+import data from '../../data/data';
 
 const ForumMenu = ({ sortBy, setSortBy, filters, setFilters }) => {
   const [filterInput, setFilterInput] = useState([]);

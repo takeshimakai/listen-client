@@ -1,6 +1,6 @@
 import data from "../../data/data";
 
-import ProgressBar from "../../components/ProgressBar";
+import ProgressBar from "./ProgressBar";
 
 const GenderInput = ({
   profileInput,
