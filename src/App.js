@@ -16,21 +16,22 @@ import EmailVerification from './pages/EmailVerification';
 
 const App = () => {
   const [token, setToken] = useState(JSON.parse(localStorage.getItem('token')));
-  const [accountInitialized, setAccountInitialized] = useState(false);
+  const [emailVerified, setEmailVerified] = useState(false);
+  const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('token', JSON.stringify(token));
 
     if (token) {
       const { verified, username } = decodeToken(token);
-
-      verified && username && setAccountInitialized(true);
+      verified && setEmailVerified(true);
+      verified && username && setInitialized(true);
     }
   }, [token]);
 
   return (
-    <div className="w-screen h-screen bg-green-900 bg-opacity-20">
-      {accountInitialized &&
+    <div className={`w-screen h-screen ${emailVerified && 'bg-green-900 bg-opacity-20'}`}>
+      {initialized &&
         <div>
           <h1 className='logo-main'>listen</h1>
         </div>

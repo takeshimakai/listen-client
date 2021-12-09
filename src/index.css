@@ -56,11 +56,11 @@
   }
 
   .error-msg {
-    @apply text-red-600 text-xs h-4;
+    @apply text-red-600 text-xs h-4 mt-1;
   }
 
   .primary-btn {
-    @apply max-w-xs w-full h-8 rounded-md cursor-pointer bg-green-700 text-gray-100 text-sm hover:bg-green-800 active:shadow-inner-2;
+    @apply max-w-xs w-full h-8 rounded-md cursor-pointer bg-green-700 text-sm text-white hover:bg-green-800 active:shadow-inner-2;
   }
 
   .secondary-btn {

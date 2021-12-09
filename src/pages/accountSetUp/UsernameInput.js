@@ -49,7 +49,7 @@ const UsernameInput = ({
             onKeyDown={goNext}
           />
           <p className='text-xs mt-1 text-gray-500'>This field is required.</p>
-          <p className='error-msg mt-1'>{error && error.username}</p>
+          <p className='error-msg'>{error && error.username}</p>
         </div>
       </div>
       <button

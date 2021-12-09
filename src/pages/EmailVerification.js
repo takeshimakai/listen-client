@@ -77,13 +77,22 @@ const EmailVerification = () => {
   };
 
   return (
-    <div className='w-full h-full sm:flex sm:items-center overflow-auto'>
+    <div className='w-full h-full flex flex-col sm:flex-row sm:items-center overflow-auto'>
       <div className='bg-image' />
+      <button
+        className='absolute z-20 right-4 top-2 font-light text-sm'
+        onClick={() => setToken('')}
+      >
+        Sign out
+      </button>
       <div className='relative flex items-center justify-center sm:justify-end h-2/6 sm:h-auto z-10 sm:flex-1 sm:mr-14'>
         <h1 className='logo-main'>listen</h1>
       </div>
-      <div className='relative z-10 px-12 sm:px-0 sm:flex-1 sm:ml-14'>
-        <form className='max-w-xs mx-auto sm:mx-0 flex flex-col items-center justify-between h-64' onSubmit={handleSubmit}>
+      <div className='relative z-10 px-12 sm:px-0 flex-1 sm:ml-14'>
+        <form
+          className='max-w-xs mx-auto sm:mx-0 flex flex-col items-center justify-between h-full sm:h-80 pb-12 sm:pb-0'
+          onSubmit={handleSubmit}
+        >
           <div className='text-center'>
             <p>
               An email has been sent with a four digit verification code.
@@ -91,23 +100,28 @@ const EmailVerification = () => {
             <p className='mt-2'>
               Please enter it below.
             </p>
+            <div className='w-full text-center mt-8'>
+              {input.map((el, i) => (
+                <input
+                  className='num-input border border-gray-400 rounded-md text-gray-900 text-xl text-center h-12 w-10 mx-1'
+                  key={i}
+                  type='number'
+                  data-index={i}
+                  value={el}
+                  max='9'
+                  min='0'
+                  onChange={handleChange}
+                />
+              ))}
+              <p className='error-msg'>{error && error}</p>
+            </div>
           </div>
-          <div className='w-full text-center'>
-            {input.map((el, i) => (
-              <input
-                className='num-input border border-gray-400 rounded-md text-gray-900 text-xl text-center h-12 w-10 mx-1'
-                key={i}
-                type='number'
-                data-index={i}
-                value={el}
-                max='9'
-                min='0'
-                onChange={handleChange}
-              />
-            ))}
-            <p className='error-msg'>{error && error}</p>
+          <div className='w-full text-center space-y-4'>
+            <p className='text-white sm:text-black text-sm'>
+              Didn't receive it? <span className='text-blue-700 hover:text-blue-900 cursor-pointer'>Send it again.</span>
+            </p>
+            <input className='primary-btn' type='submit' value='Verify' />
           </div>
-          <input className='primary-btn' type='submit' value='Verify' />
         </form>
       </div>
     </div>
