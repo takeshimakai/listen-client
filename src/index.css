@@ -11,6 +11,10 @@
     @apply text-gray-800 font-serif text-6xl sm:text-8xl;
   }
 
+  .logo-sm {
+    @apply text-gray-800 font-serif text-2xl;
+  }
+
   .auth-container {
     @apply flex flex-col justify-between mb-10 sm:mb-0 sm:w-64;
   }
