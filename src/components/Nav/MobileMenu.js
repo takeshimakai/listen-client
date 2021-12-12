@@ -28,7 +28,7 @@ const MobileMenu = () => {
     const icon = document.querySelector('#mobile-menu-icon');
     const logo = document.querySelector('#logo');
 
-    if (isVisible && ![menu, icon, logo].includes(e.target)) {
+    if (isVisible && ![menu, icon, logo, ...menu.children].includes(e.target)) {
       setIsVisible(false);
     }
   };
@@ -43,23 +43,23 @@ const MobileMenu = () => {
         className='hidden w-full absolute flex flex-col items-center bg-white left-0 top-0 pt-16 pb-10 space-y-10'
       >
         <div id='mobile-app-menu' className='flex flex-col items-center space-y-2'>
-          <Link to='/dashboard' className='font-light w-max'>Dashboard</Link>
-          <Link to='/listen' className='font-light w-max'>Listen</Link>
-          <Link to='/talk' className='font-light w-max'>Talk</Link>
-          <Link to='/forum' className='font-light w-max'>Forum</Link>
+          <Link to='/dashboard' className='font-light'>Dashboard</Link>
+          <Link to='/listen' className='font-light'>Listen</Link>
+          <Link to='/talk' className='font-light'>Talk</Link>
+          <Link to='/forum' className='font-light'>Forum</Link>
         </div>
         <div id='mobile-user-menu' className='space-y-2 flex flex-col items-center'>
-          <Link to='/dashboard/profile' className='block font-light w-max'>
+          <Link to='/dashboard/profile' className='font-light'>
             Profile
           </Link>
-          <Link to='/dashboard/friends' className='block font-light w-max'>
+          <Link to='/dashboard/friends' className='font-light'>
             Friends
           </Link>
-          <Link to='/dashboard/forum-activity' className='block font-light w-max'>
+          <Link to='/dashboard/forum-activity' className='font-light'>
             Forum Activity
           </Link>
         </div>
-        <button className='block font-light w-max' onClick={() => setToken('')}>
+        <button className='font-light' onClick={() => setToken('')}>
           Sign out
         </button>
       </div>
