@@ -9,6 +9,16 @@ const MobileMenu = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    const closeOutside = (e) => {
+      const menu = document.querySelector('#mobile-menu');
+      const icon = document.querySelector('#mobile-menu-icon');
+      const logo = document.querySelector('#logo');
+  
+      if (isVisible && ![menu, icon, logo, ...menu.children].includes(e.target)) {
+        setIsVisible(false);
+      }
+    };
+    
     window.addEventListener('click', closeOutside);
     return () => window.removeEventListener('click', closeOutside);
   });
@@ -23,19 +33,9 @@ const MobileMenu = () => {
 
   const toggleMenu = () => setIsVisible(!isVisible);
 
-  const closeOutside = (e) => {
-    const menu = document.querySelector('#mobile-menu');
-    const icon = document.querySelector('#mobile-menu-icon');
-    const logo = document.querySelector('#logo');
-
-    if (isVisible && ![menu, icon, logo, ...menu.children].includes(e.target)) {
-      setIsVisible(false);
-    }
-  };
-
   return (
     <>
-      <button id='mobile-menu-icon' className='z-10 sm:hidden text-xl text-gray-600' onClick={toggleMenu}>
+      <button id='mobile-menu-icon' className='z-10 text-xl text-gray-600' onClick={toggleMenu}>
         {isVisible ? <span>&#x2715;</span> : <span>&#9776;</span>}
       </button>
       <div
