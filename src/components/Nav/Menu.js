@@ -36,7 +36,7 @@ const Menu = () => {
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   return (
-    <>
+    <div className='flex space-x-8'>
       <div className='flex items-center space-x-8'>
         <Link to='/dashboard' className='font-light text-sm'>Dashboard</Link>
         <Link to='/listen' className='font-light text-sm'>Listen</Link>
@@ -52,7 +52,7 @@ const Menu = () => {
       </button>
       <div
         id='user-menu'
-        className='hidden absolute top-11 right-4 h-48 flex flex-col justify-between bg-white p-6 rounded-md'
+        className='hidden absolute top-11 right-4 h-48 flex flex-col justify-between bg-white p-6 rounded-md shadow-lg'
       >
         <div className='flex flex-col space-y-2'>
           <Link to='/dashboard/profile' className='font-light text-sm w-max'>
@@ -69,7 +69,7 @@ const Menu = () => {
           Sign out
         </button>
       </div>
-    </>
+    </div>
   )
 }
 
