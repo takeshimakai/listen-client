@@ -69,7 +69,7 @@ const AccountSetUp = () => {
   };
 
   return (
-    <div className='h-full flex flex-col'>
+    <div className='h-screen flex flex-col'>
       <div className='flex justify-between py-2 px-4'>
         <h1 className='logo-sm'>listen</h1>
         <button className='font-light text-sm' onClick={() => setToken('')}>Sign out</button>

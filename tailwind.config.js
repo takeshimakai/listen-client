@@ -10,11 +10,14 @@ module.exports = {
         'inner-2': 'inset 0 2px 2px 0 rgba(0, 0, 0, 0.5)'
       },
       height: {
-        login: '22rem'
+        88: '22rem'
       },
       maxHeight: {
         '1/2': '50%',
         '3/4': '75%'
+      },
+      maxWidth: {
+        '2xs': '16rem'
       }
     },
   },

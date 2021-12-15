@@ -77,7 +77,7 @@ const EmailVerification = () => {
   };
 
   return (
-    <div className='w-full h-full flex flex-col sm:flex-row sm:items-center overflow-auto'>
+    <div className='w-screen h-screen flex flex-col sm:flex-row sm:items-center overflow-auto'>
       <div className='bg-image' />
       <button
         className='absolute z-20 right-4 top-2 font-light text-sm'

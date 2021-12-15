@@ -17,7 +17,7 @@ const Home = () => {
   }, [token, history]);
 
   return (
-    <div className='w-full h-full sm:flex sm:items-center overflow-auto'>
+    <div className='w-screen h-screen sm:flex sm:items-center overflow-auto'>
       <div className='bg-image' />
       <div className='relative flex items-center justify-center sm:justify-end h-2/6 sm:h-auto z-10 sm:flex-1 sm:mr-14'>
         <h1 className='logo-main'>listen</h1>

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import UserContext from "../../contexts/UserContext";
 
 const MobileMenu = () => {
-  const { setToken } = useContext(UserContext);
+  const { token, setToken } = useContext(UserContext);
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -14,7 +14,7 @@ const MobileMenu = () => {
       const icon = document.querySelector('#mobile-menu-icon');
       const logo = document.querySelector('#logo');
   
-      if (isVisible && ![menu, icon, logo, ...menu.children].includes(e.target)) {
+      if (token && isVisible && ![menu, icon, logo, ...menu.children].includes(e.target)) {
         setIsVisible(false);
       }
     };
@@ -40,7 +40,7 @@ const MobileMenu = () => {
       </button>
       <div
         id='mobile-menu'
-        className='hidden w-full absolute flex flex-col items-center bg-white left-0 top-0 pt-16 pb-10 space-y-10'
+        className='hidden w-full absolute flex flex-col items-center bg-gray-50 left-0 top-0 pt-16 pb-10 space-y-10 shadow-lg'
       >
         <div id='mobile-app-menu' className='flex flex-col items-center space-y-2'>
           <Link to='/dashboard' className='font-light'>Dashboard</Link>

@@ -28,24 +28,33 @@ const App = () => {
       const { verified, username } = decodeToken(token);
       verified && setEmailVerified(true);
       verified && username && setInitialized(true);
+    } else {
+      setEmailVerified(false);
+      setInitialized(false);
     }
   }, [token]);
+
+  useEffect(() => {
+    if (emailVerified) {
+      document.body.classList.add('bg-gray-50');
+    } else {
+      document.body.classList.remove('bg-gray-50');
+    }
+  }, [emailVerified]);
 
   return (
     <UserContext.Provider value={{ token, setToken }}>
       <BrowserRouter>
-        <div className={`w-screen h-screen ${emailVerified && 'bg-green-900 bg-opacity-10'}`}>
-          {token && initialized && <Nav />}
-          <Switch>
-            <ProtectedRoute path='/users/:userId' component={Profile} />
-            <ProtectedRoute path='/forum' component={Forum} />
-            <ProtectedRoute path='/dashboard' component={Dashboard} />
-            <Route path='/verify' component={EmailVerification} />
-            <Route path='/account-setup' component={AccountSetUp} />
-            <Route path='/auth/google/success' component={GoogleOAuthSuccess} />
-            <Route path='/' component={Home} />
-          </Switch>
-        </div>
+        {initialized && <Nav />}
+        <Switch>
+          <ProtectedRoute path='/users/:userId' component={Profile} />
+          <ProtectedRoute path='/forum' component={Forum} />
+          <ProtectedRoute path='/dashboard' component={Dashboard} />
+          <Route path='/verify' component={EmailVerification} />
+          <Route path='/account-setup' component={AccountSetUp} />
+          <Route path='/auth/google/success' component={GoogleOAuthSuccess} />
+          <Route path='/' component={Home} />
+        </Switch>
       </BrowserRouter>
     </UserContext.Provider>
 

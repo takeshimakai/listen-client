@@ -85,3 +85,12 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.menu-card:hover .menu-card-arrow {
+  position: relative;
+  left: 0.5rem;
+}
+
+.menu-card:hover p {
+  color: rgb(6, 78, 59);
+}

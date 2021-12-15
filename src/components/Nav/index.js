@@ -14,7 +14,7 @@ const Nav = () => {
   });
 
   return (
-    <div className='flex justify-between py-2 px-4'>
+    <div className='fixed w-full h-12 flex items-center justify-between py-2 px-4 bg-gray-50'>
       <h1 id='logo' className='logo-sm z-10'>listen</h1>
       {isMobile ? <MobileMenu /> : <Menu />}
     </div>
