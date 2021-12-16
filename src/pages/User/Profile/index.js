@@ -9,6 +9,7 @@ import formatDate from "../../../utils/formatDate";
 import defaultPic from '../../../assets/default-profile.jpg';
 
 import ProfileForm from "../Form";
+import Card from "./Card";
 
 const Profile = () => {
   const match = useRouteMatch();
@@ -55,26 +56,10 @@ const Profile = () => {
           <div className='flex flex-col items-center xl:items-start xl:ml-20'>
             <p className='mt-4 xl:mt-0 text-lg font-bold'>{profile.username}</p>
             <div className='space-y-9 mt-9'>
-              <div className='text-center xl:text-left'>
-                <h4 className='text-gray-600 font-light sm:text-sm'>Date of birth</h4>
-                <p className='mt-1'>{profile.dob}</p>
-              </div>
-              <div className='text-center xl:text-left'>
-                <h4 className='text-gray-600 font-light sm:text-sm'>Gender</h4>
-                <p className='mt-1'>{profile.gender}</p>
-              </div>
-              <div className='text-center xl:text-left'>
-                <h4 className='text-gray-600 font-light sm:text-sm'>Interests</h4>
-                <ul className='mt-1'>
-                  {profile.interests.map(interest => <li key={interest}>{interest}</li>)}
-                </ul>
-              </div>
-              <div className='text-center xl:text-left'>
-                <h4 className='text-gray-600 font-light sm:text-sm'>Problem topics</h4>
-                <ul className='mt-1'>
-                  {profile.problemTopics.map(topic => <li key={topic}>{topic}</li>)}
-                </ul>
-              </div>
+              <Card title='Date of birth' data={profile.dob} />
+              <Card title='Gender' data={profile.gender} />
+              <Card title='Interests' data={profile.interests} />
+              <Card title='Problem topics' data={profile.problemTopics} />
             </div>
           </div>
           {!userId &&
