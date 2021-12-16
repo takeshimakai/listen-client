@@ -91,6 +91,6 @@ input::-webkit-inner-spin-button {
   left: 0.5rem;
 }
 
-.menu-card:hover p {
+.menu-card:hover .menu-card-label > p {
   color: rgb(6, 78, 59);
 }

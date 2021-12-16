@@ -40,16 +40,19 @@ const Dashboard = () => {
               illustration={illustrationA}
               summary='Help someone feel heard by giving your time and attention to those in need of a compassionate listener.'
               label='Listen'
+              path='/listen'
             />
             <MenuCard
               illustration={illustrationB}
               summary='We all need someone to talk to sometimes. Connect with someone who wants to be there for you.'
               label='Talk'
+              path='/talk'
             />
             <MenuCard
               illustration={illustrationC}
               summary="Join the discussions and see that you're not alone."
               label='Join Discussions'
+              path='/forum'
             />
           </div>
         </div>
