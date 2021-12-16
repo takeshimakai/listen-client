@@ -1,16 +1,16 @@
 import { useContext } from 'react';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
 
-import UserContext from '../../contexts/UserContext';
+import UserContext from '../../../contexts/UserContext';
 
-import decodeToken from '../../utils/decodeToken';
-import illustrationA from '../../assets/getting-coffee.svg';
-import illustrationB from '../../assets/a-day-off.svg';
-import illustrationC from '../../assets/public-discussion.svg';
+import decodeToken from '../../../utils/decodeToken';
+import illustrationA from '../../../assets/getting-coffee.svg';
+import illustrationB from '../../../assets/a-day-off.svg';
+import illustrationC from '../../../assets/public-discussion.svg';
 
-import Friends from './Friends';
-import ForumActivity from './ForumActivity';
-import Profile from '../Profile';
+import Friends from '../Friends';
+import ForumActivity from '../ForumActivity';
+import Profile from '../../User/Profile';
 import MenuCard from './MenuCard';
 
 const Dashboard = () => {

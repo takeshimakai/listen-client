@@ -1,14 +1,14 @@
 import { useEffect, useState, useContext } from "react";
 import { Redirect, useHistory } from 'react-router-dom';
 
-import UserContext from "../../contexts/UserContext";
+import UserContext from "../../../contexts/UserContext";
 
-import data from '../../data/data';
-import putData from '../../utils/putData';
-import formatDate from "../../utils/formatDate";
+import data from '../../../data/data';
+import putData from '../../../utils/putData';
+import formatDate from "../../../utils/formatDate";
 
-import InterestsInput from "../../components/InterestsInput";
-import ProblemTopicsInput from "../../components/ProblemTopicsInput";
+import InterestsInput from "../../../components/InterestsInput";
+import ProblemTopicsInput from "../../../components/ProblemTopicsInput";
 
 const ProfileForm = ({ profile, setProfile }) => {
   const history = useHistory();
