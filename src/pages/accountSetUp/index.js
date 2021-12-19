@@ -74,7 +74,7 @@ const AccountSetUp = () => {
         <h1 className='logo-sm'>listen</h1>
         <button className='font-light text-sm' onClick={() => setToken('')}>Sign out</button>
       </div>
-      <div className='account-setup-container'>
+      <div className='min-h-0 flex-grow flex flex-col items-center justify-between w-full mx-auto pb-12 px-12 sm:px-0'>
         {step === 'username' &&
           <UsernameInput
             profileInput={profileInput}

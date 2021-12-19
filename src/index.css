@@ -19,12 +19,8 @@
     @apply flex flex-col justify-between mb-10 sm:mb-0 sm:w-64;
   }
 
-  .account-setup-container {
-    @apply min-h-0 flex-grow flex flex-col items-center justify-between w-full mx-auto pb-12 px-12 sm:px-0;
-  }
-
   .account-setup-input-container {
-    @apply max-h-3/4 relative bg-white shadow-xl rounded-lg w-full sm:max-w-lg text-center pt-14 pb-10 px-5 sm:px-10 my-auto;
+    @apply border max-h-3/4 relative bg-white shadow-xl rounded-lg w-full sm:max-w-lg text-center pt-14 pb-10 px-5 sm:px-10 my-auto;
   }
 
   .account-setup-input-title {
@@ -59,20 +55,28 @@
     @apply text-xs text-gray-500;
   }
 
+  .radio {
+    @apply h-4 w-4 mr-1.5;
+  }
+
   .error-msg {
     @apply text-red-600 text-xs h-4 mt-1;
   }
 
   .primary-btn {
-    @apply max-w-xs w-full h-8 rounded-md cursor-pointer bg-green-700 text-sm text-white hover:bg-green-800 active:shadow-inner-2;
+    @apply shadow-md max-w-2xs w-full h-8 rounded-md cursor-pointer bg-green-700 text-sm text-white hover:bg-green-800 active:shadow-inner-2;
   }
 
   .secondary-btn {
-    @apply max-w-xs w-full h-8 rounded-md cursor-pointer bg-white text-sm text-gray-600 hover:bg-gray-200 active:shadow-inner-2;
+    @apply border active:border-0 active:p-px shadow-md max-w-2xs w-full h-8 rounded-md cursor-pointer bg-gray-50 text-sm text-gray-600 hover:bg-gray-200 active:shadow-inner;
   }
 
   .rounded-btn {
-    @apply max-w-xs w-full h-8 rounded-full cursor-pointer text-gray-600 bg-white text-sm hover:bg-gray-200 active:shadow-inner-2;
+    @apply border active:border-0 active:p-px shadow-md max-w-2xs w-full h-8 rounded-full cursor-pointer text-gray-600 bg-gray-50 text-sm hover:bg-gray-200 active:shadow-inner;
+  }
+
+  .tertiary-btn {
+    @apply shadow-md border border-green-700 max-w-2xs w-full h-8 rounded-md cursor-pointer bg-gray-50 text-sm text-green-700 hover:text-white hover:bg-green-700 active:shadow-inner;
   }
 
   .btn-icon {

@@ -48,13 +48,13 @@ const Profile = () => {
   return (
     <Switch>
       <Route path={`${match.path}/edit`}>
-        <ProfileForm profile={profile} setProfile={setProfile} />
+        <ProfileForm setProfile={setProfile} />
       </Route>
       <Route path={match.path}>
         <div className='pt-20 sm:pt-24 pb-12 xl:pb-0 px-12 xl:px-0 flex flex-col xl:flex-row items-center xl:items-start xl:relative xl:w-max xl:mx-auto'>
           <img className='h-36 sm:h-48 rounded-full' src={defaultPic} alt='' />
-          <div className='flex flex-col items-center xl:items-start xl:ml-20'>
-            <p className='mt-4 xl:mt-0 text-lg font-bold'>{profile.username}</p>
+          <div className='flex flex-col items-center xl:items-start xl:ml-20 xl:w-60'>
+            <p className='mt-4 xl:mt-0 text-lg font-bold text-gray-800'>{profile.username}</p>
             <div className='space-y-9 mt-9'>
               <Card title='Date of birth' data={profile.dob} />
               <Card title='Gender' data={profile.gender} />
@@ -65,7 +65,7 @@ const Profile = () => {
           {!userId &&
             <Link to={`${match.url}/edit`} className='xl:absolute xl:left-4 xl:top-80 mt-12 xl:mt-0'>
               <button
-                className='shadow-md border border-green-700 hover:bg-green-700 active:shadow-inner-2 text-green-700 hover:text-white text-sm w-40 h-8 rounded-md'
+                className='tertiary-btn w-40'
               >
                 Edit
               </button>

@@ -29,7 +29,8 @@ module.exports = {
       boxShadow: ['active'],
       opacity: ['disabled'],
       backgroundColor: ['disabled'],
-      borderWidth: ['hover']
+      borderWidth: ['hover', 'active'],
+      padding: ['active']
     },
   },
   plugins: [],

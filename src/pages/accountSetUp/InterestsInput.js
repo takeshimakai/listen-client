@@ -2,6 +2,9 @@ import { useState } from "react";
 
 import ProgressBar from "./ProgressBar";
 
+import sanitizeStr from "../../utils/sanitizeStr";
+import capitalizeStrAt0 from "../../utils/capitalizeStrAt0";
+
 const InterestsInput = ({
   profileInput,
   setProfileInput,
@@ -17,8 +20,7 @@ const InterestsInput = ({
   const handleInput = (e) => setInput(e.target.value);
 
   const addInterest = () => {
-    const sanitized = input.replace(/[^a-z\s]/gi, '').trim().replace(/\s+/g, ' ');
-    const formatted = sanitized.charAt(0).toUpperCase() + sanitized.slice(1).toLowerCase();
+    const formatted = capitalizeStrAt0(sanitizeStr(input));
 
     if (formatted && !profileInput.interests.includes(formatted)) {
       setProfileInput(prev => {
@@ -52,7 +54,6 @@ const InterestsInput = ({
             <input
               className='text-center pr-10 w-full py-1 border-b border-gray-500 text-lg text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
               type='text'
-              name='interests'
               value={input}
               onChange={handleInput}
               onKeyDown={(e) => {

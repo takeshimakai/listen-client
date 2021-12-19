@@ -21,7 +21,7 @@ const GenderInput = ({
             {data.genders.map(gender => (
               <div className='flex items-center my-2' key={gender}>
                 <input
-                  className='h-4 w-4 mr-1.5'
+                  className='radio'
                   type='radio'
                   id={gender}
                   name='gender'
@@ -35,7 +35,7 @@ const GenderInput = ({
             ))}
             <div className='flex items-center my-2'>
               <input
-                className='h-4 w-4 mr-1.5'
+                className='radio'
                 type='radio'
                 id='undisclosed'
                 name='gender'

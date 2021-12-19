@@ -1,14 +1,18 @@
 import { useState } from "react";
 
-const InterestsInput = ({ profileInput, setProfileInput, goNext }) => {
+import sanitizeStr from "../../../utils/sanitizeStr";
+import capitalizeStrAt0 from '../../../utils/capitalizeStrAt0';
+
+import Toggle from "../../../components/Toggle";
+
+const InterestsInput = ({ profileInput, setProfileInput, handleInput }) => {
   const [input, setInput] = useState('');
   const [duplicate, setDuplicate] = useState();
 
-  const handleInput = (e) => setInput(e.target.value);
+  const handleInterestInput = (e) => setInput(e.target.value);
 
   const addInterest = () => {
-    const sanitized = input.replace(/[^a-z\s]/gi, '').trim().replace(/\s+/g, ' ');
-    const formatted = sanitized.charAt(0).toUpperCase() + sanitized.slice(1).toLowerCase();
+    const formatted = capitalizeStrAt0(sanitizeStr(input));
 
     if (formatted && !profileInput.interests.includes(formatted)) {
       setProfileInput(prev => {
@@ -31,23 +35,25 @@ const InterestsInput = ({ profileInput, setProfileInput, goNext }) => {
       interests: prev.interests.filter(interest => interest !== e.target.getAttribute('value'))
     }));
   };
- 
+
   return (
-    <div className='h-full flex flex-col'>
-      <p className='account-setup-input-title'>What are your interests?</p>
-      <div className='relative w-full mt-11'>
+    <div className='flex flex-col items-center xl:items-start'>
+      <div className='relative w-full flex items-center xl:justify-between'>
+        <label className='text-gray-600 font-light sm:text-sm mx-auto xl:mx-0'>Interests</label>
+        <div className='absolute xl:relative right-0'>
+          <Toggle name='hidden' value='interests' input={profileInput.hidden} handleInput={handleInput} />
+        </div>
+      </div>
+      <div className='relative w-full mt-1'>
         <input
-          className='text-center pr-10 w-full py-1 border-b border-gray-500 text-lg text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
+          className='text-center pr-10 w-full py-1 border-b border-gray-500 sm:text-sm text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
           type='text'
-          name='interests'
           value={input}
-          onChange={handleInput}
+          onChange={handleInterestInput}
           onKeyDown={(e) => {
-            if (e.key === 'Enter' && input) {
+            if (e.key === 'Enter') {
               e.preventDefault();
               document.querySelector('#add-btn').click();
-            } else {
-              goNext(e);
             }
           }}
         />
@@ -63,10 +69,10 @@ const InterestsInput = ({ profileInput, setProfileInput, goNext }) => {
       <div>
         <p className='error-msg mt-1'>{duplicate && `${duplicate} has already been added.`}</p>
       </div>
-      <ul className='mt-4 overflow-auto'>
+      <ul className='mt-1 text-center xl:text-left'>
         {profileInput.interests.map(interest => (
           <li
-            className='cursor-pointer inline-block text-sm hover:text-white border-green-900 border-opacity-40 hover:border-opacity-0 border rounded-full py-0.5 px-2.5 m-1 hover:bg-green-900 hover:bg-opacity-40 active:bg-opacity-40 active:bg-opacity-40'
+            className='m-0.5 cursor-pointer inline-block text-sm text-gray-900 hover:text-white border-green-900 border-opacity-40 hover:border-opacity-0 border rounded-full py-0.5 px-2.5 hover:bg-green-900 hover:bg-opacity-40 active:bg-opacity-40 active:bg-opacity-40'
             value={interest}
             key={interest}
             onClick={removeInterest}
