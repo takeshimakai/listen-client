@@ -1,6 +1,6 @@
 const formatDate = (date) => {
   const formatted = new Date(date);
-  let dd = formatted.getDate();
+  let dd = formatted.getUTCDate();
   let mm = formatted.getMonth() + 1;
   const year = formatted.getFullYear();
 
