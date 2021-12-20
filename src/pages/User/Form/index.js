@@ -30,10 +30,6 @@ const ProfileForm = ({ setProfile }) => {
   });
 
   useEffect(() => {
-    console.log(profileInput.hidden);
-  }, [profileInput]);
-
-  useEffect(() => {
     if (redirect) {
       history.replace('/dashboard/profile');
     }

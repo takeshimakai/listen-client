@@ -13,7 +13,7 @@ const DobInput = ({ profileInput, handleInput }) => {
         <div className='absolute xl:relative right-0'>
           <Toggle name='hidden' value='dob' input={profileInput.hidden} handleInput={handleInput} />
         </div>
-        <p className='absolute text-xs font-thin text-gray-400 right-0 -top-4'>Show</p>
+        <p className='absolute w-8 text-center text-xs font-thin text-gray-400 right-0 -top-4'>Show</p>
       </div>
       <input
         className='w-40 py-1 border-b border-gray-500 sm:text-sm text-gray-900 bg-transparent focus:outline-none focus:border-gray-900 mt-1'

@@ -33,19 +33,14 @@ const GenderInput = ({
                 <label className='text-base' htmlFor={gender}>{gender}</label>
               </div>
             ))}
-            <div className='flex items-center my-2'>
-              <input
-                className='radio'
-                type='radio'
-                id='undisclosed'
-                name='gender'
-                value='undisclosed'
-                checked={profileInput.gender === 'undisclosed'}
-                onChange={handleInput}
-                onKeyDown={goNext}
-              />
-              <label className='text-base' htmlFor='undisclosed'>Rather not say</label>
-            </div>
+            <button
+              className='font-light text-sm text-blue-700 hover:text-blue-900 mt-5'
+              name='gender'
+              value=''
+              onClick={handleInput}
+            >
+              Clear
+            </button>
           </div>
         </div>
         <p className='account-setup-moreinfo' onClick={() => setMoreInfo(!moreInfo)}>

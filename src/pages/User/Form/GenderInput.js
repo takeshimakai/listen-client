@@ -17,10 +17,10 @@ const GenderInput = ({ profileInput, handleInput }) => {
         value={profileInput.gender}
         onChange={handleInput}
       >
+        <option value=''></option>
         {data.genders.map(value => (
           <option key={value} value={value}>{value}</option>
         ))}
-        <option value='undisclosed'>Rather not say</option>
       </select>
     </div>
   )
