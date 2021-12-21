@@ -26,7 +26,7 @@ const ProfileForm = ({ setProfile }) => {
     gender: '',
     interests: [],
     problemTopics: [],
-    hidden: []
+    public: []
   });
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const ProfileForm = ({ setProfile }) => {
           gender: profile.gender || '',
           interests: profile.interests || [],
           problemTopics: profile.problemTopics || [],
-          hidden: profile.hidden || []
+          public: profile.public || []
         })
       } catch (err) {
         console.log(err);
@@ -68,7 +68,6 @@ const ProfileForm = ({ setProfile }) => {
         gender: data.profile.gender,
         interests: data.profile.interests,
         problemTopics: data.profile.problemTopics,
-        hidden: data.profile.hidden
       }));
       setRedirect(true);
     } catch (err) {

@@ -5,7 +5,7 @@ const Toggle = ({ name, value, input, handleInput }) => {
     const toggle = document.querySelector(`#toggle-${value}`);
     const slider = document.querySelector(`#slider-${value}`);
 
-    if (!input.includes(value)) {
+    if (input.includes(value)) {
       toggle.classList.replace('bg-gray-300', 'bg-blue-400');
       slider.classList.remove('left-0', 'left-px');
       slider.classList.add('right-0', 'right-px');

@@ -41,7 +41,7 @@ const InterestsInput = ({ profileInput, setProfileInput, handleInput }) => {
       <div className='relative w-full flex items-center xl:justify-between'>
         <label className='text-gray-600 font-light sm:text-sm mx-auto xl:mx-0'>Interests</label>
         <div className='absolute xl:relative right-0'>
-          <Toggle name='hidden' value='interests' input={profileInput.hidden} handleInput={handleInput} />
+          <Toggle name='public' value='interests' input={profileInput.public} handleInput={handleInput} />
         </div>
       </div>
       <div className='relative w-full mt-1'>

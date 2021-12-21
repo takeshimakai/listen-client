@@ -22,7 +22,6 @@ const Profile = () => {
     gender: '',
     interests: [],
     problemTopics: [],
-    hidden: []
   });
 
   useEffect(() => {
@@ -37,7 +36,6 @@ const Profile = () => {
           gender: profile.gender || '',
           interests: profile.interests || [],
           problemTopics: profile.problemTopics || [],
-          hidden: profile.hidden || []
         })
       } catch (err) {
         console.log(err);

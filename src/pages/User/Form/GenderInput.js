@@ -8,7 +8,7 @@ const GenderInput = ({ profileInput, handleInput }) => {
       <div className='relative w-full flex items-center xl:justify-between'>
         <label className='text-gray-600 font-light sm:text-sm mx-auto xl:mx-0'>Gender</label>
         <div className='absolute xl:relative right-0'>
-          <Toggle name='hidden' value='gender' input={profileInput.hidden} handleInput={handleInput} />
+          <Toggle name='public' value='gender' input={profileInput.public} handleInput={handleInput} />
         </div>
       </div>
       <select

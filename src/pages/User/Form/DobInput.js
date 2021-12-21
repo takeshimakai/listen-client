@@ -11,7 +11,7 @@ const DobInput = ({ profileInput, handleInput }) => {
           Date of birth
         </label>
         <div className='absolute xl:relative right-0'>
-          <Toggle name='hidden' value='dob' input={profileInput.hidden} handleInput={handleInput} />
+          <Toggle name='public' value='dob' input={profileInput.public} handleInput={handleInput} />
         </div>
         <p className='absolute w-8 text-center text-xs font-thin text-gray-400 right-0 -top-4'>Show</p>
       </div>
