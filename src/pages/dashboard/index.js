@@ -8,7 +8,7 @@ import illustrationA from '../../assets/getting-coffee.svg';
 import illustrationB from '../../assets/a-day-off.svg';
 import illustrationC from '../../assets/public-discussion.svg';
 
-import Friends from './Friends';
+import Friends from '../Friends';
 import ForumActivity from './ForumActivity';
 import Profile from '../User/Profile';
 import MenuCard from './MenuCard';

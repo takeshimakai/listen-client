@@ -10,12 +10,14 @@ import defaultPic from '../../../assets/default-profile.jpg';
 
 import ProfileForm from "../Form";
 import Card from "./Card";
+import FriendBtn from "../../../components/FriendBtn";
 
 const Profile = () => {
   const match = useRouteMatch();
   const { userId } = useParams();
   const { token } = useContext(UserContext);
 
+  const [friendshipStatus, setFriendshipStatus] = useState('');
   const [profile, setProfile] = useState({
     username: '',
     dob: '',
@@ -28,15 +30,17 @@ const Profile = () => {
     (async () => {
       try {
         const res = await getData(`/users/${userId ? userId : decodeToken(token).id}`, token);
-        const { profile } = await res.json();
+        const user = await res.json();
 
         setProfile({
-          username: profile.username,
-          dob: profile.dob ? formatDate(profile.dob) : '',
-          gender: profile.gender || '',
-          interests: profile.interests || [],
-          problemTopics: profile.problemTopics || [],
-        })
+          username: user.profile.username,
+          dob: user.profile.dob ? formatDate(user.profile.dob) : '',
+          gender: user.profile.gender || '',
+          interests: user.profile.interests || [],
+          problemTopics: user.profile.problemTopics || [],
+        });
+
+        setFriendshipStatus(user.friendshipStatus);
       } catch (err) {
         console.log(err);
       }
@@ -60,6 +64,13 @@ const Profile = () => {
               <Card title='Problem topics' data={profile.problemTopics} />
             </div>
           </div>
+          {userId &&
+            <FriendBtn
+              userId={userId}
+              friendshipStatus={friendshipStatus}
+              setFriendshipStatus={setFriendshipStatus}
+            />
+          }
           {!userId &&
             <Link to={`${match.url}/edit`} className='xl:absolute xl:left-4 xl:top-80 mt-12 xl:mt-0'>
               <button
