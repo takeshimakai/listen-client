@@ -56,7 +56,7 @@ const Menu = () => {
       </button>
       <div
         id='user-menu'
-        className='hidden absolute top-11 right-4 h-48 flex flex-col justify-between bg-gray-50 p-6 rounded-md shadow-lg'
+        className='hidden absolute top-11 right-4 h-48 flex flex-col justify-between bg-gray-50 p-6 border rounded-md shadow-lg'
       >
         <div className='flex flex-col space-y-2'>
           <Link to='/dashboard/profile' className='font-light text-sm hover:text-gray-500 w-max'>
