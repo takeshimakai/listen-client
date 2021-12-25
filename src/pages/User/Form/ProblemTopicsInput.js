@@ -1,6 +1,7 @@
 import data from "../../../data/data";
 
 import Toggle from "../../../components/Toggle";
+import Checkbox from "../../../components/Checkbox";
 
 const ProblemTopicsInput = ({ profileInput, handleInput }) => {
   return (
@@ -13,20 +14,13 @@ const ProblemTopicsInput = ({ profileInput, handleInput }) => {
       </div>
       <div className='mt-1'>
         {data.categories.map(category => (
-          <div className='my-2 flex items-center' key={category}>
-            <input
-              className='h-4 w-4 mr-1.5'
-              type='checkbox'
-              name='problemTopics'
-              id={category}
-              value={category}
-              checked={profileInput.problemTopics.includes(category)}
-              onChange={handleInput}
-            />
-            <label
-              className='sm:text-sm text-left leading-snug text-gray-900'
-              htmlFor={category}>{category}</label>
-          </div>
+          <Checkbox
+            key={category}
+            name='problemTopics'
+            data={category}
+            input={profileInput.problemTopics}
+            handleInput={handleInput}
+          />
         ))}
       </div>
     </div>

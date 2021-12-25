@@ -4,7 +4,8 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'base': "url('/src/assets/background-orig.jpg')"
+        'base': "url('/src/assets/background-orig.jpg')",
+        'chevron-down': "url('/src/assets/chevron-down-solid.svg')"
       },
       boxShadow: {
         'inner-2': 'inset 0 2px 2px 0 rgba(0, 0, 0, 0.5)'
