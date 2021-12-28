@@ -5,6 +5,7 @@ import UserContext from "../../contexts/UserContext";
 
 import TitleInput from "./TitleInput";
 import Categories from "./Categories";
+import ContentInput from "./ContentInput";
 
 import postData from "../../utils/postData";
 import putData from '../../utils/putData';
@@ -117,16 +118,7 @@ const PostForm = ({ post, setPosts, setComments }) => {
       <div className='flex-grow flex flex-col space-y-3'>
         <TitleInput input={input.title} handleInput={handleInput} errors={errors} />
         <Categories input={input.topics} setInput={setInput} handleInput={handleInput} errors={errors} />
-        <div className='flex-grow pb-12'>
-          <textarea
-            className='resize-none p-1 h-full w-full border border-gray-500 focus:border-gray-900 rounded sm:text-sm text-gray-900 focus:outline-none'
-            name='content'
-            value={input.content}
-            placeholder="What's on your mind?"
-            onChange={handleInput}
-          />
-          <p className='error-msg'>{errors && errors.content}</p>
-        </div>
+        <ContentInput input={input.content} handleInput={handleInput} errors={errors} />
       </div>
       <div className='flex sm:justify-between'>
         {setComments

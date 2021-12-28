@@ -60,7 +60,7 @@ const Forum = () => {
         <Post posts={posts} setPosts={setPosts} />
       </Route>
       <Route path={`${match.path}`}>
-        <div className='pt-20 px-4'>
+        <div className='pt-16 px-4 pb-12'>
           <div className='sm:flex sm:justify-between'>
             <ForumMenu
               sortBy={sortBy}
@@ -75,19 +75,17 @@ const Forum = () => {
               {lessThan640 ? <span>&#65291;</span> : 'Create new post'}
             </Link>
           </div>
-          {posts.length > 0
-            ? sortData(sortBy, posts).map(post => (
-                filters.length === 0
-                  ? <Link to={`${match.url}/${post._id}`} key={post._id}>
-                      <PostPreview post={post} />
-                    </Link>
-                  : post.topics.some(topic => filters.includes(topic)) &&
-                      <Link to={`${match.url}/${post._id}`} key={post._id}>
-                        <PostPreview post={post} />
-                      </Link>
-            ))
-            : <p>No posts to display</p>
-          }
+          <div className='mt-4 sm:mt-8 space-y-4 sm:w-3/5 sm:mx-auto'>
+            {posts.length > 0
+              ? sortData(sortBy, posts).map(post => (
+                  filters.length === 0
+                    ? <PostPreview post={post} key={post._id} />
+                    : post.topics.some(topic => filters.includes(topic)) &&
+                        <PostPreview post={post} key={post._id} />
+                ))
+              : <p className='font-light sm:text-sm'>There are no posts to show.</p>
+            }
+          </div>
         </div>
       </Route>
     </Switch>
