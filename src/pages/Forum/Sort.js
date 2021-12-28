@@ -9,7 +9,7 @@ const Sort = ({ sortBy, setSortBy }) => {
       <label className='text-gray-500 font-light sm:text-sm mr-1'>Sort by</label>
       <div className='relative flex items-center'>
         <select
-          className='z-10 py-px pl-1.5 pr-5 appearance-none bg-transparent sm:text-sm text-gray-900 border rounded border-gray-400 focus:outline-none'
+          className='py-px pl-1.5 pr-5 appearance-none bg-transparent sm:text-sm text-gray-900 border rounded border-gray-400 focus:outline-none'
           name='sort'
           value={sortBy}
           onChange={handleSort}
@@ -21,7 +21,7 @@ const Sort = ({ sortBy, setSortBy }) => {
           <option value='most relatable'>Most relatable</option>
           <option value='least relatable'>Least relatable</option>
         </select>
-        <div className='absolute bg-chevron-down bg-no-repeat w-3 h-3 m-auto inset-y-0 right-1' />
+        <div className='absolute -z-10 bg-chevron-down bg-no-repeat w-3 h-3 m-auto inset-y-0 right-1' />
       </div>
     </div>
   )

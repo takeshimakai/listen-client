@@ -6,7 +6,7 @@ const GenderInput = ({ profileInput, handleInput }) => {
   return (
     <div className='flex flex-col items-center xl:items-start'>
       <div className='relative w-full flex items-center xl:justify-between'>
-        <label className='text-gray-600 font-light sm:text-sm mx-auto xl:mx-0'>Gender</label>
+        <label className='subtitle mx-auto xl:mx-0'>Gender</label>
         <div className='absolute xl:relative right-0'>
           <Toggle name='public' value='gender' input={profileInput.public} handleInput={handleInput} />
         </div>

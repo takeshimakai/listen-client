@@ -80,11 +80,11 @@ const Post = ({ posts, setPosts }) => {
   return (
     <Switch>
       <Route path={`${match.path}/edit`}>
-        <PostForm setPosts={setPosts} post={post} setComments={setComments} />
+        <PostForm post={post} setPosts={setPosts} setComments={setComments} />
       </Route>
       <Route path={`${match.path}`}>
         {post
-          ? <div id='post-container'>
+          ? <div className='pt-20'>
               <div id='post'>
                 <p>Relatability: {post.relatable.length}</p>
                 {post.postedBy._id !== user.id &&

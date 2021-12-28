@@ -70,11 +70,12 @@ const Filters = ({ filters, setFilters }) => {
       </button>
       <div
         id='filters-container'
-        className='absolute top-8 bg-gray-50 border shadow-lg rounded-lg p-4 sm:w-max filters'
+        className='z-10 absolute top-8 bg-gray-50 border shadow-lg rounded-lg p-4 sm:w-max filters'
+        hidden
       >
         <div className='flex mb-6 filters'>
           <button className='secondary-btn mr-1 filters' onClick={clearFilters}>Clear</button>
-          <button className='primary-btn ml-1 filters' onClick={applyFilters}>Apply</button>
+          <button className='primary-btn ml-1' onClick={applyFilters}>Apply</button>
         </div>
         {data.categories.map(filter => (
           <Checkbox
@@ -83,6 +84,7 @@ const Filters = ({ filters, setFilters }) => {
             data={filter}
             input={filterInput}
             handleInput={handleCheckbox}
+            selector={'filters'}
           />
         ))}
       </div>

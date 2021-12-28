@@ -5,7 +5,7 @@ const DobInput = ({ profileInput, handleInput }) => {
     <div className='flex flex-col items-center xl:items-start'>
       <div className='relative w-full flex items-center xl:justify-between'>
         <label
-          className='text-gray-600 font-light sm:text-sm mx-auto xl:mx-0'
+          className='subtitle mx-auto xl:mx-0'
           htmlFor='dob'
         >
           Date of birth

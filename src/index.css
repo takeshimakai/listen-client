@@ -15,6 +15,10 @@
     @apply text-gray-800 font-serif text-2xl;
   }
 
+  .subtitle {
+    @apply text-gray-600 font-light sm:text-sm;
+  }
+
   .auth-container {
     @apply flex flex-col justify-between mb-10 sm:mb-0 sm:w-64;
   }
@@ -61,6 +65,10 @@
 
   .error-msg {
     @apply text-red-600 text-xs h-4 mt-1;
+  }
+
+  .blue-text {
+    @apply text-xs text-blue-700 hover:text-blue-900;
   }
 
   .primary-btn {

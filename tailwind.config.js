@@ -22,6 +22,9 @@ module.exports = {
       },
       inset: {
         88: '22rem'
+      },
+      zIndex: {
+        '-10': '-10'
       }
     },
   },
