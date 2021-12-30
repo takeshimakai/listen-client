@@ -1,17 +1,15 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams, useRouteMatch, Switch, Route, Link } from 'react-router-dom';
+import { useParams, useRouteMatch, Switch, Route } from 'react-router-dom';
 
 import UserContext from "../../contexts/UserContext";
 
 import getData from '../../utils/getData';
-import putData from "../../utils/putData";
-import formatDate from "../../utils/formatDate";
-import convertArrToStr from "../../utils/convertArrToStr";
 
 import Comments from './Comments';
 import PostForm from "../PostForm";
 import CommentForm from "./CommentForm";
-import CommentMenu from "./CommentMenu";
+import CommentSort from "./CommentSort";
+import PostContainer from "./PostContainer";
 
 const Post = ({ posts, setPosts }) => {
   const match = useRouteMatch();
@@ -20,7 +18,7 @@ const Post = ({ posts, setPosts }) => {
 
   const [user, setUser] = useState();
   const [post, setPost] = useState();
-  const [comments, setComments] = useState();
+  const [comments, setComments] = useState([]);
   const [commentToEditId, setCommentToEditId] = useState('');
   const [commentSort, setCommentSort] = useState('newest comment');
 
@@ -62,63 +60,36 @@ const Post = ({ posts, setPosts }) => {
     }
   }, [post, token]);
 
-  const votePostRelatability = async (e) => {
-    try {
-      const res = await putData(`/posts/${post._id}/relatability`, undefined, token);
-      const data = await res.json();
-
-      setPosts(prevPosts => {
-        const updated = [...prevPosts];
-        updated.splice(updated.findIndex(post => post._id === data._id), 1, data);
-        return updated;
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
   return (
     <Switch>
       <Route path={`${match.path}/edit`}>
         <PostForm post={post} setPosts={setPosts} setComments={setComments} />
       </Route>
       <Route path={`${match.path}`}>
-        {post
-          ? <div className='pt-20'>
-              <div id='post'>
-                <p>Relatability: {post.relatable.length}</p>
-                {post.postedBy._id !== user.id &&
-                  <button id='post-relatable-btn' onClick={votePostRelatability}>
-                    {post.relatable.includes(user.id)
-                      ? 'Unrelatable'
-                      : 'Relatable'
-                    }
-                  </button>
-                }
-                <h3>{post.title}</h3>
-                <p>Posted by: {post.postedBy.profile.username}</p>
-                <p>Posted on: {formatDate(post.datePosted)}</p>
-                {post.dateEdited && <p>Edited on: {formatDate(post.dateEdited)}</p>}
-                <p>Filed under: {convertArrToStr(post.topics)}</p>
-                <p>{post.content}</p>
-              </div>
-              {user.id === post.postedBy._id && <Link to={`${match.url}/edit`}>Edit post</Link>}
-              <CommentForm setComments={setComments} parentId={post._id} />
-              <CommentMenu commentSort={commentSort} setCommentSort={setCommentSort} />
-              {comments &&
-                <Comments
-                  parentId={post._id}
-                  comments={comments}
-                  setComments={setComments}
-                  commentSort={commentSort}
-                  commentToEditId={commentToEditId}
-                  setCommentToEditId={setCommentToEditId}
-                  user={user}
-                />
-              }
-            </div>
-          : <p>Unable to find post.</p>
-        }
+        <div className='pt-16 sm:pt-20 pb-12 px-4 sm:w-3/5 sm:mx-auto'>
+          {post
+            ? <>
+                <PostContainer user={user} post={post} setPosts={setPosts} />
+                <div className='mt-8 space-y-4 border rounded-xl px-6 sm:px-10 pb-6 sm:pb-10 pt-2 sm:pt-6 shadow-md'>
+                  <CommentForm setComments={setComments} parentId={post._id} />
+                  <CommentSort commentSort={commentSort} setCommentSort={setCommentSort} />
+                  {comments.length > 0
+                    ? <Comments
+                        parentId={post._id}
+                        comments={comments}
+                        setComments={setComments}
+                        commentSort={commentSort}
+                        commentToEditId={commentToEditId}
+                        setCommentToEditId={setCommentToEditId}
+                        user={user}
+                      />
+                    : <p className='font-light sm:text-sm'>There are no comments.</p>
+                  }
+                </div>
+              </>
+            : <p className='font-light sm:text-sm'>Unable to find post.</p>
+          }
+        </div>
       </Route>
     </Switch>
   )

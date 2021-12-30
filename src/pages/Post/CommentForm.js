@@ -7,6 +7,8 @@ import postData from '../../utils/postData';
 import putData from '../../utils/putData';
 import setErrMsgs from '../../utils/setErrMsgs';
 
+import sendIcon from '../../assets/send.png';
+
 const CommentForm = ({
   comment,
   setComments,
@@ -77,12 +79,35 @@ const CommentForm = ({
   };
 
   return (
-    <form id='comment-form' onSubmit={comment ? handleEditSubmit : handleSubmit}>
-      <textarea placeholder='Add comment' value={input.content} onChange={handleInput} />
-      {errors && <p className='error'>{errors.content}</p>}
-      {comment && <input type='button' value='Cancel' onClick={() => setCommentToEditId('')} />}
-      {setReply && <input type='button' value='Cancel' onClick={() => setReply('')} />}
-      <input type='submit' value='Save' />
+    <form onSubmit={comment ? handleEditSubmit : handleSubmit}>
+      <p className='error-msg mt-0 mb-1'>{errors && errors.content}</p>
+      <textarea
+        className='p-1 w-full h-16 border border-gray-400 focus:border-gray-700 rounded-md sm:text-sm text-gray-900 focus:outline-none'
+        placeholder='Add comment'
+        value={input.content}
+        onChange={handleInput}
+      />
+      <div className='flex justify-end'>
+        {comment &&
+          <input
+            className='font-light text-blue-700 hover:text-blue-900 text-xs bg-transparent mr-3 cursor-pointer'
+            type='button'
+            value='Cancel'
+            onClick={() => setCommentToEditId('')}
+          />
+        }
+        {setReply &&
+          <input
+            className='font-light text-blue-700 hover:text-blue-900 text-xs bg-transparent mr-3 cursor-pointer'
+            type='button'
+            value='Cancel'
+            onClick={() => setReply('')}
+          />
+        }
+        <button className='border rounded-full border-green-700 p-1.5'>
+          <img className='h-4' src={sendIcon} alt='' />
+        </button>
+      </div>
     </form>
   )
 }

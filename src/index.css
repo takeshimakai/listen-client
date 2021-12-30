@@ -19,6 +19,10 @@
     @apply text-gray-600 font-light sm:text-sm;
   }
 
+  .post-title {
+    @apply font-medium text-green-700;
+  }
+
   .auth-container {
     @apply flex flex-col justify-between mb-10 sm:mb-0 sm:w-64;
   }
@@ -68,7 +72,7 @@
   }
 
   .blue-text {
-    @apply text-xs text-blue-700 hover:text-blue-900;
+    @apply text-sm font-light text-blue-700 hover:text-blue-900;
   }
 
   .primary-btn {

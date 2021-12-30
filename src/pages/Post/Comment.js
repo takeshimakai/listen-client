@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 
 import UserContext from "../../contexts/UserContext";
 
@@ -8,6 +9,8 @@ import CommentForm from "./CommentForm";
 import formatDate from "../../utils/formatDate";
 import putData from "../../utils/putData";
 import deleteData from "../../utils/deleteData";
+
+import deleteIcon from '../../assets/delete-red.png';
 
 const Comment = ({
   user,
@@ -38,7 +41,7 @@ const Comment = ({
 
   const handleDelete = async () => {
     try {
-      const res = await deleteData(`/comments/${comment._id}`, token);
+      const res = await deleteData(`/comments/${comment._id}`, undefined, token);
 
       if (res.ok) {
         setComments(prevComments => prevComments.filter(prevComment => (
@@ -51,38 +54,60 @@ const Comment = ({
   }
 
   return (
-    <div className='comment-container'>
-      {commentToEditId === comment._id
-        ? <CommentForm
-            comment={comment}
-            setComments={setComments}
-            setCommentToEditId={setCommentToEditId}
-            parentId={comment.replyTo}
-          />
-        : <div className='comment'>
-            <p>{comment.content}</p>
-            <p>Comment by: {comment.postedBy.profile.username}</p>
-            <p>Comment posted on: {formatDate(comment.datePosted)}</p>
-            {comment.dateEdited && <p>Comment edited on: {formatDate(comment.dateEdited)}</p>}
-            <p>Relatability: {comment.relatable.length}</p>
-            {user.id === comment.postedBy._id
-              ? <div>
-                  <button onClick={() => setCommentToEditId(comment._id)}>Edit comment</button>
-                  <button onClick={handleDelete}>Delete</button>
-                </div>
-              : <button id='comment-relatable-btn' data-comment-id={comment._id} onClick={voteCommentRelatability}>
-                  {comment.relatable.includes(user.id)
-                    ? 'Unrelatable'
-                    : 'Relatable'
-                  }
-                </button>
-            }
-            {reply
-              ? <CommentForm setComments={setComments} setReply={setReply} parentId={comment._id} />
-              : user.id !== comment.postedBy._id && <button onClick={() => setReply(true)}>Reply</button>
-            }
-          </div>
-      }
+    <div className='border-l border-gray-300 pl-2'>
+      <div className='mb-4'>
+        {commentToEditId === comment._id
+          ? <CommentForm
+              comment={comment}
+              setComments={setComments}
+              setCommentToEditId={setCommentToEditId}
+              parentId={comment.replyTo}
+            />
+          : <>
+              <p className='font-light sm:text-sm text-gray-700 whitespace-pre-wrap mb-2'>{comment.content}</p>
+              <div className='mb-1'>
+                <p className='text-xs font-light text-gray-400'>
+                  Comment by <Link className='text-blue-700 hover:text-blue-900' to={`/users/${comment.postedBy._id}`}>{comment.postedBy.profile.username}</Link> on {formatDate(comment.datePosted)}
+                </p>
+                {comment.dateEdited &&
+                  <p className='text-xs font-light text-gray-400'>
+                    Edited on {formatDate(comment.dateEdited)}
+                  </p>
+                }
+                <p className='text-xs font-light text-gray-400'>Relatability {comment.relatable.length}</p>
+              </div>
+              {user.id === comment.postedBy._id
+                ? <div className='flex items-center justify-between'>
+                    <button
+                      className='font-light text-blue-700 hover:text-blue-900 text-xs'
+                      onClick={() => setCommentToEditId(comment._id)}
+                    >
+                      Edit comment
+                    </button>
+                    <button onClick={handleDelete}>
+                      <img className='h-4' src={deleteIcon} alt='' />
+                    </button>
+                  </div>
+                : <div className='flex space-x-1.5'>
+                    <button
+                      className='font-light text-blue-700 hover:text-blue-900 text-xs'
+                      data-comment-id={comment._id}
+                      onClick={voteCommentRelatability}
+                    >
+                      {comment.relatable.includes(user.id) ? 'Unrelatable' : 'Relatable'}
+                    </button>
+                    <button
+                      className='font-light text-blue-700 hover:text-blue-900 text-xs'
+                      onClick={() => setReply(true)}
+                    >
+                      Reply
+                    </button>
+                  </div>
+              }
+              {reply && <CommentForm setComments={setComments} setReply={setReply} parentId={comment._id} />}
+            </>
+        }
+      </div>
       <Comments
         parentId={comment._id}
         comments={comments}

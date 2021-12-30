@@ -14,7 +14,7 @@ const Comments = ({
   const sorted = commentSort ? sortData(commentSort, comments) : sortData('newest comment', comments);
 
   return (
-    <div className='comments-container'>
+    <>
       {sorted.map(comment => (
         parentId === comment.replyTo &&
           <Comment
@@ -27,7 +27,7 @@ const Comments = ({
             key={comment._id}
           />
       ))}
-    </div>
+    </>
   )
 }
 
