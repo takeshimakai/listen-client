@@ -10,7 +10,7 @@ import formatDate from "../../utils/formatDate";
 import putData from "../../utils/putData";
 import deleteData from "../../utils/deleteData";
 
-import deleteIcon from '../../assets/delete-red.png';
+import deleteIcon from '../../assets/delete.png';
 
 const Comment = ({
   user,

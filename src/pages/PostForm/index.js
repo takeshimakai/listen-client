@@ -12,7 +12,7 @@ import putData from '../../utils/putData';
 import deleteData from "../../utils/deleteData";
 import setErrMsgs from '../../utils/setErrMsgs';
 
-import deleteIcon from '../../assets/delete-red.png';
+import deleteIcon from '../../assets/delete.png';
 
 const PostForm = ({ post, setPosts, setComments }) => {
   const history = useHistory();
