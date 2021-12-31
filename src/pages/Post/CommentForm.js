@@ -104,7 +104,7 @@ const CommentForm = ({
             onClick={() => setReply('')}
           />
         }
-        <button className='border rounded-full border-green-700 p-1.5'>
+        <button className='border rounded-full border-green-700 p-1.5 shadow'>
           <img className='h-4' src={sendIcon} alt='' />
         </button>
       </div>

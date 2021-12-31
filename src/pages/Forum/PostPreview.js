@@ -18,14 +18,16 @@ const PostPreview = ({ post }) => {
           <h4 className='post-title mb-2'>{post.title}</h4>
           <div className='space-y-1'>
             <p className='truncate font-light sm:text-sm text-gray-700'>{post.content}</p>
-            <p className='text-xs font-light text-gray-700'>
-              Posted by {post.postedBy.profile.username} on {formatDate(post.datePosted)}
-            </p>
-            {post.dateEdited &&
+            <div>
               <p className='text-xs font-light text-gray-700'>
-                Edited on {formatDate(post.dateEdited)}
+                Posted by {post.postedBy.profile.username} on {formatDate(post.datePosted)}
               </p>
-            }
+              {post.dateEdited &&
+                <p className='text-xs font-light text-gray-700'>
+                  Edited on {formatDate(post.dateEdited)}
+                </p>
+              }
+            </div>
           </div>
         </div>
       </Link>

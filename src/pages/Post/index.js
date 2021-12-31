@@ -23,6 +23,10 @@ const Post = ({ posts, setPosts }) => {
   const [commentSort, setCommentSort] = useState('newest comment');
 
   useEffect(() => {
+    console.log(comments);
+  }, [comments]);
+
+  useEffect(() => {
     const savedSort = JSON.parse(sessionStorage.getItem('commentSort'));
 
     if (savedSort) {
