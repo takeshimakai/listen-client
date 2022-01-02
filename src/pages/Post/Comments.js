@@ -4,14 +4,14 @@ import sortData from '../../utils/sortData';
 
 const Comments = ({
   parentId,
-  commentSort,
+  sortCommentsBy,
   comments,
   setComments,
   commentToEditId,
   setCommentToEditId,
   user
 }) => {
-  const sorted = commentSort ? sortData(commentSort, comments) : sortData('newest comment', comments);
+  const sorted = sortCommentsBy ? sortData(sortCommentsBy, comments) : sortData('newest', comments);
 
   return (
     <>

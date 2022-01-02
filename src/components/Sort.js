@@ -1,7 +1,16 @@
-const CommentSort = ({ commentSort, setCommentSort }) => {
+const Sort = ({ sortBy, setSortBy, name }) => {
   const handleSort = (e) => {
-    setCommentSort(e.target.value);
-    sessionStorage.setItem('commentSort', JSON.stringify(e.target.value));
+    const { value } = e.target;
+
+    setSortBy(value);
+
+    if (name === 'posts') {
+      sessionStorage.setItem('sortPostsBy', JSON.stringify(value));
+    }
+
+    if (name === 'comments') {
+      sessionStorage.setItem('sortCommentsBy', JSON.stringify(value));
+    }
   };
 
   return (
@@ -10,11 +19,11 @@ const CommentSort = ({ commentSort, setCommentSort }) => {
       <div className='relative flex items-center'>
         <select
           className='py-px pl-1.5 pr-5 appearance-none bg-transparent sm:text-sm text-gray-900 border rounded border-gray-400 focus:outline-none'
-          value={commentSort}
+          value={sortBy}
           onChange={handleSort}
         >
-          <option value='newest comment'>Newest comment</option>
-          <option value='oldest comment'>Oldest comment</option>
+          <option value='newest'>Newest</option>
+          <option value='oldest'>Oldest</option>
           <option value='newest edit'>Newest edit</option>
           <option value='oldest edit'>Oldest edit</option>
           <option value='most relatable'>Most relatable</option>
@@ -26,4 +35,4 @@ const CommentSort = ({ commentSort, setCommentSort }) => {
   )
 }
 
-export default CommentSort;
+export default Sort;

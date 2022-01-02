@@ -6,10 +6,11 @@ import UserContext from '../../contexts/UserContext';
 import getData from '../../utils/getData';
 import sortData from '../../utils/sortData';
 
-import PostPreview from './PostPreview';
+import PostPreview from '../../components/PostPreview';
 import Post from '../Post';
 import PostForm from '../PostForm';
-import ForumMenu from './ForumMenu';
+import Filters from './Filters';
+import Sort from '../../components/Sort';
 
 const Forum = () => {
   const match = useRouteMatch();
@@ -17,7 +18,7 @@ const Forum = () => {
   const { token } = useContext(UserContext);
 
   const [posts, setPosts] = useState([]);
-  const [sortBy, setSortBy] = useState('newest post');
+  const [sortPostsBy, setSortPostsBy] = useState('newest');
   const [filters, setFilters] = useState([]);
   const [lessThan640, setLessThan640] = useState(window.innerWidth < 640);
 
@@ -28,11 +29,11 @@ const Forum = () => {
   });
 
   useEffect(() => {
-    const savedSort = JSON.parse(sessionStorage.getItem('sortBy'));
+    const savedSort = JSON.parse(sessionStorage.getItem('sortPostsBy'));
     const savedFilters = JSON.parse(sessionStorage.getItem('filters'));
 
     if (savedSort) {
-      setSortBy(savedSort);
+      setSortPostsBy(savedSort);
     }
 
     if (savedFilters) {
@@ -60,14 +61,12 @@ const Forum = () => {
         <Post posts={posts} setPosts={setPosts} />
       </Route>
       <Route path={`${match.path}`}>
-        <div className='pt-16 px-4 pb-12'>
+        <div className='pt-16 sm:pt-20 px-4 sm:px-0 pb-12 space-y-4 sm:w-3/5 sm:mx-auto'>
           <div className='sm:flex sm:justify-between'>
-            <ForumMenu
-              sortBy={sortBy}
-              setSortBy={setSortBy}
-              filters={filters}
-              setFilters={setFilters}
-            />
+            <div className='relative flex justify-between items-center sm:justify-start'>
+              <Filters filters={filters} setFilters={setFilters} />
+              <Sort sortBy={sortPostsBy} setSortBy={setSortPostsBy} name='posts' />
+            </div>
             <Link
               className='fixed sm:relative bottom-3 right-3 sm:inset-0 w-11 sm:w-40 h-11 sm:h-8 border rounded-full border-green-700 flex items-center justify-center text-green-700 text-2xl sm:text-sm shadow-md bg-gray-50 hover:text-white hover:bg-green-700 active:shadow-inner'
               to={`${match.url}/new`}
@@ -75,17 +74,19 @@ const Forum = () => {
               {lessThan640 ? <span>&#65291;</span> : 'Create new post'}
             </Link>
           </div>
-          <div className='mt-4 sm:mt-8 space-y-4 sm:w-3/5 sm:mx-auto'>
-            {posts.length > 0
-              ? sortData(sortBy, posts).map(post => (
-                  filters.length === 0
-                    ? <PostPreview post={post} key={post._id} />
-                    : post.topics.some(topic => filters.includes(topic)) &&
-                        <PostPreview post={post} key={post._id} />
-                ))
-              : <p className='font-light sm:text-sm'>There are no posts to show.</p>
-            }
-          </div>
+          {posts.length > 0
+            ? sortData(sortPostsBy, posts).map(post => (
+                filters.length === 0
+                  ? <Link className='block min-w-0 w-full' to={`${match.url}/${post._id}`} key={post._id}>
+                      <PostPreview post={post} />
+                    </Link>
+                  : post.topics.some(topic => filters.includes(topic)) &&
+                      <Link className='block min-w-0 w-full' to={`${match.url}/${post._id}`} key={post._id}>
+                        <PostPreview post={post} />
+                      </Link>
+              ))
+            : <p className='font-light sm:text-sm'>There are no posts to show.</p>
+          }
         </div>
       </Route>
     </Switch>

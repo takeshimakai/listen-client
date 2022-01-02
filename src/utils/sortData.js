@@ -1,10 +1,8 @@
 const sortData = (sortBy, data) => {
   switch (sortBy) {
-    case 'oldest post':
-    case 'oldest comment':
+    case 'oldest':
       return data.sort((a, b) => new Date(a.datePosted) - new Date(b.datePosted));
-    case 'newest post':
-    case 'newest comment':
+    case 'newest':
       return data.sort((a, b) => new Date(b.datePosted) - new Date(a.datePosted));
     case 'oldest edit':
       return data.sort((a, b) => {
