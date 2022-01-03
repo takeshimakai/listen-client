@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { Switch, Route, useRouteMatch, Link, useParams } from 'react-router-dom';
+import { Switch, Route, useRouteMatch, Link, useParams, useHistory } from 'react-router-dom';
 
 import UserContext from "../../../contexts/UserContext";
 
@@ -13,9 +13,11 @@ import Card from "./Card";
 import FriendBtn from "../../../components/FriendBtn";
 
 const Profile = () => {
+  const history = useHistory();
   const match = useRouteMatch();
   const { userId } = useParams();
   const { token } = useContext(UserContext);
+  const { id } = decodeToken(token);
 
   const [friendshipStatus, setFriendshipStatus] = useState('');
   const [profile, setProfile] = useState({
@@ -27,9 +29,15 @@ const Profile = () => {
   });
 
   useEffect(() => {
+    if (userId === id) {
+      history.replace('/dashboard/profile');
+    }
+  }, [history, id, userId]);
+
+  useEffect(() => {
     (async () => {
       try {
-        const res = await getData(`/users/${userId ? userId : decodeToken(token).id}`, token);
+        const res = await getData(`/users/${userId ? userId : id}`, token);
         const user = await res.json();
 
         setProfile({
@@ -45,7 +53,12 @@ const Profile = () => {
         console.log(err);
       }
     })();
-  }, [token, userId]);
+
+    return () => {
+      setProfile();
+      setFriendshipStatus();
+    }
+  }, [token, userId, id]);
 
   return (
     <Switch>
