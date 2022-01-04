@@ -64,6 +64,9 @@ const LoginForm = ({ setIsLogin }) => {
           <p className='error-msg'>{errors && errors.password}</p>
         </div>
         <input className='primary-btn' type='submit' value='Sign in' />
+        <p className='mt-3.5 text-xs font-light text-blue-700 hover:text-blue-900 cursor-pointer'>
+          Forgot password?
+        </p>
         <div className='flex items-center h-10 my-2 max-w-2xs w-full'>
           <div className='flex-grow h-0 border-b border-gray-300 sm:border-gray-500' />
           <p className='px-2 text-sm text-gray-300 sm:text-gray-500 bg-transparent'>
