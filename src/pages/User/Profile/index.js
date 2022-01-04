@@ -77,21 +77,17 @@ const Profile = () => {
               <Card title='Problem topics' data={profile.problemTopics} />
             </div>
           </div>
-          {userId &&
-            <FriendBtn
-              userId={userId}
-              friendshipStatus={friendshipStatus}
-              setFriendshipStatus={setFriendshipStatus}
-            />
-          }
-          {!userId &&
-            <Link to={`${match.url}/edit`} className='xl:absolute xl:left-4 xl:top-80 mt-12 xl:mt-0'>
-              <button
-                className='tertiary-btn w-40'
-              >
-                Edit
-              </button>
-            </Link>
+          {userId
+            ? <FriendBtn
+                userId={userId}
+                friendshipStatus={friendshipStatus}
+                setFriendshipStatus={setFriendshipStatus}
+              />
+            : <Link to={`${match.url}/edit`} className='xl:absolute xl:left-4 xl:top-80 mt-12 xl:mt-0'>
+                <button className='tertiary-btn w-40'>
+                  Edit
+                </button>
+              </Link>
           }
         </div>
       </Route>
