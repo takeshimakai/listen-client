@@ -21,13 +21,14 @@ const Profile = () => {
 
   const [friendshipStatus, setFriendshipStatus] = useState('');
   const [profile, setProfile] = useState({
+    img: '',
     username: '',
     dob: '',
     gender: '',
     interests: [],
     problemTopics: [],
   });
-
+ 
   useEffect(() => {
     if (userId === id) {
       history.replace('/dashboard/profile');
@@ -41,6 +42,7 @@ const Profile = () => {
         const user = await res.json();
 
         setProfile({
+          img: user.profile.img,
           username: user.profile.username,
           dob: user.profile.dob ? formatDate(user.profile.dob) : '',
           gender: user.profile.gender || '',
@@ -67,7 +69,15 @@ const Profile = () => {
       </Route>
       <Route path={match.path}>
         <div className='pt-20 sm:pt-24 pb-12 xl:pb-0 px-12 xl:px-0 flex flex-col xl:flex-row items-center xl:items-start xl:relative xl:w-max xl:mx-auto'>
-          <img className='h-36 sm:h-48 rounded-full' src={defaultPic} alt='' />
+          <img
+            className='h-36 sm:h-48 rounded-full'
+            src={
+              profile.img
+                ? `data:${profile.img.contentType};base64,${profile.img.data}`
+                : defaultPic
+            }
+            alt=''
+          />
           <div className='flex flex-col items-center xl:items-start xl:ml-20 xl:w-60'>
             <p className='mt-4 xl:mt-0 text-lg font-bold text-gray-800'>{profile.username}</p>
             <div className='space-y-9 mt-9'>
