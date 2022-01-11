@@ -28,7 +28,7 @@ const UsernameInput = ({
       }
 
       setError();
-      setStep('dob');
+      setStep('picture');
     } catch (err) {
       console.log(err);
     }
@@ -55,7 +55,6 @@ const UsernameInput = ({
       <button
           className='primary-btn disabled:opacity-50 disabled:bg-green-700'
           id='next-btn'
-          value='dob'
           disabled={!profileInput.username}
           onClick={usernameValidation}
         >

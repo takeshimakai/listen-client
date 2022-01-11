@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import defaultPic from '../../../assets/default-profile.jpg';
 
-const ProfilePicture = ({ pic, setPic, newPic, setNewPic, setProfileInput }) => {
+const ProfilePicInput = ({ pic, setPic, newPic, setNewPic, setProfileInput }) => {
   const [error, setError] = useState(false);
 
   const selectFile = (e) => {
@@ -45,13 +45,15 @@ const ProfilePicture = ({ pic, setPic, newPic, setNewPic, setProfileInput }) => 
           alt=''
           onClick={changePic}
         />
-        <button
-          className='absolute text-xl text-gray-600 top-0 right-0 sm:right-4 rounded-full h-8 w-8 bg-gray-50'
-          type='button'
-          onClick={deletePic}
-        >
-          &#x2715;
-        </button>
+        {pic &&
+          <button
+            className='absolute text-xl text-gray-600 top-0 right-0 sm:right-4 rounded-full h-8 w-8 bg-gray-50'
+            type='button'
+            onClick={deletePic}
+          >
+            &#x2715;
+          </button>
+        }
       </div>
       <input
         className='opacity-0 h-0 w-0'
@@ -60,9 +62,9 @@ const ProfilePicture = ({ pic, setPic, newPic, setNewPic, setProfileInput }) => 
         accept='.jpeg, .jpg, .png'
         onChange={selectFile}
       />
-      <p className='error-msg'>{error && 'Invalid file type.'}</p>
+      <p className='error-msg'>{error && 'Must be jpg, jpeg, or png.'}</p>
     </>
   )
 }
 
-export default ProfilePicture;
+export default ProfilePicInput;

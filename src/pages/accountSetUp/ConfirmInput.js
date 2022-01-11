@@ -2,8 +2,10 @@ import { useContext } from "react";
 
 import UserContext from "../../contexts/UserContext";
 
-import postData from "../../utils/postData";
+import postDataWithFile from "../../utils/postDataWithFile";
 import setErrMsgs from "../../utils/setErrMsgs";
+
+import defaultPic from '../../assets/default-profile.jpg';
 
 import ProgressBar from "./ProgressBar";
 
@@ -12,7 +14,7 @@ const ConfirmInput = ({ profileInput, step, changeStep, setError }) => {
 
   const handleSubmit = async () => {
     try {
-      const res = await postData('/users', profileInput, token);
+      const res = await postDataWithFile('/users', profileInput, token);
       const data = await res.json();
 
       if (!res.ok) {
@@ -36,6 +38,15 @@ const ConfirmInput = ({ profileInput, step, changeStep, setError }) => {
             <div>
               <p className='account-setup-confirm-title'>Username</p>
               <p>{profileInput.username}</p>
+            </div>
+            <p className='separator'>&middot;</p>
+            <div>
+              <p className='account-setup-confirm-title'>Profile picture</p>
+              <img
+                className='mx-auto mt-3.5 h-28 rounded-full cursor-pointer'
+                src={profileInput.img ? URL.createObjectURL(profileInput.img) : defaultPic}
+                alt=''
+              />
             </div>
             <p className='separator'>&middot;</p>
             <div>

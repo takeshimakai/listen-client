@@ -34,7 +34,7 @@ const DobInput = ({
       <div className='w-full flex max-w-xs'>
         <button
           className='secondary-btn mr-1'
-          value='username'
+          value='picture'
           onClick={changeStep}
         >
           Back

@@ -7,16 +7,18 @@ const ProgressBar = ({ step }) => {
     switch (step) {
       case 'username':
         return setCurrent(0);
-      case 'dob':
+      case 'picture':
         return setCurrent(1);
-      case 'gender':
+      case 'dob':
         return setCurrent(2);
-      case 'interests':
+      case 'gender':
         return setCurrent(3);
-      case 'problemTopics':
+      case 'interests':
         return setCurrent(4);
-      case 'confirm':
+      case 'problemTopics':
         return setCurrent(5);
+      case 'confirm':
+        return setCurrent(6);
       default:
         return;
     }
@@ -29,7 +31,8 @@ const ProgressBar = ({ step }) => {
       <div className={`progress-bar ${current > 1 && 'progress-bar-fill'}`} />
       <div className={`progress-bar ${current > 2 && 'progress-bar-fill'}`} />
       <div className={`progress-bar ${current > 3 && 'progress-bar-fill'}`} />
-      <div className={`progress-bar rounded-r ${current > 4 && 'progress-bar-fill'}`} />
+      <div className={`progress-bar ${current > 4 && 'progress-bar-fill'}`} />
+      <div className={`progress-bar rounded-r ${current > 5 && 'progress-bar-fill'}`} />
     </div>
   )
 }

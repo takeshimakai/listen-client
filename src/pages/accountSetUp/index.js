@@ -6,6 +6,7 @@ import UserContext from '../../contexts/UserContext';
 import decodeToken from '../../utils/decodeToken';
 
 import UsernameInput from './UsernameInput';
+import ProfilePicInput from './ProfilePicInput';
 import DobInput from './DobInput';
 import GenderInput from './GenderInput';
 import InterestsInput from './InterestsInput';
@@ -22,6 +23,7 @@ const AccountSetUp = () => {
   const [step, setStep] = useState('username');
   const [profileInput, setProfileInput] = useState({
     username: '',
+    img: '',
     dob: '',
     gender: '',
     interests: [],
@@ -84,6 +86,15 @@ const AccountSetUp = () => {
             setError={setError}
             step={step}
             setStep={setStep}
+          />
+        }
+        {step === 'picture' &&
+          <ProfilePicInput
+            pic={profileInput.img}
+            setProfileInput={setProfileInput}
+            goNext={goNext}
+            step={step}
+            changeStep={changeStep}
           />
         }
         {step === 'dob' &&

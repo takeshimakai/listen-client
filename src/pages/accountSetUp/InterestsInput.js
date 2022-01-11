@@ -17,7 +17,10 @@ const InterestsInput = ({
   const [input, setInput] = useState('');
   const [duplicate, setDuplicate] = useState();
 
-  const handleInput = (e) => setInput(e.target.value);
+  const handleInput = (e) => {
+    const value = e.target.value.replace(/[^0-9a-zA-Z ]+/ig, '');
+    setInput(value);
+  };
 
   const addInterest = () => {
     const formatted = capitalizeStrAt0(sanitizeStr(input));

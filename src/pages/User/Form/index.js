@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import UserContext from "../../../contexts/UserContext";
 
-import ProfilePicture from "./ProfilePicture";
+import ProfilePicInput from "./ProfilePicInput";
 import DobInput from "./DobInput";
 import GenderInput from "./GenderInput";
 import InterestsInput from "./InterestsInput";
@@ -101,7 +101,7 @@ const ProfileForm = ({ setProfile }) => {
       className='pt-20 sm:pt-24 pb-12 xl:pb-0 px-12 xl:px-0 xl:mb-20 flex flex-col xl:flex-row items-center xl:items-start xl:relative xl:w-max xl:mx-auto'
       onSubmit={handleSubmit}
     >
-      <ProfilePicture pic={pic} setPic={setPic} newPic={newPic} setNewPic={setNewPic} setProfileInput={setProfileInput} />
+      <ProfilePicInput pic={pic} setPic={setPic} newPic={newPic} setNewPic={setNewPic} setProfileInput={setProfileInput} />
       <div className='flex flex-col items-center xl:items-start xl:ml-20 w-full'>
         <p className='xl:mt-0 text-lg font-bold text-gray-800'>{profileInput.username}</p>
         <div className='space-y-11 mt-9 xl:w-60 w-full max-w-xs'>
