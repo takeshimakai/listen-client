@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 import ProgressBar from "./ProgressBar";
 
@@ -8,10 +8,10 @@ const ProfilePicInput = ({
   pic,
   setProfileInput,
   step,
-  changeStep
+  changeStep,
+  err,
+  setErr
 }) => {
-  const [error, setError] = useState(false);
-
   useEffect(() => {
     const goNext = () => {
       if (pic) {
@@ -27,12 +27,16 @@ const ProfilePicInput = ({
     const file = e.target.files[0];
     const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
 
-    if (validTypes.includes(file.type)) {
-      setProfileInput(prev => ({ ...prev, img: file }));
-      setError(false);
-    } else {
-      setError(true);
+    if (!validTypes.includes(file.type)) {
+      return setErr(prev => ({ ...prev, picture: 'Must be jpg, jpeg, or png.' }));
     }
+
+    if (file.size > 500000) {
+      return setErr(prev => ({ ...prev, picture: 'File must be 0.5 MB or less.' }));
+    }
+
+    setErr(prev => ({ ...prev, picture: '' }));
+    setProfileInput(prev => ({ ...prev, img: file }));
   };
 
   const changePic = (e) => {
@@ -75,7 +79,7 @@ const ProfilePicInput = ({
           accept='.jpeg, .jpg, .png'
           onChange={selectFile}
         />
-        <p className='-mt-4 error-msg'>{error && 'Must be jpg, jpeg, or png.'}</p>
+        <p className='-mt-4 error-msg'>{err && err.picture}</p>
       </div>
       <div className='w-full flex max-w-xs'>
         <button
@@ -89,7 +93,10 @@ const ProfilePicInput = ({
           className='primary-btn ml-1'
           id='next-btn'
           value='dob'
-          onClick={changeStep}
+          onClick={(e) => {
+            setErr(prev => ({ ...prev, picture: '' }));
+            changeStep(e);
+          }}
         >
           {pic ? 'Next' : 'Skip'}
         </button>

@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import UserContext from '../../contexts/UserContext';
 
 import decodeToken from '../../utils/decodeToken';
+import postDataWithFile from '../../utils/postDataWithFile';
 
 import UsernameInput from './UsernameInput';
 import ProfilePicInput from './ProfilePicInput';
@@ -19,7 +20,7 @@ const AccountSetUp = () => {
   const { token, setToken } = useContext(UserContext);
 
   const [moreInfo, setMoreInfo] = useState(false);
-  const [error, setError] = useState();
+  const [err, setErr] = useState({ username: '', picture: '' });
   const [step, setStep] = useState('username');
   const [profileInput, setProfileInput] = useState({
     username: '',
@@ -40,10 +41,6 @@ const AccountSetUp = () => {
       history.replace('/');
     }
   }, [token, history]);
-
-  useEffect(() => {
-    error && setStep('username');
-  }, [error]);
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -70,6 +67,28 @@ const AccountSetUp = () => {
     }
   };
 
+  const handleSubmit = async () => {
+    try {
+      const res = await postDataWithFile('/users', profileInput, token);
+      const data = await res.json();
+
+      if (res.status === 413) {
+        setErr(prev => ({ ...prev, picture: data.msg }));
+        return setStep('picture');
+      }
+
+      if (res.status === 400) {
+        const { param, msg } = data.errors[0];
+        setErr(prev => ({ ...prev, [param]: msg }));
+        return setStep('username');
+      }
+
+      setToken(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className='h-screen flex flex-col'>
       <div className='flex justify-between py-2 px-4'>
@@ -82,8 +101,8 @@ const AccountSetUp = () => {
             profileInput={profileInput}
             handleInput={handleInput}
             goNext={goNext}
-            error={error}
-            setError={setError}
+            err={err}
+            setErr={setErr}
             step={step}
             setStep={setStep}
           />
@@ -95,6 +114,8 @@ const AccountSetUp = () => {
             goNext={goNext}
             step={step}
             changeStep={changeStep}
+            err={err}
+            setErr={setErr}
           />
         }
         {step === 'dob' &&
@@ -146,7 +167,7 @@ const AccountSetUp = () => {
             profileInput={profileInput}
             step={step}
             changeStep={changeStep}
-            setError={setError}
+            handleSubmit={handleSubmit}
           />
         }
       </div>

@@ -1,32 +1,8 @@
-import { useContext } from "react";
-
-import UserContext from "../../contexts/UserContext";
-
-import postDataWithFile from "../../utils/postDataWithFile";
-import setErrMsgs from "../../utils/setErrMsgs";
-
 import defaultPic from '../../assets/default-profile.jpg';
 
 import ProgressBar from "./ProgressBar";
 
-const ConfirmInput = ({ profileInput, step, changeStep, setError }) => {
-  const { token, setToken } = useContext(UserContext);
-
-  const handleSubmit = async () => {
-    try {
-      const res = await postDataWithFile('/users', profileInput, token);
-      const data = await res.json();
-
-      if (!res.ok) {
-        return setError(setErrMsgs(data.errors));
-      }
-
-      setToken(data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
+const ConfirmInput = ({ profileInput, step, changeStep, handleSubmit }) => {
   return (
     <>
       <div className='account-setup-input-container'>

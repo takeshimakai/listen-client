@@ -19,6 +19,7 @@ const ProfileForm = ({ setProfile }) => {
   const history = useHistory();
   const { token } = useContext(UserContext);
 
+  const [err, setErr] = useState();
   const [newPic, setNewPic] = useState(false);
   const [pic, setPic] = useState();
   const [profileInput, setProfileInput] = useState({
@@ -63,6 +64,11 @@ const ProfileForm = ({ setProfile }) => {
         res = await putData('/users', profileInput, token);
       }
 
+      if (!res.ok) {
+        const { msg } = await res.json();
+        return setErr(msg);
+      }
+
       const data = await res.json();
 
       setProfile(prev => ({
@@ -101,7 +107,15 @@ const ProfileForm = ({ setProfile }) => {
       className='pt-20 sm:pt-24 pb-12 xl:pb-0 px-12 xl:px-0 xl:mb-20 flex flex-col xl:flex-row items-center xl:items-start xl:relative xl:w-max xl:mx-auto'
       onSubmit={handleSubmit}
     >
-      <ProfilePicInput pic={pic} setPic={setPic} newPic={newPic} setNewPic={setNewPic} setProfileInput={setProfileInput} />
+      <ProfilePicInput
+        pic={pic}
+        setPic={setPic}
+        newPic={newPic}
+        setNewPic={setNewPic}
+        setProfileInput={setProfileInput}
+        err={err}
+        setErr={setErr}
+      />
       <div className='flex flex-col items-center xl:items-start xl:ml-20 w-full'>
         <p className='xl:mt-0 text-lg font-bold text-gray-800'>{profileInput.username}</p>
         <div className='space-y-11 mt-9 xl:w-60 w-full max-w-xs'>

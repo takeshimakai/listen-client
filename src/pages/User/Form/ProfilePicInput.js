@@ -1,21 +1,21 @@
-import { useState } from 'react';
-
 import defaultPic from '../../../assets/default-profile.jpg';
 
-const ProfilePicInput = ({ pic, setPic, newPic, setNewPic, setProfileInput }) => {
-  const [error, setError] = useState(false);
-
+const ProfilePicInput = ({ pic, setPic, newPic, setNewPic, setProfileInput, err, setErr }) => {
   const selectFile = (e) => {
     const file = e.target.files[0];
     const validTypes = ['image/jpeg', 'image/jpg', 'image/png'];
 
-    if (validTypes.includes(file.type)) {
-      setNewPic(true);
-      setPic(file);
-      setError(false);
-    } else {
-      setError(true);
+    if (!validTypes.includes(file.type)) {
+      return setErr('Must be jpg, jpeg, or png.');
     }
+
+    if (file.size > 500000) {
+      return setErr('File must be 0.5 MB or less.')
+    }
+
+    setNewPic(true);
+    setPic(file);
+    setErr();
   };
 
   const changePic = (e) => {
@@ -30,8 +30,8 @@ const ProfilePicInput = ({ pic, setPic, newPic, setNewPic, setProfileInput }) =>
   };
 
   return (
-    <>
-      <div className='relative xl:w-full'>
+    <div className='flex flex-col items-center xl:w-full'>
+      <div className='relative'>
         <img
           className='h-36 sm:h-48 rounded-full cursor-pointer'
           id='profile-picture'
@@ -56,14 +56,14 @@ const ProfilePicInput = ({ pic, setPic, newPic, setNewPic, setProfileInput }) =>
         }
       </div>
       <input
-        className='opacity-0 h-0 w-0'
         id='img-input'
         type='file'
         accept='.jpeg, .jpg, .png'
         onChange={selectFile}
+        hidden
       />
-      <p className='error-msg'>{error && 'Must be jpg, jpeg, or png.'}</p>
-    </>
+      <p className='error-msg text-center'>{err && err}</p>
+    </div>
   )
 }
 

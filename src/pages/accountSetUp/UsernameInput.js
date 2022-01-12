@@ -3,7 +3,6 @@ import { useContext } from "react";
 import UserContext from "../../contexts/UserContext";
 
 import getData from "../../utils/getData";
-import setErrMsgs from "../../utils/setErrMsgs";
 
 import ProgressBar from "./ProgressBar";
 
@@ -11,8 +10,8 @@ const UsernameInput = ({
   profileInput,
   handleInput,
   goNext,
-  error,
-  setError,
+  err,
+  setErr,
   step,
   setStep
 }) => {
@@ -23,11 +22,11 @@ const UsernameInput = ({
       const res = await getData(`/users/username/${profileInput.username}`, token);
 
       if (!res.ok) {
-        const data = await res.json();
-        return setError(setErrMsgs(data.errors));
+        const { errors } = await res.json();
+        return setErr(prev => ({ ...prev, username: errors[0].msg }));
       }
 
-      setError();
+      setErr(prev => ({ ...prev, username: '' }));
       setStep('picture');
     } catch (err) {
       console.log(err);
@@ -49,7 +48,7 @@ const UsernameInput = ({
             onKeyDown={goNext}
           />
           <p className='text-xs mt-1 text-gray-500'>This field is required.</p>
-          <p className='error-msg'>{error && error.username}</p>
+          <p className='error-msg'>{err && err.username}</p>
         </div>
       </div>
       <button
