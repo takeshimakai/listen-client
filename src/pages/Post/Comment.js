@@ -53,6 +53,17 @@ const Comment = ({
     }
   }
 
+  const commentBy = (
+    <span>
+      {!comment.postedBy
+        ? 'deleted user'
+        : <Link className='text-blue-700 hover:text-blue-900' to={`/users/${comment.postedBy._id}`}>
+            {comment.postedBy.profile.username}
+          </Link>
+      }
+    </span>
+  )
+
   return (
     <div className='border-l border-gray-300 pl-2'>
       <div className='mb-4'>
@@ -67,7 +78,7 @@ const Comment = ({
               <p className='font-light sm:text-sm text-gray-700 whitespace-pre-wrap mb-2'>{comment.content}</p>
               <div className='mb-1'>
                 <p className='text-xs font-light text-gray-400'>
-                  Comment by <Link className='text-blue-700 hover:text-blue-900' to={`/users/${comment.postedBy._id}`}>{comment.postedBy.profile.username}</Link> on {formatDate(comment.datePosted)}
+                  Comment by {commentBy} on {formatDate(comment.datePosted)}
                 </p>
                 {comment.dateEdited &&
                   <p className='text-xs font-light text-gray-400'>
@@ -76,7 +87,7 @@ const Comment = ({
                 }
                 <p className='text-xs font-light text-gray-400'>Relatability {comment.relatable.length}</p>
               </div>
-              {user.id === comment.postedBy._id
+              {comment.postedBy && comment.postedBy._id === user.id
                 ? <div className='flex items-center justify-between'>
                     <button
                       className='font-light text-blue-700 hover:text-blue-900 text-xs'

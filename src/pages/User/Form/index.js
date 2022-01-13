@@ -12,12 +12,13 @@ import ProblemTopicsInput from "./ProblemTopicsInput";
 import putDataWithFile from "../../../utils/putDataWithFile";
 import putData from '../../../utils/putData';
 import getData from "../../../utils/getData";
+import deleteData from '../../../utils/deleteData';
 import formatDate from "../../../utils/formatDate";
 import decodeToken from "../../../utils/decodeToken";
 
 const ProfileForm = ({ setProfile }) => {
   const history = useHistory();
-  const { token } = useContext(UserContext);
+  const { token, setToken } = useContext(UserContext);
 
   const [err, setErr] = useState();
   const [newPic, setNewPic] = useState(false);
@@ -102,6 +103,18 @@ const ProfileForm = ({ setProfile }) => {
             }));
   };
 
+  const deleteAccount = async () => {
+    try {
+      const res = await deleteData('/users', undefined, token);
+
+      if (res.ok) {
+        setToken('');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <form
       className='pt-20 sm:pt-24 pb-12 xl:pb-0 px-12 xl:px-0 xl:mb-20 flex flex-col xl:flex-row items-center xl:items-start xl:relative xl:w-max xl:mx-auto'
@@ -125,18 +138,23 @@ const ProfileForm = ({ setProfile }) => {
           <ProblemTopicsInput profileInput={profileInput} handleInput={handleInput} />
         </div>
       </div>
-      <div className='xl:absolute xl:left-4 xl:top-80 mt-12 xl:mt-0 w-full xl:w-40 flex xl:block max-w-xs xl:space-y-2.5'>
-        <input
-          className='secondary-btn mr-1 xl:mr-0'
-          type='button'
-          value='Cancel'
-          onClick={() => history.goBack()}
-        />
-        <input
-          className='primary-btn ml-1 xl:ml-0'
-          type='submit'
-          value='Save'
-        />
+      <div className='text-center xl:absolute xl:left-4 xl:top-80 mt-10 xl:mt-0 w-full xl:w-40 max-w-xs'>
+        <div className='flex xl:flex-col w-full xl:space-y-2.5'>
+          <input
+            className='secondary-btn mr-1 xl:mr-0'
+            type='button'
+            value='Cancel'
+            onClick={() => history.goBack()}
+          />
+          <input
+            className='primary-btn ml-1 xl:ml-0'
+            type='submit'
+            value='Save'
+          />
+        </div>
+        <button className='mt-5 text-red-600 text-xs' type='button' onClick={deleteAccount} >
+          Delete account
+        </button>
       </div>
     </form>
   )

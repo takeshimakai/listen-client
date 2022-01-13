@@ -13,7 +13,7 @@ import YourComment from "./YourComment";
 const ForumActivity = () => {
   const { token } = useContext(UserContext);
 
-  const [activity, setActivity] = useState();
+  const [activity, setActivity] = useState({ posts: [], comments: [] });
   const [sortPostsBy, setSortPostsBy] = useState('newest');
   const [sortCommentsBy, setSortCommentsBy] = useState('newest');
 
@@ -42,7 +42,7 @@ const ForumActivity = () => {
           <Sort sortBy={sortPostsBy} setSortBy={setSortPostsBy} />
         </div>
         <div className='space-y-4'>
-          {activity
+          {activity.posts.length > 0
             ? sortData(sortPostsBy, activity.posts).map(post => (
                 <Link className='block' to={`/forum/${post._id}`} key={post._id}>
                   <PostPreview post={post} />
@@ -58,7 +58,7 @@ const ForumActivity = () => {
           <Sort sortBy={sortCommentsBy} setSortBy={setSortCommentsBy} />
         </div>
         <div className='space-y-4'>
-          {activity
+          {activity.comments.length > 0
             ? sortData(sortCommentsBy, activity.comments).map(comment => (
                 <Link className='block' to={`/forum/${comment.postId._id}`} key={comment._id}>
                   <YourComment comment={comment} />

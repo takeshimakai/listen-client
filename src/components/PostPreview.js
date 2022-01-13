@@ -1,6 +1,15 @@
 import formatDate from '../utils/formatDate';
 
 const PostPreview = ({ post }) => {
+  const postedBy = (
+    <span>
+      {!post.postedBy
+        ? 'by deleted user'
+        : post.postedBy.profile && `by ${post.postedBy.profile.username}`
+      }
+    </span>
+  );
+
   return (
     <div className='border rounded-lg shadow-md px-4 py-3'>
       <h4 className='post-title mb-2'>{post.title}</h4>
@@ -8,7 +17,7 @@ const PostPreview = ({ post }) => {
         <p className='truncate font-light sm:text-sm text-gray-700'>{post.content}</p>
         <div>
           <p className='text-xs font-light text-gray-400'>
-            Posted {post.postedBy.profile && `by ${post.postedBy.profile.username}`} on {formatDate(post.datePosted)}
+            Posted {postedBy} on {formatDate(post.datePosted)}
           </p>
           {post.dateEdited &&
             <p className='text-xs font-light text-gray-400'>
