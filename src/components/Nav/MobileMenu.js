@@ -44,18 +44,18 @@ const MobileMenu = () => {
       >
         <div id='mobile-app-menu' className='flex flex-col items-center space-y-2'>
           <Link to='/dashboard' className='font-light'>Dashboard</Link>
-          <Link to='/listen' className='font-light'>Listen</Link>
-          <Link to='/talk' className='font-light'>Talk</Link>
+          <Link to={{ pathname: '/chat', state: { action: 'listen' } }} className='font-light'>Listen</Link>
+          <Link to={{ pathname: '/chat', state: { action: 'talk' } }} className='font-light'>Talk</Link>
           <Link to='/forum' className='font-light'>Forum</Link>
         </div>
         <div id='mobile-user-menu' className='space-y-2 flex flex-col items-center'>
-          <Link to='/dashboard/profile' className='font-light'>
+          <Link to='/profile' className='font-light'>
             Profile
           </Link>
-          <Link to='/dashboard/friends' className='font-light'>
+          <Link to='/friends' className='font-light'>
             Friends
           </Link>
-          <Link to='/dashboard/forum-activity' className='font-light'>
+          <Link to='/forum-activity' className='font-light'>
             Forum Activity
           </Link>
         </div>

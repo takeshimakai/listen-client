@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 
-const MenuCard = ({ illustration, summary, label, path }) => {
+const MenuCard = ({ illustration, summary, label, to }) => {
   const [isLessThan1280, setIsLessThan1280] = useState(window.innerWidth < 1280);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const MenuCard = ({ illustration, summary, label, path }) => {
         {summary}
       </p>
       {isLessThan1280
-        ? <Link to={path}>
+        ? <Link to={to}>
             <button className='shadow-md border border-green-700 hover:bg-green-700 active:shadow-inner-2 text-green-700 hover:text-white text-sm w-40 h-8 rounded-full'>
               {label}
             </button>
@@ -34,7 +34,7 @@ const MenuCard = ({ illustration, summary, label, path }) => {
   return (
     isLessThan1280
       ? card
-      : <Link to={path}>
+      : <Link to={to}>
           {card}
         </Link>
   )

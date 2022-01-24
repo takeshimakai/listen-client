@@ -15,6 +15,9 @@ import Dashboard from './pages/Dashboard';
 import AccountSetUp from './pages/AccountSetUp';
 import Home from './pages/Home';
 import EmailVerification from './pages/EmailVerification';
+import Friends from './pages/Friends';
+import ForumActivity from './pages/ForumActivity';
+import Chat from './pages/Chat';
 
 const App = () => {
   const [token, setToken] = useState(JSON.parse(localStorage.getItem('token')));
@@ -47,8 +50,12 @@ const App = () => {
       <BrowserRouter>
         {initialized && <Nav />}
         <Switch>
+          <ProtectedRoute path='/chat' component={Chat} />
           <ProtectedRoute path='/users/:userId' component={Profile} />
           <ProtectedRoute path='/forum' component={Forum} />
+          <ProtectedRoute path='/forum-activity' component={ForumActivity} />
+          <ProtectedRoute path='/friends' component={Friends} />
+          <ProtectedRoute path='/profile' component={Profile} />
           <ProtectedRoute path='/dashboard' component={Dashboard} />
           <Route path='/verify' component={EmailVerification} />
           <Route path='/account-setup' component={AccountSetUp} />

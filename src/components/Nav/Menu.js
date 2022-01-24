@@ -43,8 +43,8 @@ const Menu = () => {
     <div className='flex space-x-8'>
       <div className='flex items-center space-x-8'>
         <Link to='/dashboard' className='font-light text-sm hover:text-gray-500'>Dashboard</Link>
-        <Link to='/listen' className='font-light text-sm hover:text-gray-500'>Listen</Link>
-        <Link to='/talk' className='font-light text-sm hover:text-gray-500'>Talk</Link>
+        <Link to={{ pathname: '/chat', state: { action: 'listen' } }} className='font-light text-sm hover:text-gray-500'>Listen</Link>
+        <Link to={{ pathname: '/chat', state: { action: 'talk' } }} className='font-light text-sm hover:text-gray-500'>Talk</Link>
         <Link to='/forum' className='font-light text-sm hover:text-gray-500'>Forum</Link>
       </div>
       <button
@@ -59,13 +59,13 @@ const Menu = () => {
         className='hidden absolute top-11 right-4 h-48 flex flex-col justify-between bg-gray-50 p-6 border rounded-md shadow-lg'
       >
         <div className='flex flex-col space-y-2'>
-          <Link to='/dashboard/profile' className='font-light text-sm hover:text-gray-500 w-max'>
+          <Link to='/profile' className='font-light text-sm hover:text-gray-500 w-max'>
             Profile
           </Link>
-          <Link to='/dashboard/friends' className='font-light text-sm hover:text-gray-500 w-max'>
+          <Link to='/friends' className='font-light text-sm hover:text-gray-500 w-max'>
             Friends
           </Link>
-          <Link to='/dashboard/forum-activity' className='font-light hover:text-gray-500 text-sm w-max'>
+          <Link to='/forum-activity' className='font-light hover:text-gray-500 text-sm w-max'>
             Forum Activity
           </Link>
         </div>
