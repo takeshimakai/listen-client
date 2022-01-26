@@ -38,11 +38,13 @@ const InterestsInput = ({ input, setInput }) => {
   };
 
   return (
-    <div>
-      <label>Interests</label>
-      <div className='relative w-full mt-1'>
+    <>
+      <label className='subtitle text-center mb-6'>
+        What common interests would you like them to have?
+      </label>
+      <div className='relative'>
         <input
-          className='text-center pr-10 w-full py-1 border-b border-gray-500 sm:text-sm text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
+          className='text-center pr-10 py-1 border-b border-gray-500 sm:text-sm text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
           type='text'
           value={interestInput}
           onChange={handleInput}
@@ -65,7 +67,7 @@ const InterestsInput = ({ input, setInput }) => {
       <div>
         <p className='error-msg mt-1'>{duplicate && `${duplicate} has already been added.`}</p>
       </div>
-      <ul className='mt-1 text-center xl:text-left'>
+      <ul className='overflow-auto text-center mt-2'>
         {input.interests.map(interest => (
           <li
             className='m-0.5 cursor-pointer inline-block text-sm text-gray-900 hover:text-white border-green-900 border-opacity-40 hover:border-opacity-0 border rounded-full py-0.5 px-2.5 hover:bg-green-900 hover:bg-opacity-40 active:bg-opacity-40 active:bg-opacity-40'
@@ -77,7 +79,7 @@ const InterestsInput = ({ input, setInput }) => {
           </li>
         ))}
       </ul>
-    </div>
+    </>
   )
 }
 

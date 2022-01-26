@@ -10,19 +10,19 @@ const AwaitMatchModal = ({ action, setAwaitMatch, setConnected, socket }) => {
 
     if (elapsedSec === 20) {
       clearInterval(intervalID);
+      socket.disconnect();
     }
 
     return () => clearInterval(intervalID);
-  }, [elapsedSec]);
+  }, [elapsedSec, socket]);
 
   const confirm = () => {
     setAwaitMatch(false);
     setConnected(false);
-    socket.disconnect();
   };
 
   return (
-    <div className='cursor-wait bg-gray-200 bg-opacity-60 absolute m-auto inset-0 z-10 flex justify-center items-center'>
+    <div className={`${elapsedSec < 20 && 'cursor-wait'} bg-gray-200 bg-opacity-60 absolute m-auto inset-0 z-10 flex justify-center items-center`}>
       <div className='bg-gray-50 w-3/4 border rounded-lg shadow-md p-4 text-center'>
         <p>
           {
@@ -37,7 +37,7 @@ const AwaitMatchModal = ({ action, setAwaitMatch, setConnected, socket }) => {
           <>
             <p>
               {action === 'talk'
-                ? "Please try again after modifying your filters or at a later time."
+                ? "Please try again after modifying your criteria or at a later time."
                 : "Please try again later."
               }
             </p>

@@ -34,8 +34,10 @@ module.exports = {
       boxShadow: ['active'],
       opacity: ['disabled'],
       backgroundColor: ['disabled'],
+      borderColor: ['disabled'],
       borderWidth: ['hover', 'active'],
-      padding: ['active']
+      padding: ['active'],
+      textColor: ['disabled']
     },
   },
   plugins: [],

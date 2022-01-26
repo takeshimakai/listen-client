@@ -4,9 +4,11 @@ import Checkbox from '../../../components/Checkbox';
 
 const ProblemTopics = ({ input, handleInput }) => {
   return (
-    <div>
-      <label>Problem topics</label>
-      <div className='mt-1'>
+    <>
+      <label className='subtitle text-center mb-6'>
+        Which topics would you like them to have some understanding of?
+      </label>
+      <div className='overflow-auto sm:px-3'>
         {data.categories.map(category => (
           <Checkbox
             key={category}
@@ -17,7 +19,7 @@ const ProblemTopics = ({ input, handleInput }) => {
           />
         ))}
       </div>
-    </div>
+    </>
   )
 }
 
