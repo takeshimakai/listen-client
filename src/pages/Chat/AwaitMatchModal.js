@@ -23,7 +23,7 @@ const AwaitMatchModal = ({ action, setAwaitMatch, setConnected, socket }) => {
 
   return (
     <div className={`${elapsedSec < 20 && 'cursor-wait'} bg-gray-200 bg-opacity-60 absolute m-auto inset-0 z-10 flex justify-center items-center`}>
-      <div className='bg-gray-50 w-3/4 border rounded-lg shadow-md p-4 text-center'>
+      <div className='text-center bg-gray-50 w-3/4 sm:max-w-lg border rounded-lg shadow-md px-4 py-8'>
         <p>
           {
             (elapsedSec === 0 && "We're looking for a match...") ||

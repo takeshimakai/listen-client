@@ -32,8 +32,8 @@ const Chat = ({ location }) => {
 
   useEffect(() => {
     if (connected) {
-      unblock.current = history.block(({ pathname }) => {
-        setPath(pathname);
+      unblock.current = history.block(({ pathname, state }) => {
+        setPath({ pathname, state });
         setPreventNav(true);
         return false;
       });
@@ -124,7 +124,7 @@ const Chat = ({ location }) => {
   return (
     <div className='h-screen pt-16'>
       {awaitMatch && <AwaitMatchModal action={action} setAwaitMatch={setAwaitMatch} setConnected={setConnected} socket={socket} />}
-      {preventNav && <BlockModal unblock={unblock} path={path} setPreventNav={setPreventNav} />}
+      {preventNav && <BlockModal unblock={unblock} path={path} setPreventNav={setPreventNav} setSocket={setSocket} />}
       {connected &&
         <div className='h-full px-4 pb-4 flex flex-col justify-between'>
           <OtherUser otherUser={otherUser} />
