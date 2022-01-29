@@ -13,8 +13,8 @@ const BlockModal = ({ unblock, path, setPreventNav }) => {
     <div className='bg-gray-200 bg-opacity-60 absolute m-auto inset-0 z-10 flex justify-center items-center'>
       <div className='bg-gray-50 w-3/4 sm:max-w-lg border rounded-lg shadow-md px-4 pb-4 pt-8'>
         <div className='text-center'>
-          <p>You will be disconnected.</p>
-          <p>Are you sure you want to leave?</p>
+          <p className='font-light sm:text-sm'>You will be disconnected.</p>
+          <p className='font-light sm:text-sm'>Are you sure you want to leave?</p>
         </div>
         <div className='flex mx-auto mt-6 max-w-xs'>
           <button className='secondary-btn mr-1' onClick={() => setPreventNav(false)}>Cancel</button>

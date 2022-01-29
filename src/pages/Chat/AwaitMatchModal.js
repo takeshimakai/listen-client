@@ -24,7 +24,7 @@ const AwaitMatchModal = ({ action, setAwaitMatch, setConnected, socket }) => {
   return (
     <div className={`${elapsedSec < 20 && 'cursor-wait'} bg-gray-200 bg-opacity-60 absolute m-auto inset-0 z-10 flex justify-center items-center`}>
       <div className='text-center bg-gray-50 w-3/4 sm:max-w-lg border rounded-lg shadow-md px-4 py-8'>
-        <p>
+        <p className='font-light sm:text-sm'>
           {
             (elapsedSec === 0 && "We're looking for a match...") ||
             (elapsedSec === 5 && "Hold tight, we're still looking...") ||
@@ -35,7 +35,7 @@ const AwaitMatchModal = ({ action, setAwaitMatch, setConnected, socket }) => {
         </p>
         {elapsedSec === 20 &&
           <>
-            <p>
+            <p className='font-light sm:text-sm'>
               {action === 'talk'
                 ? "Please try again after modifying your criteria or at a later time."
                 : "Please try again later."

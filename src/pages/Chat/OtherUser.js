@@ -2,7 +2,7 @@ import defaultPic from '../../assets/default-profile.jpg';
 
 const OtherUser = ({ otherUser }) => {
   return (
-    <div className='flex flex-col items-center'>
+    <div className='flex flex-col items-center sm:flex-grow sm:max-w-sm'>
       <img
         className='h-20 rounded-full'
         src={

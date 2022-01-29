@@ -31,6 +31,12 @@ const Chat = ({ location }) => {
   const [path, setPath] = useState();
 
   useEffect(() => {
+    const socketio = io('http://localhost:5000', { autoConnect: false });
+    setSocket(socketio);
+    return () => socketio.disconnect();
+  }, []);
+
+  useEffect(() => {
     if (connected) {
       unblock.current = history.block(({ pathname, state }) => {
         setPath({ pathname, state });
@@ -41,12 +47,6 @@ const Chat = ({ location }) => {
       return () => unblock.current();
     }
   }, [connected, history]);
-
-  useEffect(() => {
-    const socketio = io('http://localhost:5000', { autoConnect: false });
-    setSocket(socketio);
-    return () => socketio.disconnect();
-  }, []);
 
   useEffect(() => {
     if (socket) {
@@ -69,20 +69,20 @@ const Chat = ({ location }) => {
 
       socket.on('otherUser disconnected', () => {
         const msgsContainer = document.querySelector('#msgs-container');
-        const div = document.createElement('div');
+        const p = document.createElement('p');
         const notification = document.createTextNode(`${otherUser.username} disconnected`);
-        div.classList.add('text-center', 'italic', 'font-light', 'text-gray-400');
-        div.appendChild(notification);
-        msgsContainer.appendChild(div);
+        p.classList.add('text-center', 'italic', 'font-light', 'text-gray-400', 'sm:text-sm');
+        p.appendChild(notification);
+        msgsContainer.appendChild(p);
       });
 
       socket.on('otherUser reconnected', () => {
         const msgsContainer = document.querySelector('#msgs-container');
-        const div = document.createElement('div');
+        const p = document.createElement('p');
         const notification = document.createTextNode(`${otherUser.username} reconnected`);
-        div.classList.add('text-center', 'italic', 'font-light', 'text-gray-400');
-        div.appendChild(notification);
-        msgsContainer.appendChild(div);
+        p.classList.add('text-center', 'italic', 'font-light', 'text-gray-400', 'sm:text-sm');
+        p.appendChild(notification);
+        msgsContainer.appendChild(p);
       });
 
       socket.on('match found', ({ roomID, listener, talker }) => {
@@ -126,10 +126,12 @@ const Chat = ({ location }) => {
       {awaitMatch && <AwaitMatchModal action={action} setAwaitMatch={setAwaitMatch} setConnected={setConnected} socket={socket} />}
       {preventNav && <BlockModal unblock={unblock} path={path} setPreventNav={setPreventNav} setSocket={setSocket} />}
       {connected &&
-        <div className='h-full px-4 pb-4 flex flex-col justify-between'>
+        <div className='h-full px-4 pb-4 flex flex-col sm:flex-row'>
           <OtherUser otherUser={otherUser} />
-          <Messages msgs={msgs} id={id} />
-          <Input socket={socket} setMsgs={setMsgs} id={id} />
+          <div className='flex-grow flex flex-col min-h-0'>
+            <Messages msgs={msgs} id={id} />
+            <Input socket={socket} setMsgs={setMsgs} id={id} />
+          </div>
         </div>
       }
       {!connected && action === 'listen' &&
