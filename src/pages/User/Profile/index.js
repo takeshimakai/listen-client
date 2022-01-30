@@ -31,7 +31,7 @@ const Profile = () => {
  
   useEffect(() => {
     if (userId === id) {
-      history.replace('/dashboard/profile');
+      history.replace('/profile');
     }
   }, [history, id, userId]);
 
@@ -72,19 +72,19 @@ const Profile = () => {
           <img
             className='h-36 sm:h-48 rounded-full'
             src={
-              profile.img
+              profile && profile.img
                 ? `data:${profile.img.contentType};base64,${profile.img.data}`
                 : defaultPic
             }
             alt=''
           />
           <div className='flex flex-col items-center xl:items-start xl:ml-20 xl:w-60'>
-            <p className='mt-4 xl:mt-0 text-lg font-bold text-gray-800'>{profile.username}</p>
+            <p className='mt-4 xl:mt-0 text-lg font-bold text-gray-800'>{profile && profile.username}</p>
             <div className='space-y-9 mt-9'>
-              <Card title='Date of birth' data={profile.dob} />
-              <Card title='Gender' data={profile.gender} />
-              <Card title='Interests' data={profile.interests} />
-              <Card title='Problem topics' data={profile.problemTopics} />
+              <Card title='Date of birth' data={profile && profile.dob} />
+              <Card title='Gender' data={profile && profile.gender} />
+              <Card title='Interests' data={profile && profile.interests} />
+              <Card title='Problem topics' data={profile && profile.problemTopics} />
             </div>
           </div>
           {userId

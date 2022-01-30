@@ -2,7 +2,7 @@ import defaultPic from '../../assets/default-profile.jpg';
 
 const OtherUser = ({ otherUser }) => {
   return (
-    <div className='flex flex-col items-center sm:flex-grow sm:max-w-sm'>
+    <div className='flex flex-col items-center'>
       <img
         className='h-20 rounded-full'
         src={
@@ -12,7 +12,7 @@ const OtherUser = ({ otherUser }) => {
         }
         alt=''
       />
-      <p>{otherUser && otherUser.username}</p>
+      <p className='font-light mt-1 sm:text-sm'>{otherUser && otherUser.username}</p>
     </div>
   )
 }

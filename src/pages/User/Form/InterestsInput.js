@@ -10,7 +10,7 @@ const InterestsInput = ({ profileInput, setProfileInput, handleInput }) => {
   const [duplicate, setDuplicate] = useState();
 
   const handleInterestInput = (e) => {
-    const value = e.target.value.replace(/[^0-9a-zA-Z ]+/ig, '');
+    const value = e.target.value.replace(/[^a-zA-Z ]+/ig, '');
     setInput(value);
   };
 

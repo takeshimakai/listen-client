@@ -4,7 +4,7 @@ const Messages = ({ msgs, id }) => {
   return (
     <div
       id='msgs-container'
-      className='min-h-0 overflow-auto flex-grow flex flex-col space-y-2 mt-4'
+      className='min-h-0 overflow-auto flex-grow flex flex-col space-y-2 mt-10 sm:mt-0'
     >
       {msgs.map(({ msg, from }) => (
         <p

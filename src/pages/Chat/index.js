@@ -11,6 +11,8 @@ import AwaitMatchModal from './AwaitMatchModal';
 import OtherUser from './OtherUser';
 import Messages from './Messages';
 import Input from './Input';
+import MobileOptions from './MobileOptions';
+import Options from './Options';
 
 import decodeToken from '../../utils/decodeToken';
 
@@ -126,8 +128,12 @@ const Chat = ({ location }) => {
       {awaitMatch && <AwaitMatchModal action={action} setAwaitMatch={setAwaitMatch} setConnected={setConnected} socket={socket} />}
       {preventNav && <BlockModal unblock={unblock} path={path} setPreventNav={setPreventNav} setSocket={setSocket} />}
       {connected &&
-        <div className='h-full px-4 pb-4 flex flex-col sm:flex-row'>
-          <OtherUser otherUser={otherUser} />
+        <div className='relative h-full px-4 pb-4 flex flex-col sm:flex-row'>
+          <div className='relative sm:flex-grow sm:max-w-sm sm:flex sm:flex-col'>
+            <OtherUser otherUser={otherUser} />
+            <Options />
+            <MobileOptions />
+          </div>
           <div className='flex-grow flex flex-col min-h-0'>
             <Messages msgs={msgs} id={id} />
             <Input socket={socket} setMsgs={setMsgs} id={id} />
