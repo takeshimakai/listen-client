@@ -13,8 +13,10 @@ import Messages from './Messages';
 import Input from './Input';
 import MobileOptions from './MobileOptions';
 import Options from './Options';
+import Profile from './Profile';
 
 import decodeToken from '../../utils/decodeToken';
+import formatDate from '../../utils/formatDate';
 
 const Chat = ({ location }) => {
   const history = useHistory();
@@ -25,8 +27,17 @@ const Chat = ({ location }) => {
   const [socket, setSocket] = useState();
   const [connected, setConnected] = useState(false);
   const [msgs, setMsgs] = useState([]);
-  const [otherUser, setOtherUser] = useState();
   const [awaitMatch, setAwaitMatch] = useState(false);
+  const [viewProfile, setViewProfile] = useState(false);
+  const [otherUser, setOtherUser] = useState({
+    userID: '',
+    img: '',
+    username: '',
+    dob: '',
+    gender: '',
+    interests: [],
+    problemTopics: []
+  });
 
   const unblock = useRef();
   const [preventNav, setPreventNav] = useState(false);
@@ -66,7 +77,15 @@ const Chat = ({ location }) => {
     if (socket) {
       socket.on('reconnect', ({ msgs, otherUser }) => {
         setMsgs(msgs);
-        setOtherUser(otherUser);
+        setOtherUser({
+          userID: otherUser.userID,
+          img: otherUser.img || '',
+          username: otherUser.username,
+          dob: otherUser.dob ? formatDate(otherUser.dob) : '',
+          gender: otherUser.gender || '',
+          interests: otherUser.interests || [],
+          problemTopics: otherUser.problemTopics || []
+        });
       });
 
       socket.on('otherUser disconnected', () => {
@@ -89,12 +108,28 @@ const Chat = ({ location }) => {
 
       socket.on('match found', ({ roomID, listener, talker }) => {
         if (action === 'listen') {
-          setOtherUser(talker);
+          setOtherUser({
+            userID: talker.userID,
+            img: talker.img || '',
+            username: talker.username,
+            dob: talker.dob ? formatDate(talker.dob) : '',
+            gender: talker.gender || '',
+            interests: talker.interests || [],
+            problemTopics: talker.problemTopics || []
+          });
           socket.emit('listener setup', { roomID, talker });
         }
 
         if (action === 'talk') {
-          setOtherUser(listener);
+          setOtherUser({
+            userID: listener.userID,
+            img: listener.img || '',
+            username: listener.username,
+            dob: listener.dob ? formatDate(otherUser.dob) : '',
+            gender: listener.gender || '',
+            interests: listener.interests || [],
+            problemTopics: listener.problemTopics || []
+          });
         }
 
         setAwaitMatch(false);
@@ -123,14 +158,16 @@ const Chat = ({ location }) => {
     socket.emit('initiate', { role, filters });
   };
 
+  const toggleView = () => setViewProfile(!viewProfile);
+
   return (
     <div className='h-screen pt-16'>
       {awaitMatch && <AwaitMatchModal action={action} setAwaitMatch={setAwaitMatch} setConnected={setConnected} socket={socket} />}
       {preventNav && <BlockModal unblock={unblock} path={path} setPreventNav={setPreventNav} setSocket={setSocket} />}
       {connected &&
         <div className='relative h-full px-4 pb-4 flex flex-col sm:flex-row'>
-          <div className='relative sm:flex-grow sm:max-w-sm sm:flex sm:flex-col'>
-            <OtherUser otherUser={otherUser} />
+          <div className='relative sm:flex-grow sm:max-w-sm sm:flex sm:flex-col sm:justify-between sm:items-center'>
+            <OtherUser otherUser={otherUser} toggleView={toggleView} />
             <Options />
             <MobileOptions />
           </div>
@@ -138,6 +175,7 @@ const Chat = ({ location }) => {
             <Messages msgs={msgs} id={id} />
             <Input socket={socket} setMsgs={setMsgs} id={id} />
           </div>
+          {viewProfile && <Profile profile={otherUser} toggleView={toggleView} socket={socket} />}
         </div>
       }
       {!connected && action === 'listen' &&

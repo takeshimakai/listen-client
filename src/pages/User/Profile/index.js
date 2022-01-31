@@ -26,7 +26,7 @@ const Profile = () => {
     dob: '',
     gender: '',
     interests: [],
-    problemTopics: [],
+    problemTopics: []
   });
  
   useEffect(() => {
@@ -47,7 +47,7 @@ const Profile = () => {
           dob: user.profile.dob ? formatDate(user.profile.dob) : '',
           gender: user.profile.gender || '',
           interests: user.profile.interests || [],
-          problemTopics: user.profile.problemTopics || [],
+          problemTopics: user.profile.problemTopics || []
         });
 
         setFriendshipStatus(user.friendshipStatus);
