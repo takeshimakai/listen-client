@@ -36,7 +36,8 @@ const Chat = ({ location }) => {
     dob: '',
     gender: '',
     interests: [],
-    problemTopics: []
+    problemTopics: [],
+    isConnected: false
   });
 
   const unblock = useRef();
@@ -84,26 +85,17 @@ const Chat = ({ location }) => {
           dob: otherUser.dob ? formatDate(otherUser.dob) : '',
           gender: otherUser.gender || '',
           interests: otherUser.interests || [],
-          problemTopics: otherUser.problemTopics || []
+          problemTopics: otherUser.problemTopics || [],
+          isConnected: otherUser.isConnected
         });
       });
 
       socket.on('otherUser disconnected', () => {
-        const msgsContainer = document.querySelector('#msgs-container');
-        const p = document.createElement('p');
-        const notification = document.createTextNode(`${otherUser.username} disconnected`);
-        p.classList.add('text-center', 'italic', 'font-light', 'text-gray-400', 'sm:text-sm');
-        p.appendChild(notification);
-        msgsContainer.appendChild(p);
+        setOtherUser(prev => ({ ...prev, isConnected: false }));
       });
 
       socket.on('otherUser reconnected', () => {
-        const msgsContainer = document.querySelector('#msgs-container');
-        const p = document.createElement('p');
-        const notification = document.createTextNode(`${otherUser.username} reconnected`);
-        p.classList.add('text-center', 'italic', 'font-light', 'text-gray-400', 'sm:text-sm');
-        p.appendChild(notification);
-        msgsContainer.appendChild(p);
+        setOtherUser(prev => ({ ...prev, isConnected: true }));
       });
 
       socket.on('match found', ({ roomID, listener, talker }) => {
@@ -115,7 +107,8 @@ const Chat = ({ location }) => {
             dob: talker.dob ? formatDate(talker.dob) : '',
             gender: talker.gender || '',
             interests: talker.interests || [],
-            problemTopics: talker.problemTopics || []
+            problemTopics: talker.problemTopics || [],
+            isConnected: talker.isConnected
           });
           socket.emit('listener setup', { roomID, talker });
         }
@@ -128,7 +121,8 @@ const Chat = ({ location }) => {
             dob: listener.dob ? formatDate(otherUser.dob) : '',
             gender: listener.gender || '',
             interests: listener.interests || [],
-            problemTopics: listener.problemTopics || []
+            problemTopics: listener.problemTopics || [],
+            isConnected: listener.isConnected
           });
         }
 
