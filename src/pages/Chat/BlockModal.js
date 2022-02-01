@@ -1,9 +1,10 @@
 import { useHistory } from 'react-router-dom';
 
-const BlockModal = ({ unblock, path, setPreventNav }) => {
+const BlockModal = ({ unblock, path, setPreventNav, socket }) => {
   const history = useHistory();
 
   const confirmNav = () => {
+    socket.emit('leave room');
     sessionStorage.removeItem('roomID');
     unblock.current();
     history.push({ pathname: path.pathname, state: path.state });

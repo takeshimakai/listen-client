@@ -29,6 +29,7 @@ const Chat = ({ location }) => {
   const [msgs, setMsgs] = useState([]);
   const [awaitMatch, setAwaitMatch] = useState(false);
   const [viewProfile, setViewProfile] = useState(false);
+  const [otherUserLeft, setOtherUserLeft] = useState(false);
   const [otherUser, setOtherUser] = useState({
     userID: '',
     img: '',
@@ -134,12 +135,15 @@ const Chat = ({ location }) => {
         setMsgs(prev => [...prev, { msg, from: otherUser.userID }]);
       });
 
+      socket.on('user left', () => setOtherUserLeft(true));
+
       return () => {
         socket.off('reconnect');
         socket.off('otherUser disconnected');
         socket.off('otherUser reconnected');
         socket.off('match found');
         socket.off('new msg');
+        socket.off('user left');
       }
     }
   }, [socket, otherUser, action]);
@@ -154,20 +158,26 @@ const Chat = ({ location }) => {
 
   const toggleView = () => setViewProfile(!viewProfile);
 
+  const leaveConversation = () => history.push('/dashboard');
+
   return (
     <div className='h-screen pt-16'>
-      {awaitMatch && <AwaitMatchModal action={action} setAwaitMatch={setAwaitMatch} setConnected={setConnected} socket={socket} />}
-      {preventNav && <BlockModal unblock={unblock} path={path} setPreventNav={setPreventNav} setSocket={setSocket} />}
+      {awaitMatch &&
+        <AwaitMatchModal action={action} setAwaitMatch={setAwaitMatch} setConnected={setConnected} socket={socket} />
+      }
+      {preventNav &&
+        <BlockModal unblock={unblock} path={path} setPreventNav={setPreventNav} socket={socket} />
+      }
       {connected &&
         <div className='relative h-full px-4 pb-4 flex flex-col sm:flex-row'>
           <div className='relative sm:flex-grow sm:max-w-sm sm:flex sm:flex-col sm:justify-between sm:items-center'>
             <OtherUser otherUser={otherUser} toggleView={toggleView} />
-            <Options />
-            <MobileOptions />
+            <Options leaveConversation={leaveConversation} />
+            <MobileOptions leaveConversation={leaveConversation} />
           </div>
           <div className='flex-grow flex flex-col min-h-0'>
-            <Messages msgs={msgs} id={id} />
-            <Input socket={socket} setMsgs={setMsgs} id={id} />
+            <Messages msgs={msgs} id={id} otherUser={otherUser} otherUserLeft={otherUserLeft} />
+            <Input socket={socket} setMsgs={setMsgs} id={id} otherUserLeft={otherUserLeft} />
           </div>
           {viewProfile && <Profile profile={otherUser} toggleView={toggleView} socket={socket} />}
         </div>

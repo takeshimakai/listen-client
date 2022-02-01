@@ -2,19 +2,33 @@ import { useEffect, useState } from 'react';
 
 const AwaitMatchModal = ({ action, setAwaitMatch, setConnected, socket }) => {
   const [elapsedSec, setElapsedSec] = useState(0);
+  const [timeOut, setTimeOut] = useState(false);
 
   useEffect(() => {
     const intervalID = setInterval(() => {
       setElapsedSec(prev => prev + 5);
     }, 5000);
 
-    if (elapsedSec === 20) {
-      clearInterval(intervalID);
+    if (action === 'listen' && elapsedSec === 20) {
+      setTimeOut(true);
       socket.disconnect();
     }
 
+    if (timeOut) {
+      clearInterval(intervalID);
+    }
+
     return () => clearInterval(intervalID);
-  }, [elapsedSec, socket]);
+  }, [timeOut, elapsedSec, action, socket]);
+
+  useEffect(() => {
+    socket.on('no match', () => {
+      setTimeOut(true);
+      socket.disconnect();
+    });
+
+    return () => socket.off('no match');
+  }, [socket]);
 
   const confirm = () => {
     setAwaitMatch(false);
@@ -29,11 +43,11 @@ const AwaitMatchModal = ({ action, setAwaitMatch, setConnected, socket }) => {
             (elapsedSec === 0 && "We're looking for a match...") ||
             (elapsedSec === 5 && "Hold tight, we're still looking...") ||
             (elapsedSec === 10 && "Still working on it...") ||
-            (elapsedSec === 15 && "Where is everybody?") ||
-            (elapsedSec === 20 && "We're sorry, we couldn't find a match.")
+            (elapsedSec >= 15 && !timeOut && "Where is everybody?") ||
+            (timeOut && "We're sorry, we couldn't find a match.")
           }
         </p>
-        {elapsedSec === 20 &&
+        {timeOut &&
           <>
             <p className='font-light sm:text-sm'>
               {action === 'talk'

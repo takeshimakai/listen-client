@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import chevronDown from '../../assets/chevron-down-solid.svg';
 
-const MobileOptions = () => {
+const MobileOptions = ({ leaveConversation }) => {
   const [hidden, setHidden] = useState(true);
 
   useEffect(() => {
@@ -26,9 +26,9 @@ const MobileOptions = () => {
         id='chat-options'
         className='max-h-0 overflow-hidden transition-all duration-500 ease-out flex justify-center'
       >
-        <p className='text-red-600 font-light text-center cursor-pointer'>
+        <button className='text-red-600 font-light text-center' onClick={leaveConversation}>
           Leave conversation
-        </p>
+        </button>
       </div>
       <img
         id='chevron'

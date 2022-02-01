@@ -1,8 +1,11 @@
-const Options = () => {
+const Options = ({ leaveConversation }) => {
   return (
-    <p className='hidden cursor-pointer sm:block text-red-600 font-light text-sm mb-2.5'>
+    <button
+      className='hidden sm:block text-red-600 font-light text-sm mb-2.5'
+      onClick={leaveConversation}
+    >
       Leave conversation
-    </p>
+    </button>
   )
 }
 

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 
 import sendIcon from '../../assets/send.png';
 
-const Input = ({ socket, setMsgs, id }) => {
+const Input = ({ socket, setMsgs, id, otherUserLeft }) => {
   const [input, setInput] = useState('');
 
   const chatInput = useRef();
@@ -53,8 +53,13 @@ const Input = ({ socket, setMsgs, id }) => {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={submitOnEnter}
+        disabled={otherUserLeft}
       />
-      <button id='chat-submit-btn' className='absolute right-0 bottom-0 border rounded-full border-green-700 p-2'>
+      <button
+        id='chat-submit-btn'
+        className='absolute right-0 bottom-0 border rounded-full border-green-700 p-2 disabled:opacity-50'
+        disabled={otherUserLeft}
+      >
         <img className='h-6 sm:h-5' src={sendIcon} alt='' />
       </button>
     </form>

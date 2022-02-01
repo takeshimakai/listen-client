@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-const Messages = ({ msgs, id }) => {
+const Messages = ({ msgs, id, otherUser, otherUserLeft }) => {
   return (
     <div
       id='msgs-container'
@@ -14,6 +14,11 @@ const Messages = ({ msgs, id }) => {
           {msg}
         </p>
       ))}
+      {otherUserLeft &&
+        <p className='font-light sm:text-sm italic text-center text-gray-400'>
+          {`${otherUser.username} left`}
+        </p>
+      }
     </div>
   )
 }
