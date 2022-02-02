@@ -4,7 +4,7 @@ const UserPreview = ({ user }) => {
   return (
     <>
       <img className='h-10 sm:h-20 rounded-full' src={defaultPic} alt='' />
-      <p className='ml-2 sm:ml-0 truncate sm:w-full sm:text-center'>{user.profile.username}</p>
+      <p className='ml-2 sm:ml-0 truncate sm:w-full sm:text-center sm:text-sm font-light'>{user.profile.username}</p>
     </>
   )
 }
