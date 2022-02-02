@@ -119,7 +119,7 @@ const Chat = ({ location }) => {
             userID: listener.userID,
             img: listener.img || '',
             username: listener.username,
-            dob: listener.dob ? formatDate(otherUser.dob) : '',
+            dob: listener.dob ? formatDate(listener.dob) : '',
             gender: listener.gender || '',
             interests: listener.interests || [],
             problemTopics: listener.problemTopics || [],
