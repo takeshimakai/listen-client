@@ -1,10 +1,10 @@
 import { useContext } from "react";
 
-import UserContext from "../contexts/UserContext";
+import UserContext from "../../../contexts/UserContext";
 
-import postData from '../utils/postData';
-import putData from "../utils/putData";
-import deleteData from '../utils/deleteData';
+import postData from '../../../utils/postData';
+import putData from "../../../utils/putData";
+import deleteData from '../../../utils/deleteData';
 
 const FriendBtn = ({ userId, friendshipStatus, setFriendshipStatus }) => {
   const { token } = useContext(UserContext);

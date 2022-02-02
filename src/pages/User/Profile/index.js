@@ -10,7 +10,7 @@ import defaultPic from '../../../assets/default-profile.jpg';
 
 import ProfileForm from "../Form";
 import Card from "./Card";
-import FriendBtn from "../../../components/FriendBtn";
+import FriendBtn from "./FriendBtn";
 
 const Profile = () => {
   const history = useHistory();
@@ -68,7 +68,7 @@ const Profile = () => {
         <ProfileForm setProfile={setProfile} />
       </Route>
       <Route path={match.path}>
-        <div className='pt-20 sm:pt-24 pb-12 xl:pb-0 px-12 xl:px-0 flex flex-col xl:flex-row items-center xl:items-start xl:relative xl:w-max xl:mx-auto'>
+        <div className='pt-20 sm:pt-24 pb-12 px-12 xl:px-0 flex flex-col xl:flex-row items-center xl:items-start xl:relative xl:w-max xl:mx-auto'>
           <img
             className='h-36 sm:h-48 rounded-full'
             src={
