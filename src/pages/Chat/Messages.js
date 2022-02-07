@@ -1,6 +1,14 @@
+import { useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-const Messages = ({ msgs, id, otherUser, otherUserLeft }) => {
+import UserContext from '../../contexts/UserContext';
+
+import decodeToken from '../../utils/decodeToken';
+
+const Messages = ({ msgs, otherUser, otherUserLeft }) => {
+  const { token } = useContext(UserContext);
+  const { id } = decodeToken(token);
+
   return (
     <div
       id='msgs-container'

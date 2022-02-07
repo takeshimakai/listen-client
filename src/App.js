@@ -1,7 +1,9 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { io } from 'socket.io-client';
 
 import UserContext from './contexts/UserContext';
+import SocketContext from './contexts/SocketContext';
 
 import decodeToken from './utils/decodeToken';
 
@@ -23,6 +25,24 @@ const App = () => {
   const [token, setToken] = useState(JSON.parse(localStorage.getItem('token')));
   const [emailVerified, setEmailVerified] = useState(false);
   const [initialized, setInitialized] = useState(false);
+
+  const socket = useRef(io('http://localhost:5000', { autoConnect: false }));
+  const user = useRef();
+
+  useEffect(() => {
+    if (token) {
+      user.current = decodeToken(token);
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (initialized) {
+      const { id, username } = user.current;
+      socket.current.auth = { userID: id, username };
+      socket.current.connect();
+      return () => socket.current.disconnect();
+    }
+  }, [initialized, token]);
 
   useEffect(() => {
     localStorage.setItem('token', JSON.stringify(token));
@@ -47,22 +67,24 @@ const App = () => {
 
   return (
     <UserContext.Provider value={{ token, setToken }}>
-      <BrowserRouter>
-        {initialized && <Nav />}
-        <Switch>
-          <ProtectedRoute path='/chat' component={Chat} />
-          <ProtectedRoute path='/users/:userId' component={Profile} />
-          <ProtectedRoute path='/forum' component={Forum} />
-          <ProtectedRoute path='/forum-activity' component={ForumActivity} />
-          <ProtectedRoute path='/friends' component={Friends} />
-          <ProtectedRoute path='/profile' component={Profile} />
-          <ProtectedRoute path='/dashboard' component={Dashboard} />
-          <Route path='/verify' component={EmailVerification} />
-          <Route path='/account-setup' component={AccountSetUp} />
-          <Route path='/auth/google/success' component={GoogleOAuthSuccess} />
-          <Route path='/' component={Home} />
-        </Switch>
-      </BrowserRouter>
+      <SocketContext.Provider value={socket.current}>
+        <BrowserRouter>
+          {initialized && <Nav />}
+          <Switch>
+            <ProtectedRoute path='/chat' component={Chat} />
+            <ProtectedRoute path='/users/:userId' component={Profile} />
+            <ProtectedRoute path='/forum' component={Forum} />
+            <ProtectedRoute path='/forum-activity' component={ForumActivity} />
+            <ProtectedRoute path='/friends' component={Friends} />
+            <ProtectedRoute path='/profile' component={Profile} />
+            <ProtectedRoute path='/dashboard' component={Dashboard} />
+            <Route path='/verify' component={EmailVerification} />
+            <Route path='/account-setup' component={AccountSetUp} />
+            <Route path='/auth/google/success' component={GoogleOAuthSuccess} />
+            <Route path='/' component={Home} />
+          </Switch>
+        </BrowserRouter>
+      </SocketContext.Provider>
     </UserContext.Provider>
 
   );

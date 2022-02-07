@@ -8,7 +8,7 @@ import Intro from './Intro';
 import ProgressBar from './ProgressBar';
 import Confirm from './Confirm';
 
-const Talk = ({ initiate, action }) => {
+const Talk = ({ initialize, action }) => {
   const [step, setStep] = useState('intro');
   const [err, setErr] = useState(false);
   const [input, setInput] = useState({
@@ -37,7 +37,7 @@ const Talk = ({ initiate, action }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    initiate(action, input);
+    initialize(action, input);
   };
 
   const next = () => {

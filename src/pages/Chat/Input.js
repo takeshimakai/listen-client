@@ -1,8 +1,14 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
+
+import UserContext from '../../contexts/UserContext';
 
 import sendIcon from '../../assets/send.png';
+import decodeToken from '../../utils/decodeToken';
 
-const Input = ({ socket, setMsgs, id, otherUserLeft }) => {
+const Input = ({ socket, setMsgs, otherUserLeft }) => {
+  const { token } = useContext(UserContext);
+  const { id } = decodeToken(token);
+
   const [input, setInput] = useState('');
 
   const chatInput = useRef();

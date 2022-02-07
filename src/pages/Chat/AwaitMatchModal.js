@@ -1,6 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 
-const AwaitMatchModal = ({ action, setAwaitMatch, setConnected, socket }) => {
+import SocketContext from '../../contexts/SocketContext';
+
+const AwaitMatchModal = ({ action, setAwaitMatch, setConnected }) => {
+  const socket = useContext(SocketContext);
+  
   const [elapsedSec, setElapsedSec] = useState(0);
   const [timeOut, setTimeOut] = useState(false);
 

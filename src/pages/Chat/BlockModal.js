@@ -1,7 +1,11 @@
 import { useHistory } from 'react-router-dom';
+import { useContext } from 'react';
 
-const BlockModal = ({ unblock, path, setPreventNav, socket }) => {
+import SocketContext from '../../contexts/SocketContext';
+
+const BlockModal = ({ unblock, path, setPreventNav }) => {
   const history = useHistory();
+  const socket = useContext(SocketContext);
 
   const confirmNav = () => {
     socket.emit('leave room');

@@ -1,8 +1,7 @@
 import { useEffect, useState, useContext, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
-import { io } from 'socket.io-client';
 
-import UserContext from '../../contexts/UserContext';
+import SocketContext from '../../contexts/SocketContext';
 
 import Listen from './Listen';
 import Talk from './Talk';
@@ -15,16 +14,13 @@ import MobileOptions from './MobileOptions';
 import Options from './Options';
 import Profile from './Profile';
 
-import decodeToken from '../../utils/decodeToken';
 import formatDate from '../../utils/formatDate';
 
 const Chat = ({ location }) => {
   const history = useHistory();
   const { action } = location.state;
-  const { token } = useContext(UserContext);
-  const { id, username } = decodeToken(token);
+  const socket = useContext(SocketContext);
 
-  const [socket, setSocket] = useState();
   const [connected, setConnected] = useState(false);
   const [msgs, setMsgs] = useState([]);
   const [awaitMatch, setAwaitMatch] = useState(false);
@@ -46,12 +42,6 @@ const Chat = ({ location }) => {
   const [path, setPath] = useState();
 
   useEffect(() => {
-    const socketio = io('http://localhost:5000', { autoConnect: false });
-    setSocket(socketio);
-    return () => socketio.disconnect();
-  }, []);
-
-  useEffect(() => {
     if (connected) {
       unblock.current = history.block(({ pathname, state }) => {
         setPath({ pathname, state });
@@ -64,96 +54,92 @@ const Chat = ({ location }) => {
   }, [connected, history]);
 
   useEffect(() => {
-    if (socket) {
-      const roomID = sessionStorage.getItem('roomID');
-      
-      if (roomID) {
-        socket.auth = { userID: id, username, roomID };
-        socket.connect();
-        setConnected(true);
-      }
+    const roomID = sessionStorage.getItem('roomID');
+    
+    if (roomID) {
+      setConnected(true);
+      socket.emit('reconnect', roomID);
     }
-  }, [socket, id, username]);
+  }, [socket]);
 
   useEffect(() => {
-    if (socket) {
-      socket.on('reconnect', ({ msgs, otherUser }) => {
-        setMsgs(msgs);
+    socket.on('reconnect', ({ msgs, otherUser }) => {
+      setMsgs(msgs);
+      setOtherUser({
+        userID: otherUser.userID,
+        img: otherUser.img || '',
+        username: otherUser.username,
+        dob: otherUser.dob ? formatDate(otherUser.dob) : '',
+        gender: otherUser.gender || '',
+        interests: otherUser.interests || [],
+        problemTopics: otherUser.problemTopics || [],
+        isConnected: otherUser.isConnected
+      });
+    });
+
+    socket.on('otherUser disconnected', () => {
+      setOtherUser(prev => ({ ...prev, isConnected: false }));
+    });
+
+    socket.on('otherUser reconnected', () => {
+      setOtherUser(prev => ({ ...prev, isConnected: true }));
+    });
+
+    socket.on('match found', ({ roomID, listener, talker }) => {
+      if (action === 'listen') {
         setOtherUser({
-          userID: otherUser.userID,
-          img: otherUser.img || '',
-          username: otherUser.username,
-          dob: otherUser.dob ? formatDate(otherUser.dob) : '',
-          gender: otherUser.gender || '',
-          interests: otherUser.interests || [],
-          problemTopics: otherUser.problemTopics || [],
-          isConnected: otherUser.isConnected
+          userID: talker.userID,
+          img: talker.img || '',
+          username: talker.username,
+          dob: talker.dob ? formatDate(talker.dob) : '',
+          gender: talker.gender || '',
+          interests: talker.interests || [],
+          problemTopics: talker.problemTopics || [],
+          isConnected: talker.isConnected
         });
-      });
-
-      socket.on('otherUser disconnected', () => {
-        setOtherUser(prev => ({ ...prev, isConnected: false }));
-      });
-
-      socket.on('otherUser reconnected', () => {
-        setOtherUser(prev => ({ ...prev, isConnected: true }));
-      });
-
-      socket.on('match found', ({ roomID, listener, talker }) => {
-        if (action === 'listen') {
-          setOtherUser({
-            userID: talker.userID,
-            img: talker.img || '',
-            username: talker.username,
-            dob: talker.dob ? formatDate(talker.dob) : '',
-            gender: talker.gender || '',
-            interests: talker.interests || [],
-            problemTopics: talker.problemTopics || [],
-            isConnected: talker.isConnected
-          });
-          socket.emit('listener setup', { roomID, talker });
-        }
-
-        if (action === 'talk') {
-          setOtherUser({
-            userID: listener.userID,
-            img: listener.img || '',
-            username: listener.username,
-            dob: listener.dob ? formatDate(listener.dob) : '',
-            gender: listener.gender || '',
-            interests: listener.interests || [],
-            problemTopics: listener.problemTopics || [],
-            isConnected: listener.isConnected
-          });
-        }
-
-        setAwaitMatch(false);
-        sessionStorage.setItem('roomID', roomID);
-      });
-
-      socket.on('new msg', (msg) => {
-        setMsgs(prev => [...prev, { msg, from: otherUser.userID }]);
-      });
-
-      socket.on('user left', () => setOtherUserLeft(true));
-
-      return () => {
-        socket.off('reconnect');
-        socket.off('otherUser disconnected');
-        socket.off('otherUser reconnected');
-        socket.off('match found');
-        socket.off('new msg');
-        socket.off('user left');
+        socket.emit('listener setup', { roomID, talker });
       }
+
+      if (action === 'talk') {
+        setOtherUser({
+          userID: listener.userID,
+          img: listener.img || '',
+          username: listener.username,
+          dob: listener.dob ? formatDate(listener.dob) : '',
+          gender: listener.gender || '',
+          interests: listener.interests || [],
+          problemTopics: listener.problemTopics || [],
+          isConnected: listener.isConnected
+        });
+      }
+
+      setAwaitMatch(false);
+      sessionStorage.setItem('roomID', roomID);
+    });
+
+    socket.on('new msg', (msg) => {
+      setMsgs(prev => [...prev, { msg, from: otherUser.userID }]);
+    });
+
+    socket.on('user left', () => {
+      setOtherUser(prev => ({ ...prev, isConnected: false }));
+      setOtherUserLeft(true);
+    });
+
+    return () => {
+      socket.off('reconnect');
+      socket.off('otherUser disconnected');
+      socket.off('otherUser reconnected');
+      socket.off('match found');
+      socket.off('new msg');
+      socket.off('user left');
     }
   }, [socket, otherUser, action]);
 
-  const initiate = (role, filters) => {
+  const initialize = (role, filters) => {
     setAwaitMatch(true);
     setConnected(true);
-    socket.auth = { userID: id, username };
-    socket.connect();
-    socket.emit('initiate', { role, filters });
+    socket.emit('initialize', { role, filters });
   };
 
   const toggleView = () => setViewProfile(!viewProfile);
@@ -163,10 +149,10 @@ const Chat = ({ location }) => {
   return (
     <div className='h-screen pt-16'>
       {awaitMatch &&
-        <AwaitMatchModal action={action} setAwaitMatch={setAwaitMatch} setConnected={setConnected} socket={socket} />
+        <AwaitMatchModal action={action} setAwaitMatch={setAwaitMatch} setConnected={setConnected} />
       }
       {preventNav &&
-        <BlockModal unblock={unblock} path={path} setPreventNav={setPreventNav} socket={socket} />
+        <BlockModal unblock={unblock} path={path} setPreventNav={setPreventNav} />
       }
       {connected &&
         <div className='relative h-full px-4 pb-4 flex flex-col sm:flex-row'>
@@ -176,17 +162,17 @@ const Chat = ({ location }) => {
             <MobileOptions leaveConversation={leaveConversation} />
           </div>
           <div className='flex-grow flex flex-col min-h-0'>
-            <Messages msgs={msgs} id={id} otherUser={otherUser} otherUserLeft={otherUserLeft} />
-            <Input socket={socket} setMsgs={setMsgs} id={id} otherUserLeft={otherUserLeft} />
+            <Messages msgs={msgs} otherUser={otherUser} otherUserLeft={otherUserLeft} />
+            <Input socket={socket} setMsgs={setMsgs} otherUserLeft={otherUserLeft} />
           </div>
           {viewProfile && <Profile profile={otherUser} toggleView={toggleView} socket={socket} />}
         </div>
       }
       {!connected && action === 'listen' &&
-        <Listen action={action} initiate={initiate} />
+        <Listen action={action} initialize={initialize} />
       }
       {!connected && action === 'talk' &&
-        <Talk action={action} initiate={initiate} />
+        <Talk action={action} initialize={initialize} />
       }
     </div>
   )

@@ -1,9 +1,15 @@
+import { useContext } from 'react';
+
+import SocketContext from '../../../contexts/SocketContext';
+
 import defaultPic from '../../../assets/default-profile.jpg';
 
 import Card from './Card';
 import FriendBtns from './FriendBtns';
 
-const Profile = ({ profile, toggleView, socket }) => {
+const Profile = ({ profile, toggleView }) => {
+  const socket = useContext(SocketContext);
+
   return (
     <div className='absolute flex flex-col items-center bg-gray-50 border rounded-lg shadow-lg p-8 sm:p-0 sm:pt-8 sm:px-4 sm:pb-4 mb-4 mx-4 sm:max-w-sm inset-0'>
       <button className='absolute top-1 right-1 w-6 h-6 rounded-full' onClick={toggleView}>
