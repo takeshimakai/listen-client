@@ -48,7 +48,7 @@ const App = () => {
     localStorage.setItem('token', JSON.stringify(token));
 
     if (token) {
-      const { verified, username } = decodeToken(token);
+      const { verified, username } = user.current;
       verified && setEmailVerified(true);
       verified && username && setInitialized(true);
     } else {

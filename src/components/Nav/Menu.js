@@ -5,7 +5,7 @@ import UserContext from "../../contexts/UserContext";
 
 import decodeToken from "../../utils/decodeToken";
 
-const Menu = () => {
+const Menu = ({ numOfFriendReqs }) => {
   const { token, setToken } = useContext(UserContext);
 
   const [isVisible, setIsVisible] = useState(false);
@@ -62,8 +62,16 @@ const Menu = () => {
           <Link to='/profile' className='font-light text-sm hover:text-gray-500 w-max'>
             Profile
           </Link>
-          <Link to='/friends' className='font-light text-sm hover:text-gray-500 w-max'>
+          <Link to='/friends' className='flex items-center relative font-light text-sm hover:text-gray-500 w-max'>
             Friends
+            {numOfFriendReqs > 0 &&
+              <span
+                title='num of friend requests'
+                className='flex justify-center items-center rounded-full bg-gray-400 absolute -right-6 h-5 w-5 text-xs font-medium text-white'
+              >
+                {numOfFriendReqs}
+              </span>
+            }
           </Link>
           <Link to='/forum-activity' className='font-light hover:text-gray-500 text-sm w-max'>
             Forum Activity

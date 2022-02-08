@@ -163,9 +163,9 @@ const Chat = ({ location }) => {
           </div>
           <div className='flex-grow flex flex-col min-h-0'>
             <Messages msgs={msgs} otherUser={otherUser} otherUserLeft={otherUserLeft} />
-            <Input socket={socket} setMsgs={setMsgs} otherUserLeft={otherUserLeft} />
+            <Input setMsgs={setMsgs} otherUserLeft={otherUserLeft} />
           </div>
-          {viewProfile && <Profile profile={otherUser} toggleView={toggleView} socket={socket} />}
+          {viewProfile && <Profile profile={otherUser} toggleView={toggleView} />}
         </div>
       }
       {!connected && action === 'listen' &&

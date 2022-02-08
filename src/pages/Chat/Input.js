@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 
 import UserContext from '../../contexts/UserContext';
+import SocketContext from '../../contexts/SocketContext';
 
 import sendIcon from '../../assets/send.png';
 import decodeToken from '../../utils/decodeToken';
 
-const Input = ({ socket, setMsgs, otherUserLeft }) => {
+const Input = ({ setMsgs, otherUserLeft }) => {
+  const socket = useContext(SocketContext);
   const { token } = useContext(UserContext);
   const { id } = decodeToken(token);
 
