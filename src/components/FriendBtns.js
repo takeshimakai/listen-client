@@ -1,47 +1,45 @@
 import { useEffect, useState, useContext } from 'react';
 
-import SocketContext from '../../../contexts/SocketContext';
+import SocketContext from '../contexts/SocketContext';
 
-const FriendBtns = ({ profileId }) => {
+const FriendBtns = ({ userId }) => {
   const socket = useContext(SocketContext);
 
   const [friendshipStatus, setFriendshipStatus] = useState('');
 
   useEffect(() => {
-    socket.emit('get friendship status');
-  }, [socket]);
+    socket.emit('get friendship status', userId);
 
-  useEffect(() => {
     socket.on('friendship status', (friendshipStatus) => {
       setFriendshipStatus(friendshipStatus);
     });
 
     socket.on('request canceled', ({ canceledBy }) => {
-      if (profileId === canceledBy) {
+      if (userId === canceledBy) {
         setFriendshipStatus('');
       }
     });
 
     socket.on('request declined', ({ declinedBy }) => {
-      if (profileId === declinedBy) {
+      if (userId === declinedBy) {
         setFriendshipStatus('');
       }
     });
 
     socket.on('request received', ({ sentBy }) => {
-      if (profileId === sentBy) {
+      if (userId === sentBy) {
         setFriendshipStatus('received');
       }
     });
 
     socket.on('unfriended', ({ unfriendedBy }) => {
-      if (profileId === unfriendedBy) {
+      if (userId === unfriendedBy) {
         setFriendshipStatus('');
       }
     });
 
     socket.on('request accepted', ({ acceptedBy }) => {
-      if (profileId === acceptedBy) {
+      if (userId === acceptedBy) {
         setFriendshipStatus('friends');
       }
     });
@@ -52,36 +50,37 @@ const FriendBtns = ({ profileId }) => {
       socket.off('request declined');
       socket.off('request received');
       socket.off('unfriended');
+      socket.off('request accepted');
     };
-  }, [socket, profileId]);
+  }, [socket, userId]);
 
   const send = () => {
-    socket.emit('send request', profileId);
+    socket.emit('send request', userId);
     setFriendshipStatus('sent');
   };
 
   const cancel = () => {
-    socket.emit('cancel request', profileId);
+    socket.emit('cancel request', userId);
     setFriendshipStatus('');
   };
 
   const decline = () => {
-    socket.emit('decline request', profileId);
+    socket.emit('decline request', userId);
     setFriendshipStatus('');
   };
 
   const accept = () => {
-    socket.emit('accept request', profileId);
+    socket.emit('accept request', userId);
     setFriendshipStatus('friends');
   };
 
   const unfriend = () => {
-    socket.emit('unfriend', profileId);
+    socket.emit('unfriend', userId);
     setFriendshipStatus('');
   };
 
   return (
-    <div className='mt-4 w-full text-center'>
+    <>
       {!friendshipStatus &&
         <button className='tertiary-btn w-40' onClick={send}>
           Send friend request
@@ -93,21 +92,21 @@ const FriendBtns = ({ profileId }) => {
         </button>
       }
       {friendshipStatus === 'received' &&
-        <div className='flex w-full'>
-          <button className='secondary-btn mr-1' onClick={decline}>
+        <>
+          <button className='secondary-btn' onClick={decline}>
             Decline request
           </button>
-          <button className='primary-btn ml-1' onClick={accept}>
+          <button className='primary-btn' onClick={accept}>
             Accept request
           </button>
-        </div>
+        </>
       }
       {friendshipStatus === 'friends' &&
         <button className='tertiary-btn w-40' onClick={unfriend}>
           Unfriend
         </button>
       }
-    </div>
+    </>
   )
 }
 

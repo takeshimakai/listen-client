@@ -81,7 +81,7 @@ const ProfileForm = ({ setProfile }) => {
         problemTopics: data.profile.problemTopics,
       }));
 
-      history.replace('/dashboard/profile');
+      history.replace('/profile');
     } catch (err) {
       console.log(err);
     }

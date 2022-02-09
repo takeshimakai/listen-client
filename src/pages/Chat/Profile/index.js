@@ -1,7 +1,7 @@
 import defaultPic from '../../../assets/default-profile.jpg';
 
 import Card from './Card';
-import FriendBtns from './FriendBtns';
+import FriendBtns from '../../../components/FriendBtns';
 
 const Profile = ({ profile, toggleView }) => {
   return (
@@ -28,7 +28,9 @@ const Profile = ({ profile, toggleView }) => {
           <Card title='Interests' data={profile.interests} />
           <Card title='Problem topics' data={profile.problemTopics} />
         </div>
-        <FriendBtns profileId={profile.userID} />
+        <div className='w-full mt-4 flex justify-center space-x-2'>
+          <FriendBtns userId={profile.userID} />
+        </div>
       </div>
     </div>
   )

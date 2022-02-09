@@ -10,7 +10,7 @@ import defaultPic from '../../../assets/default-profile.jpg';
 
 import ProfileForm from "../Form";
 import Card from "./Card";
-import FriendBtn from "./FriendBtn";
+import FriendBtns from "../../../components/FriendBtns";
 
 const Profile = () => {
   const history = useHistory();
@@ -19,7 +19,6 @@ const Profile = () => {
   const { token } = useContext(UserContext);
   const { id } = decodeToken(token);
 
-  const [friendshipStatus, setFriendshipStatus] = useState('');
   const [profile, setProfile] = useState({
     img: '',
     username: '',
@@ -49,17 +48,10 @@ const Profile = () => {
           interests: user.profile.interests || [],
           problemTopics: user.profile.problemTopics || []
         });
-
-        setFriendshipStatus(user.friendshipStatus);
       } catch (err) {
         console.log(err);
       }
     })();
-
-    return () => {
-      setProfile();
-      setFriendshipStatus();
-    }
   }, [token, userId, id]);
 
   return (
@@ -87,18 +79,14 @@ const Profile = () => {
               <Card title='Problem topics' data={profile && profile.problemTopics} />
             </div>
           </div>
-          {userId
-            ? <FriendBtn
-                userId={userId}
-                friendshipStatus={friendshipStatus}
-                setFriendshipStatus={setFriendshipStatus}
-              />
-            : <Link to={`${match.url}/edit`} className='xl:absolute xl:left-4 xl:top-80 mt-12 xl:mt-0'>
-                <button className='tertiary-btn w-40'>
-                  Edit
-                </button>
-              </Link>
-          }
+          <div className='xl:absolute xl:left-4 xl:top-80 mt-12 xl:mt-0 w-full max-w-xs xl:w-40 flex justify-center xl:flex-col space-x-2 xl:space-x-0 xl:space-y-2.5'>
+            {userId
+              ? <FriendBtns userId={userId} />
+              : <Link to={`${match.url}/edit`}>
+                  <button className='tertiary-btn w-40'>Edit</button>
+                </Link>
+            }
+          </div>
         </div>
       </Route>
     </Switch>
