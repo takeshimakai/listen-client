@@ -26,32 +26,35 @@ const App = () => {
   const [emailVerified, setEmailVerified] = useState(false);
   const [initialized, setInitialized] = useState(false);
 
-  const socket = useRef(io('http://localhost:5000', { autoConnect: false }));
-  const user = useRef();
-
-  useEffect(() => {
-    if (token) {
-      user.current = decodeToken(token);
-    }
-  }, [token]);
-
-  useEffect(() => {
-    if (initialized) {
-      const { id, username } = user.current;
-      socket.current.auth = { userID: id, username };
-      socket.current.connect();
-      return () => socket.current.disconnect();
-    }
-  }, [initialized, token]);
+  const socket = useRef(io('http://localhost:5000', {
+    autoConnect: false,
+    extraHeaders: { Authorization: `Bearer ${token}` }
+  }));
 
   useEffect(() => {
     localStorage.setItem('token', JSON.stringify(token));
 
     if (token) {
-      const { verified, username } = user.current;
-      verified && setEmailVerified(true);
-      verified && username && setInitialized(true);
+      const { verified, username } = decodeToken(token);
+      
+      if (verified) {
+        setEmailVerified(true);
+      }
+      
+      if (verified && username) {
+        socket.current = io('http://localhost:5000', {
+          autoConnect: false,
+          extraHeaders: { Authorization: `Bearer ${token}` }
+        });
+
+        socket.current.connect();
+
+        setInitialized(true);
+
+        return () => socket.current.disconnect();
+      };
     } else {
+      localStorage.removeItem('token');
       setEmailVerified(false);
       setInitialized(false);
     }
@@ -69,7 +72,7 @@ const App = () => {
     <UserContext.Provider value={{ token, setToken }}>
       <SocketContext.Provider value={socket.current}>
         <BrowserRouter>
-          {initialized && <Nav />}
+          {token && initialized && <Nav />}
           <Switch>
             <ProtectedRoute path='/chat' component={Chat} />
             <ProtectedRoute path='/users/:userId' component={Profile} />

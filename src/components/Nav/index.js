@@ -12,7 +12,6 @@ import decodeToken from "../../utils/decodeToken";
 const Nav = () => {
   const socket = useContext(SocketContext);
   const { token } = useContext(UserContext);
-  const { id } = decodeToken(token);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
   const [numOfFriendReqs, setNumOfFriendReqs] = useState(0);
@@ -30,6 +29,8 @@ const Nav = () => {
   }, [token]);
 
   useEffect(() => {
+    const { id } = decodeToken(token);
+
     socket.on('request received', () => setNumOfFriendReqs(prev => prev + 1));
     
     socket.on('request canceled', () => setNumOfFriendReqs(prev => prev - 1));
@@ -45,6 +46,7 @@ const Nav = () => {
         setNumOfFriendReqs(prev => prev - 1);
       }
     });
+    
 
     return () => {
       socket.off('request received');
@@ -52,7 +54,7 @@ const Nav = () => {
       socket.off('request declined');
       socket.off('request accepted');
     };
-  }, [socket, id]);
+  }, [socket, token]);
 
   useEffect(() => {
     const updateIsMobile = () => setIsMobile(window.innerWidth < 640);
