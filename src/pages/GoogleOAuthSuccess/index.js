@@ -28,8 +28,8 @@ const GoogleOAuthSuccess = () => {
   }, [setToken, history]);
 
   return (
-    <div>
-      <p>Redirecting...</p>
+    <div className='w-screen h-screen bg-gray-50 flex justify-center items-center'>
+      <p className='bg-gray-50 py-8 px-14 border rounded-lg shadow-xl font-light'>Redirecting...</p>
     </div>
   )
 }

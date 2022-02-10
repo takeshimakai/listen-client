@@ -28,7 +28,7 @@
   }
 
   .account-setup-input-container {
-    @apply border max-h-3/4 relative bg-white shadow-xl rounded-lg w-full sm:max-w-lg text-center pt-14 pb-10 px-5 sm:px-10 my-auto;
+    @apply border max-h-3/4 relative bg-gray-50 shadow-xl rounded-lg w-full sm:max-w-lg text-center pt-14 pb-10 px-5 sm:px-10 my-auto;
   }
 
   .account-setup-input-title {
