@@ -25,17 +25,21 @@ const MsgPreview = ({ subject, msg }) => {
   };
 
   return (
-    <div className={`${msg.read.includes(id) ? 'border-gray-200' : 'border-green-700'} border rounded-lg shadow-md px-4 py-3 flex justify-between sm:items-center`}>
-      <div className='sm:flex sm:w-5/6'>
+    <div className={`${msg.read.includes(id) ? 'border-gray-200' : 'border-green-700'} border rounded-lg shadow-md px-4 py-3 flex justify-between`}>
+      <div className='sm:flex sm:w-4/5'>
         <p className='sm:w-1/4 sm:text-sm truncate'>{msg.from.profile.username}</p>
-        <p className='sm:w-full truncate sm:text-sm'>
-          {subject || 'No subject'}
-          <span className='hidden sm:inline font-light text-gray-400 ml-2'>
+        <div className='flex sm:w-3/4'>
+          <div>
+            <p className={`${!subject && 'italic'} text-green-700 truncate sm:text-sm`}>
+              {subject || 'No subject'}
+            </p>
+          </div>
+          <p className='hidden sm:block sm:text-sm font-light text-gray-400 ml-2 truncate'>
             {msg.body}
-          </span>
-        </p>
+          </p>
+        </div>
       </div>
-      <p className='sm:w-1/6 font-light text-xs text-right self-center'>{receivedDate()}</p>
+      <p className='sm:w-1/5 font-light text-xs text-right self-center'>{receivedDate()}</p>
     </div>
   )
 }

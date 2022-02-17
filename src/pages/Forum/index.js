@@ -61,7 +61,7 @@ const Forum = () => {
         <Post posts={posts} setPosts={setPosts} />
       </Route>
       <Route path={match.path}>
-        <div className='pt-16 sm:pt-20 px-4 sm:px-0 pb-12 space-y-4 sm:w-3/5 sm:mx-auto'>
+        <div className='pt-16 sm:pt-20 px-4 md:px-0 pb-12 space-y-4 md:w-3/5 md:mx-auto'>
           <div className='sm:flex sm:justify-between'>
             <div className='relative flex justify-between items-center sm:justify-start'>
               <Filters filters={filters} setFilters={setFilters} />
