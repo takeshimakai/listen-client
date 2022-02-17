@@ -12,7 +12,7 @@ const formatDate = (date) => {
     mm = `0${mm}`;
   }
   
-  return `${year}-${mm}-${dd}`;
+  return `${dd}/${mm}/${year}`;
 }
 
 export default formatDate;

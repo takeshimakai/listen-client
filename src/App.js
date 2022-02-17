@@ -20,6 +20,7 @@ import EmailVerification from './pages/EmailVerification';
 import Friends from './pages/Friends';
 import ForumActivity from './pages/ForumActivity';
 import Chat from './pages/Chat';
+import DirectMsgs from './pages/DirectMsgs';
 
 const App = () => {
   const [token, setToken] = useState(JSON.parse(localStorage.getItem('token')));
@@ -81,6 +82,7 @@ const App = () => {
             <ProtectedRoute path='/friends' component={Friends} />
             <ProtectedRoute path='/profile' component={Profile} />
             <ProtectedRoute path='/dashboard' component={Dashboard} />
+            <ProtectedRoute path='/messages' component={DirectMsgs} />
             <Route path='/verify' component={EmailVerification} />
             <Route path='/account-setup' component={AccountSetUp} />
             <Route path='/auth/google/success' component={GoogleOAuthSuccess} />

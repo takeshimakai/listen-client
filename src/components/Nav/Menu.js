@@ -73,6 +73,9 @@ const Menu = ({ numOfFriendReqs }) => {
               </span>
             }
           </Link>
+          <Link to='/messages' className='font-light hover:text-gray-500 text-sm w-max'>
+            Messages
+          </Link>
           <Link to='/forum-activity' className='font-light hover:text-gray-500 text-sm w-max'>
             Forum Activity
           </Link>

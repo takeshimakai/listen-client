@@ -63,6 +63,9 @@ const MobileMenu = ({ numOfFriendReqs }) => {
               </span>
             }
           </Link>
+          <Link to='/messages' className='font-light'>
+            Messages
+          </Link>
           <Link to='/forum-activity' className='font-light'>
             Forum Activity
           </Link>
