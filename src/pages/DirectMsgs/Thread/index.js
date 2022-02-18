@@ -1,19 +1,21 @@
 import { useState, useContext, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import SocketContext from '../../contexts/SocketContext';
-import UserContext from '../../contexts/UserContext';
+import SocketContext from '../../../contexts/SocketContext';
+import UserContext from '../../../contexts/UserContext';
 
-import decodeToken from '../../utils/decodeToken';
+import decodeToken from '../../../utils/decodeToken';
 
-const MsgThread = ({ threads, setThreads }) => {
-  const history = useHistory();
+import Input from './Input';
+import MsgsContainer from './MsgsContainer';
+import Subject from './Subject';
+
+const Thread = ({ threads, setThreads }) => {
   const { threadId } = useParams();
   const socket = useContext(SocketContext);
   const { token } = useContext(UserContext);
   const { id } = decodeToken(token);
 
-  const [input, setInput] = useState('');
   const [thread, setThread] = useState();
 
   useEffect(() => {
@@ -58,50 +60,13 @@ const MsgThread = ({ threads, setThreads }) => {
     };
   }, [socket, setThreads]);
 
-  const handleInput = (e) => setInput(e.target.value);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (input) {
-      socket.emit('send dm', {
-        to: thread.users[0] === id ? thread.users[1] : thread.users[0],
-        body: input,
-        threadId: threadId
-      });
-      setInput('');
-    }
-  };
-
-  const deleteThread = () => {
-    socket.emit('delete thread', threadId);
-    setThreads(prev => {
-      const updated = [...prev];
-      updated.splice(updated.findIndex(i => i._id === threadId), 1);
-      return updated;
-    });
-    history.replace('/messages');
-  };
-
   return (
-    <div>
-      <div>
-        <p>{thread && thread.subject}</p>
-        <button onClick={deleteThread}>Delete</button>
-      </div>
-      {thread && thread.msgs.map(msg => (
-        <div key={msg._id}>
-          <p>{msg.from.profile.username}</p>
-          <p>{msg.dateSent}</p>
-          <p>{msg.body}</p>
-        </div>
-      ))}
-      <form onSubmit={handleSubmit}>
-        <textarea placeholder='Reply' value={input} onChange={handleInput} />
-        <button>Send</button>
-      </form>
-    </div>
+    <>
+      <Subject thread={thread} setThreads={setThreads} />
+      <MsgsContainer thread={thread} />
+      <Input thread={thread} />
+    </>
   )
 }
 
-export default MsgThread;
+export default Thread;

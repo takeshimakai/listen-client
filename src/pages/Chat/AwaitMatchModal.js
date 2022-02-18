@@ -15,7 +15,7 @@ const AwaitMatchModal = ({ action, setAwaitMatch, setConnected }) => {
 
     if (action === 'listen' && elapsedSec === 20) {
       setTimeOut(true);
-      socket.disconnect();
+      socket.emit('listener abort match');
     }
 
     if (timeOut) {
@@ -26,10 +26,7 @@ const AwaitMatchModal = ({ action, setAwaitMatch, setConnected }) => {
   }, [timeOut, elapsedSec, action, socket]);
 
   useEffect(() => {
-    socket.on('no match', () => {
-      setTimeOut(true);
-      socket.disconnect();
-    });
+    socket.on('no match', () => setTimeOut(true));
 
     return () => socket.off('no match');
   }, [socket]);

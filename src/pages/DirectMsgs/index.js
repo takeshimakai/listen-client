@@ -4,7 +4,7 @@ import { useRouteMatch, Route, Switch } from 'react-router-dom';
 import SocketContext from '../../contexts/SocketContext';
 
 import MsgForm from './MsgForm';
-import MsgThread from './MsgThread';
+import Thread from './Thread';
 import Inbox from './Inbox';
 import Sent from './Sent';
 
@@ -49,10 +49,10 @@ const DirectMsgs = () => {
   }, [socket]);
 
   return (
-    <div className='pt-16 sm:pt-20 px-4 md:px-0 pb-4 md:w-3/5 mx-auto'>
+    <div className='pt-16 sm:pt-20 px-4 md:px-0 pb-10 md:w-3/5 mx-auto'>
       <Switch>
         <Route path={`${match.path}/:threadId`}>
-          <MsgThread threads={threads} setThreads={setThreads} />
+          <Thread threads={threads} setThreads={setThreads} />
         </Route>
         <Route path={match.path}>
           {compose && <MsgForm setThreads={setThreads} setCompose={setCompose} />}
