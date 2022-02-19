@@ -41,7 +41,7 @@ const MsgForm = ({ setThreads, setCompose }) => {
     e.preventDefault();
 
     if (err) {
-      setErr();
+      setErr({ body: '', to: '' });
     }
 
     let errors = {};
@@ -54,7 +54,7 @@ const MsgForm = ({ setThreads, setCompose }) => {
       errors.to = 'The recipient must be from your friends list.';
     }
 
-    if (errors) {
+    if (Object.keys(errors).length > 0) {
       return setErr(errors);
     }
 

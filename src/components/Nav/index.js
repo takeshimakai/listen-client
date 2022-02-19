@@ -15,6 +15,7 @@ const Nav = () => {
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
   const [numOfFriendReqs, setNumOfFriendReqs] = useState(0);
+  const [numOfNewDMs, setNumOfNewDMs] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -27,6 +28,16 @@ const Nav = () => {
       }
     })();
   }, [token]);
+
+  useEffect(() => {
+    socket.emit('get unread dm count');
+
+    socket.on('unread dm count', (count) => setNumOfNewDMs(count));
+
+    return () => {
+      socket.off('unread dm count');
+    }
+  }, [socket]);
 
   useEffect(() => {
     const { id } = decodeToken(token);
@@ -47,12 +58,17 @@ const Nav = () => {
       }
     });
     
+    socket.on('new dm', () => setNumOfNewDMs(prev => prev + 1));
+
+    socket.on('marked as read', () => setNumOfNewDMs(prev => prev - 1));
 
     return () => {
       socket.off('request received');
       socket.off('request canceled');
       socket.off('request declined');
       socket.off('request accepted');
+      socket.off('new dm');
+      socket.off('marked as read');
     };
   }, [socket, token]);
 
@@ -67,8 +83,8 @@ const Nav = () => {
     <div className='z-10 fixed w-full h-12 flex items-center justify-between py-2 px-4 bg-gray-50'>
       <h1 id='logo' className='logo-sm z-10'>listen</h1>
       {isMobile
-        ? <MobileMenu numOfFriendReqs={numOfFriendReqs} />
-        : <Menu numOfFriendReqs={numOfFriendReqs} />
+        ? <MobileMenu numOfFriendReqs={numOfFriendReqs} numOfNewDMs={numOfNewDMs} />
+        : <Menu numOfFriendReqs={numOfFriendReqs} numOfNewDMs={numOfNewDMs} />
       }
     </div>
   )

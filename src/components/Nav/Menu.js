@@ -5,7 +5,7 @@ import UserContext from "../../contexts/UserContext";
 
 import decodeToken from "../../utils/decodeToken";
 
-const Menu = ({ numOfFriendReqs }) => {
+const Menu = ({ numOfFriendReqs, numOfNewDMs }) => {
   const { token, setToken } = useContext(UserContext);
 
   const [isVisible, setIsVisible] = useState(false);
@@ -56,7 +56,7 @@ const Menu = ({ numOfFriendReqs }) => {
       </button>
       <div
         id='user-menu'
-        className='hidden absolute top-11 right-4 h-48 flex flex-col justify-between bg-gray-50 p-6 border rounded-md shadow-lg'
+        className='hidden absolute top-11 right-4 h-52 flex flex-col justify-between bg-gray-50 p-6 border rounded-md shadow-lg'
       >
         <div className='flex flex-col space-y-2'>
           <Link to='/profile' className='font-light text-sm hover:text-gray-500 w-max'>
@@ -73,8 +73,16 @@ const Menu = ({ numOfFriendReqs }) => {
               </span>
             }
           </Link>
-          <Link to='/messages' className='font-light hover:text-gray-500 text-sm w-max'>
+          <Link to='/messages' className='flex items-center relative font-light text-sm hover:text-gray-500 w-max'>
             Messages
+            {numOfNewDMs > 0 &&
+              <span
+                title='num of new messages'
+                className='flex justify-center items-center rounded-full bg-gray-400 absolute -right-6 h-5 w-5 text-xs font-medium text-white'
+              >
+                {numOfNewDMs}
+              </span>
+            }
           </Link>
           <Link to='/forum-activity' className='font-light hover:text-gray-500 text-sm w-max'>
             Forum Activity

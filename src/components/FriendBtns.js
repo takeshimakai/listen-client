@@ -1,58 +1,9 @@
-import { useEffect, useState, useContext } from 'react';
+import { useContext } from 'react';
 
 import SocketContext from '../contexts/SocketContext';
 
-const FriendBtns = ({ userId }) => {
+const FriendBtns = ({ userId, friendshipStatus, setFriendshipStatus }) => {
   const socket = useContext(SocketContext);
-
-  const [friendshipStatus, setFriendshipStatus] = useState('');
-
-  useEffect(() => {
-    socket.emit('get friendship status', userId);
-
-    socket.on('friendship status', (friendshipStatus) => {
-      setFriendshipStatus(friendshipStatus);
-    });
-
-    socket.on('request canceled', ({ canceledBy }) => {
-      if (userId === canceledBy) {
-        setFriendshipStatus('');
-      }
-    });
-
-    socket.on('request declined', ({ declinedBy }) => {
-      if (userId === declinedBy) {
-        setFriendshipStatus('');
-      }
-    });
-
-    socket.on('request received', ({ sentBy }) => {
-      if (userId === sentBy) {
-        setFriendshipStatus('received');
-      }
-    });
-
-    socket.on('unfriended', ({ unfriendedBy }) => {
-      if (userId === unfriendedBy) {
-        setFriendshipStatus('');
-      }
-    });
-
-    socket.on('request accepted', ({ acceptedBy }) => {
-      if (userId === acceptedBy) {
-        setFriendshipStatus('friends');
-      }
-    });
-
-    return () => {
-      socket.off('friendship status');
-      socket.off('request canceled');
-      socket.off('request declined');
-      socket.off('request received');
-      socket.off('unfriended');
-      socket.off('request accepted');
-    };
-  }, [socket, userId]);
 
   const send = () => {
     socket.emit('send request', userId);

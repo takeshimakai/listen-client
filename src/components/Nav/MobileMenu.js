@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import UserContext from "../../contexts/UserContext";
 
-const MobileMenu = ({ numOfFriendReqs }) => {
+const MobileMenu = ({ numOfFriendReqs, numOfNewDMs }) => {
   const { token, setToken } = useContext(UserContext);
 
   const [isVisible, setIsVisible] = useState(false);
@@ -63,8 +63,16 @@ const MobileMenu = ({ numOfFriendReqs }) => {
               </span>
             }
           </Link>
-          <Link to='/messages' className='font-light'>
+          <Link to='/messages' className='font-light relative flex items-center'>
             Messages
+            {numOfNewDMs > 0 &&
+              <span
+                title='num of new messages'
+                className='flex items-center justify-center rounded-full bg-gray-400 absolute -right-6 h-5 w-5 text-xs font-medium text-white'
+              >
+                {numOfNewDMs}
+              </span>
+            }
           </Link>
           <Link to='/forum-activity' className='font-light'>
             Forum Activity

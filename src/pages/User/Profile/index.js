@@ -11,6 +11,9 @@ import defaultPic from '../../../assets/default-profile.jpg';
 import ProfileForm from "../Form";
 import Card from "./Card";
 import FriendBtns from "../../../components/FriendBtns";
+import DMForm from "./DMForm";
+
+import useFriendshipStatus from '../../../hooks/useFriendshipStatus';
 
 const Profile = () => {
   const history = useHistory();
@@ -19,6 +22,7 @@ const Profile = () => {
   const { token } = useContext(UserContext);
   const { id } = decodeToken(token);
 
+  const { friendshipStatus, setFriendshipStatus } = useFriendshipStatus(userId);
   const [profile, setProfile] = useState({
     img: '',
     username: '',
@@ -81,7 +85,11 @@ const Profile = () => {
           </div>
           <div className='xl:absolute xl:left-4 xl:top-80 mt-12 xl:mt-0 w-full max-w-xs xl:w-40 flex justify-center xl:flex-col space-x-2 xl:space-x-0 xl:space-y-2.5'>
             {userId
-              ? <FriendBtns userId={userId} />
+              ? <FriendBtns
+                  userId={userId}
+                  friendshipStatus={friendshipStatus}
+                  setFriendshipStatus={setFriendshipStatus}
+                />
               : <Link to={`${match.url}/edit`}>
                   <button className='tertiary-btn w-40'>Edit</button>
                 </Link>
