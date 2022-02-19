@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from 'react';
 
 import SocketContext from '../../../contexts/SocketContext';
 
-const Recipient = ({ to, setNewMsg }) => {
+const Recipient = ({ err, to, setNewMsg }) => {
   const socket = useContext(SocketContext);
 
   const [friends, setFriends] = useState([]);
@@ -30,9 +30,15 @@ const Recipient = ({ to, setNewMsg }) => {
   };
 
   return (
-    <div>
-      <label htmlFor='to'>Recipient</label>
-      <input list='to-list' value={input} onChange={handleInput} />
+    <div className='flex flex-col w-full mb-1'>
+      <label className='subtitle' htmlFor='to'>Recipient</label>
+      <input
+        className='w-full py-1 border-b border-gray-400 focus:border-gray-700 sm:text-sm text-gray-900 bg-transparent focus:outline-none'
+        list='to-list'
+        value={input}
+        onChange={handleInput}
+      />
+      <p className='error-msg'>{err.to}</p>
       <datalist id='to-list'>
         {friends.length > 0
           ? friends.map(friend => (

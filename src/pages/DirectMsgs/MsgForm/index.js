@@ -9,7 +9,7 @@ const MsgForm = ({ setThreads, setCompose }) => {
   const history = useHistory();
   const socket = useContext(SocketContext);
 
-  const [err, setErr] = useState([]);
+  const [err, setErr] = useState({ body: '', to: '' });
   const [newMsg, setNewMsg] = useState({
     isParent: true,
     subject: '',
@@ -24,7 +24,12 @@ const MsgForm = ({ setThreads, setCompose }) => {
       history.push(`/messages/${msg._id}`);
     });
 
-    return () => socket.off('dm success');
+    socket.on('dm error', (errors) => setErr(errors));
+
+    return () => {
+      socket.off('dm success');
+      socket.off('dm error');
+    };
   }, [socket, history, setThreads, setCompose]);
 
   const handleInput = (e) => {
@@ -35,21 +40,21 @@ const MsgForm = ({ setThreads, setCompose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (err.length > 0) {
-      setErr([]);
+    if (err) {
+      setErr();
     }
 
-    let errors = [];
+    let errors = {};
 
     if (!newMsg.body) {
-      errors.push({ param: 'body', msg: 'A message is required.' });
+      errors.body = 'A message is required.';
     }
 
     if (!newMsg.to) {
-      errors.push({ param: 'to', msg: 'The recipient must be from your friends list.' });
+      errors.to = 'The recipient must be from your friends list.';
     }
 
-    if (errors.length > 0) {
+    if (errors) {
       return setErr(errors);
     }
 
@@ -57,31 +62,41 @@ const MsgForm = ({ setThreads, setCompose }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Recipient err={err} to={newMsg.to} setNewMsg={setNewMsg} />
-      <div>
-        <label htmlFor='subject'>Subject</label>
-        <input
-          id='subject'
-          name='subject'
-          type='text'
-          value={newMsg.subject}
-          onChange={handleInput}
-        />
-      </div>
-      <div>
-        <textarea
-          placeholder='Message'
-          name='body'
-          value={newMsg.body}
-          onChange={handleInput}
-        />
-      </div>
-      <div>
-        <button type='button' onClick={() => setCompose(false)}>Cancel</button>
-        <button>Send</button>
-      </div>
-    </form>
+    <div className='z-10 absolute top-0 left-0 flex justify-center items-center h-full w-full bg-gray-200 bg-opacity-60'>
+      <form
+        className='flex flex-col items-center bg-gray-50 shadow-md rounded-lg p-4 sm:p-8 h-3/4 w-full sm:w-3/4 lg:w-1/2 mx-4 sm:mx-0'
+        onSubmit={handleSubmit}
+      >
+        <Recipient err={err} to={newMsg.to} setNewMsg={setNewMsg} />
+        <div className='w-full mb-5'>
+          <label className='subtitle' htmlFor='subject'>Subject</label>
+          <input
+            id='subject'
+            className='w-full py-1 border-b border-gray-400 focus:border-gray-700 sm:text-sm text-gray-900 bg-transparent focus:outline-none'
+            name='subject'
+            type='text'
+            value={newMsg.subject}
+            onChange={handleInput}
+          />
+        </div>
+        <div className='flex flex-grow flex-col w-full mb-1'>
+          <textarea
+            className='resize-none p-2 h-full w-full border border-gray-400 focus:border-gray-700 rounded sm:text-sm text-gray-900 focus:outline-none'
+            placeholder='Message'
+            name='body'
+            value={newMsg.body}
+            onChange={handleInput}
+          />
+          <p className='error-msg'>{err.body}</p>
+        </div>
+        <div className='flex justify-center max-w-sm w-full'>
+          <button className='secondary-btn mr-1 sm:w-40' type='button' onClick={() => setCompose(false)}>
+            Cancel
+          </button>
+          <button className='primary-btn ml-1 sm:w-40'>Send</button>
+        </div>
+      </form>
+    </div>
   )
 }
 
