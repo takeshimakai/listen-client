@@ -53,7 +53,7 @@ const FriendBtns = ({ userId, friendshipStatus, setFriendshipStatus }) => {
         </>
       }
       {friendshipStatus === 'friends' &&
-        <button className='tertiary-btn w-40' onClick={unfriend}>
+        <button className='secondary-btn w-40' onClick={unfriend}>
           Unfriend
         </button>
       }

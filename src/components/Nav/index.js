@@ -12,6 +12,7 @@ import decodeToken from "../../utils/decodeToken";
 const Nav = () => {
   const socket = useContext(SocketContext);
   const { token } = useContext(UserContext);
+  const { id } = decodeToken(token);
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
   const [numOfFriendReqs, setNumOfFriendReqs] = useState(0);
@@ -34,13 +35,12 @@ const Nav = () => {
 
     socket.on('unread dm count', (count) => setNumOfNewDMs(count));
 
-    return () => {
-      socket.off('unread dm count');
-    }
-  }, [socket]);
+    socket.on('new dm', () => {
+      console.log('hello')
+      setNumOfNewDMs(prev => prev + 1)
+    });
 
-  useEffect(() => {
-    const { id } = decodeToken(token);
+    socket.on('marked as read', () => setNumOfNewDMs(prev => prev - 1));
 
     socket.on('request received', () => setNumOfFriendReqs(prev => prev + 1));
     
@@ -57,20 +57,17 @@ const Nav = () => {
         setNumOfFriendReqs(prev => prev - 1);
       }
     });
-    
-    socket.on('new dm', () => setNumOfNewDMs(prev => prev + 1));
-
-    socket.on('marked as read', () => setNumOfNewDMs(prev => prev - 1));
 
     return () => {
+      socket.off('unread dm count');
+      socket.off('new dm');
+      socket.off('marked as read');
       socket.off('request received');
       socket.off('request canceled');
       socket.off('request declined');
       socket.off('request accepted');
-      socket.off('new dm');
-      socket.off('marked as read');
     };
-  }, [socket, token]);
+  }, [socket, id]);
 
   useEffect(() => {
     const updateIsMobile = () => setIsMobile(window.innerWidth < 640);
