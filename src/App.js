@@ -27,10 +27,7 @@ const App = () => {
   const [emailVerified, setEmailVerified] = useState(false);
   const [initialized, setInitialized] = useState(false);
 
-  const socket = useRef(io('http://localhost:5000', {
-    autoConnect: false,
-    extraHeaders: { Authorization: `Bearer ${token}` }
-  }));
+  const socket = useRef(io());
 
   useEffect(() => {
     localStorage.setItem('token', JSON.stringify(token));

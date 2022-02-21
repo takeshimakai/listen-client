@@ -35,10 +35,7 @@ const Nav = () => {
 
     socket.on('unread dm count', (count) => setNumOfNewDMs(count));
 
-    socket.on('new dm', () => {
-      console.log('hello')
-      setNumOfNewDMs(prev => prev + 1)
-    });
+    socket.on('new dm', () => setNumOfNewDMs(prev => prev + 1));
 
     socket.on('marked as read', () => setNumOfNewDMs(prev => prev - 1));
 
