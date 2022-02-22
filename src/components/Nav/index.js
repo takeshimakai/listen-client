@@ -56,6 +56,7 @@ const Nav = () => {
     });
 
     return () => {
+      console.log('cheese');
       socket.off('unread dm count');
       socket.off('new dm');
       socket.off('marked as read');

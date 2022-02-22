@@ -41,11 +41,8 @@ const App = () => {
       
       if (verified && username) {
         socket.current = io('http://localhost:5000', {
-          autoConnect: false,
           extraHeaders: { Authorization: `Bearer ${token}` }
         });
-
-        socket.current.connect();
 
         setInitialized(true);
 

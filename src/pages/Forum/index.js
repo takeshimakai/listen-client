@@ -3,6 +3,8 @@ import { Switch, Route, Link, useRouteMatch } from 'react-router-dom';
 
 import UserContext from '../../contexts/UserContext';
 
+import useWindowWidth from '../../hooks/useWindowWidth';
+
 import getData from '../../utils/getData';
 import sortData from '../../utils/sortData';
 
@@ -17,16 +19,10 @@ const Forum = () => {
 
   const { token } = useContext(UserContext);
 
+  const windowWidth = useWindowWidth();
   const [posts, setPosts] = useState([]);
   const [sortPostsBy, setSortPostsBy] = useState('newest');
   const [filters, setFilters] = useState([]);
-  const [lessThan640, setLessThan640] = useState(window.innerWidth < 640);
-
-  useEffect(() => {
-    const updateLessThan640 = () => setLessThan640(window.innerWidth < 640);
-    window.addEventListener('resize', updateLessThan640);
-    return () => window.removeEventListener('resize', updateLessThan640);
-  });
 
   useEffect(() => {
     const savedSort = JSON.parse(sessionStorage.getItem('sortPostsBy'));
@@ -71,7 +67,7 @@ const Forum = () => {
               className='fixed sm:relative bottom-3 right-3 sm:inset-0 w-11 sm:w-40 h-11 sm:h-8 border rounded-full border-green-700 flex items-center justify-center text-green-700 text-2xl sm:text-sm shadow-md bg-gray-50 hover:text-white hover:bg-green-700 active:shadow-inner'
               to={`${match.url}/new`}
             >
-              {lessThan640 ? <span>&#65291;</span> : 'Create new post'}
+              {windowWidth < 640 ? <span>&#65291;</span> : 'Create new post'}
             </Link>
           </div>
           {posts.length > 0

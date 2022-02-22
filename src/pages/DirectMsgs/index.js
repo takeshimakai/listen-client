@@ -3,6 +3,8 @@ import { useRouteMatch, Route, Switch } from 'react-router-dom';
 
 import SocketContext from '../../contexts/SocketContext';
 
+import useWindowWidth from '../../hooks/useWindowWidth';
+
 import MsgForm from './MsgForm';
 import Thread from './Thread';
 import Inbox from './Inbox';
@@ -12,16 +14,10 @@ const DirectMsgs = () => {
   const match = useRouteMatch();
   const socket = useContext(SocketContext);
 
-  const [lessThan640, setLessThan640] = useState(window.innerWidth < 640);
+  const windowWidth = useWindowWidth();
   const [threads, setThreads] = useState([]);
   const [compose, setCompose] = useState(false);
   const [page, setPage] = useState('inbox');
-
-  useEffect(() => {
-    const updateLessThan640 = () => setLessThan640(window.innerWidth < 640);
-    window.addEventListener('resize', updateLessThan640);
-    return () => window.removeEventListener('resize', updateLessThan640);
-  });
 
   useEffect(() => {
     socket.emit('get dms');
@@ -75,7 +71,7 @@ const DirectMsgs = () => {
               className='fixed sm:relative bottom-3 right-3 sm:inset-0 w-11 sm:w-40 h-11 sm:h-8 border rounded-full border-green-700 text-green-700 text-2xl sm:text-sm shadow-md bg-gray-50 hover:text-white hover:bg-green-700 active:shadow-inner'
               onClick={() => setCompose(true)}
             >
-              {lessThan640 ? <span>&#65291;</span> : 'Compose'}
+              {windowWidth < 640 ? <span>&#65291;</span> : 'Compose'}
             </button>
           </div>
           <div className='space-y-4'>
