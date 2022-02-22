@@ -7,8 +7,7 @@ import useWindowWidth from '../../hooks/useWindowWidth';
 
 import MsgForm from './MsgForm';
 import Thread from './Thread';
-import Inbox from './Inbox';
-import Sent from './Sent';
+import ThreadsContainer from './ThreadsContainer';
 
 const DirectMsgs = () => {
   const match = useRouteMatch();
@@ -74,10 +73,7 @@ const DirectMsgs = () => {
               {windowWidth < 640 ? <span>&#65291;</span> : 'Compose'}
             </button>
           </div>
-          <div className='space-y-4'>
-            {page === 'inbox' && <Inbox threads={threads} />}
-            {page === 'sent' && <Sent threads={threads} />}
-          </div>
+          <ThreadsContainer page={page} threads={threads} />
         </Route>
       </Switch>
     </div>

@@ -3,7 +3,7 @@ import { useContext } from 'react';
 
 import UserContext from '../../contexts/UserContext';
 
-import MsgPreview from './MsgPreview';
+import MsgPreview from './MsgPreview'
 
 import decodeToken from '../../utils/decodeToken';
 
