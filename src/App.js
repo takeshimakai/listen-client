@@ -27,7 +27,7 @@ const App = () => {
   const [emailVerified, setEmailVerified] = useState(false);
   const [initialized, setInitialized] = useState(false);
 
-  const socket = useRef(io());
+  const socket = useRef(io('', { autoConnect: false }));
 
   useEffect(() => {
     localStorage.setItem('token', JSON.stringify(token));
@@ -85,7 +85,6 @@ const App = () => {
         </BrowserRouter>
       </SocketContext.Provider>
     </UserContext.Provider>
-
   );
 }
 
