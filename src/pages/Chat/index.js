@@ -18,8 +18,8 @@ import formatDate from '../../utils/formatDate';
 
 const Chat = ({ location }) => {
   const history = useHistory();
-  const { action } = location.state;
   const socket = useContext(SocketContext);
+  const action = location.state ? location.state.action : 'listen';
 
   const [connected, setConnected] = useState(false);
   const [msgs, setMsgs] = useState([]);
