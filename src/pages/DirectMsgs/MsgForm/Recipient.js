@@ -11,9 +11,11 @@ const Recipient = ({ err, to, setNewMsg }) => {
   useEffect(() => {
     socket.emit('get friends', 'accepted');
 
-    socket.on('accepted friends', (friends) => setFriends(friends));
+    const acceptedFriendsHandler = (friends) => setFriends(friends);
 
-    return () => socket.off('accepted friends');
+    socket.on('accepted friends', acceptedFriendsHandler);
+
+    return () => socket.off('accepted friends', acceptedFriendsHandler);
   }, [socket]);
 
   const handleInput = (e) => {

@@ -47,17 +47,17 @@ const Thread = ({ threads, setThreads }) => {
   }, [threadId, threads]);
 
   useEffect(() => {
-    socket.on('dm success', (data) => {
+    const dmSuccessHandler = (data) => {
       setThreads(prev => {
         const newThreads = [...prev];
         newThreads.splice(newThreads.findIndex(i => i._id === data._id), 1, data);
         return newThreads;
       });
-    });
-
-    return () => {
-      socket.off('dm success');
     };
+
+    socket.on('dm success', dmSuccessHandler);
+
+    return () => socket.off('dm success', dmSuccessHandler);
   }, [socket, setThreads]);
 
   return (

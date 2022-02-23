@@ -15,16 +15,19 @@ const DMForm = ({ userId, username, setCompose }) => {
   });
 
   useEffect(() => {
-    socket.on('dm success', () => {
+    const dmSuccessHandler = () => {
       setSuccess(true);
       setTimeout(() => setCompose(false), 2000);
-    });
+    };
 
-    socket.on('dm error', (errors) => setErr(errors.body));
+    const dmErrorHandler = (errors) => setErr(errors.body);
+
+    socket.on('dm success', dmSuccessHandler);
+    socket.on('dm error', dmErrorHandler);
 
     return () => {
-      socket.off('dm success');
-      socket.off('dm error');
+      socket.off('dm success', dmSuccessHandler);
+      socket.off('dm error', dmErrorHandler);
     };
   }, [socket, setCompose]);
 

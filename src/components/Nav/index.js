@@ -35,36 +35,44 @@ const Nav = () => {
   useEffect(() => {
     socket.emit('get unread dm count');
 
-    socket.on('unread dm count', (count) => setNumOfNewDMs(count));
+    const setUnreadCount = (count) => setNumOfNewDMs(count);
 
-    socket.on('new dm', () => setNumOfNewDMs(prev => prev + 1));
+    const newDMHandler = () => setNumOfNewDMs(prev => prev + 1);
 
-    socket.on('marked as read', () => setNumOfNewDMs(prev => prev - 1));
+    const markedAsRead = () => setNumOfNewDMs(prev => prev - 1);
 
-    socket.on('request received', () => setNumOfFriendReqs(prev => prev + 1));
-    
-    socket.on('request canceled', () => setNumOfFriendReqs(prev => prev - 1));
-    
-    socket.on('request declined', ({ declinedBy }) => {
+    const requestReceived = () => setNumOfFriendReqs(prev => prev + 1);
+
+    const requestCanceled = () => setNumOfFriendReqs(prev => prev - 1);
+
+    const requestDeclined = ({ declinedBy }) => {
       if (id === declinedBy) {
         setNumOfFriendReqs(prev => prev - 1);
       }
-    });
+    };
 
-    socket.on('request accepted', ({ acceptedBy }) => {
+    const requestAccepted = ({ acceptedBy }) => {
       if (id === acceptedBy) {
         setNumOfFriendReqs(prev => prev - 1);
       }
-    });
+    };
+
+    socket.on('unread dm count', setUnreadCount);
+    socket.on('new dm', newDMHandler);
+    socket.on('marked as read', markedAsRead);
+    socket.on('request received', requestReceived);
+    socket.on('request canceled', requestCanceled);
+    socket.on('request declined', requestDeclined);
+    socket.on('request accepted', requestAccepted);
 
     return () => {
-      socket.off('unread dm count');
-      socket.off('new dm');
-      socket.off('marked as read');
-      socket.off('request received');
-      socket.off('request canceled');
-      socket.off('request declined');
-      socket.off('request accepted');
+      socket.off('unread dm count', setUnreadCount);
+      socket.off('new dm', newDMHandler);
+      socket.off('marked as read', markedAsRead);
+      socket.off('request received', requestReceived);
+      socket.off('request canceled', requestCanceled);
+      socket.off('request declined', requestDeclined);
+      socket.off('request accepted', requestAccepted);
     };
   }, [socket, id]);
 

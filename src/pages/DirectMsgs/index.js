@@ -21,9 +21,9 @@ const DirectMsgs = () => {
   useEffect(() => {
     socket.emit('get dms');
 
-    socket.on('all dms', (data) => setThreads(data));
+    const allDMsHandler = (data) => setThreads(data);
 
-    socket.on('new dm', (data) => {
+    const newDMHandler = (data) => {
       setThreads(prev => {
         const index = prev.findIndex(i => i._id === data._id);
 
@@ -35,11 +35,14 @@ const DirectMsgs = () => {
 
         return [...prev, data];
       });
-    });
+    };
+
+    socket.on('all dms', allDMsHandler);
+    socket.on('new dm', newDMHandler);
 
     return () => {
-      socket.off('all dms');
-      socket.off('new dm');
+      socket.off('all dms', allDMsHandler);
+      socket.off('new dm', newDMHandler);
     };
   }, [socket]);
 

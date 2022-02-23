@@ -26,9 +26,11 @@ const AwaitMatchModal = ({ action, setAwaitMatch, setConnected }) => {
   }, [timeOut, elapsedSec, action, socket]);
 
   useEffect(() => {
-    socket.on('no match', () => setTimeOut(true));
+    const onNoMatch = () => setTimeOut(true);
 
-    return () => socket.off('no match');
+    socket.on('no match', onNoMatch);
+
+    return () => socket.off('no match', onNoMatch);
   }, [socket]);
 
   const confirm = () => {

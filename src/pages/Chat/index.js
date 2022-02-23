@@ -63,7 +63,7 @@ const Chat = ({ location }) => {
   }, [socket]);
 
   useEffect(() => {
-    socket.on('reconnect', ({ msgs, otherUser }) => {
+    const reconnectHandler = ({ msgs, otherUser }) => {
       setMsgs(msgs);
       setOtherUser({
         userID: otherUser.userID,
@@ -75,64 +75,59 @@ const Chat = ({ location }) => {
         problemTopics: otherUser.problemTopics || [],
         isConnected: otherUser.isConnected
       });
-    });
+    };
 
-    socket.on('otherUser disconnected', () => {
+    const otherUserDisconnectedHandler = () => {
       setOtherUser(prev => ({ ...prev, isConnected: false }));
-    });
+    };
 
-    socket.on('otherUser reconnected', () => {
+    const otherUserReconnectedHandler = () => {
       setOtherUser(prev => ({ ...prev, isConnected: true }));
-    });
+    };
 
-    socket.on('match found', ({ roomID, listener, talker }) => {
+    const matchFoundHandler = ({ roomID, otherUser }) => {
+      setOtherUser({
+        userID: otherUser.userID,
+        img: otherUser.img || '',
+        username: otherUser.username,
+        dob: otherUser.dob ? formatDate(otherUser.dob) : '',
+        gender: otherUser.gender || '',
+        interests: otherUser.interests || [],
+        problemTopics: otherUser.problemTopics || [],
+        isConnected: otherUser.isConnected
+      });
+
       if (action === 'listen') {
-        setOtherUser({
-          userID: talker.userID,
-          img: talker.img || '',
-          username: talker.username,
-          dob: talker.dob ? formatDate(talker.dob) : '',
-          gender: talker.gender || '',
-          interests: talker.interests || [],
-          problemTopics: talker.problemTopics || [],
-          isConnected: talker.isConnected
-        });
-        socket.emit('listener setup', { roomID, talker });
-      }
-
-      if (action === 'talk') {
-        setOtherUser({
-          userID: listener.userID,
-          img: listener.img || '',
-          username: listener.username,
-          dob: listener.dob ? formatDate(listener.dob) : '',
-          gender: listener.gender || '',
-          interests: listener.interests || [],
-          problemTopics: listener.problemTopics || [],
-          isConnected: listener.isConnected
-        });
+        socket.emit('listener setup', { roomID, otherUserID: otherUser.userID });
       }
 
       setAwaitMatch(false);
       sessionStorage.setItem('roomID', roomID);
-    });
+    };
 
-    socket.on('new msg', (msg) => {
+    const newMsgHandler = (msg) => {
       setMsgs(prev => [...prev, { msg, from: otherUser.userID }]);
-    });
+    };
 
-    socket.on('user left', () => {
+    const userLeftHandler = () => {
       setOtherUser(prev => ({ ...prev, isConnected: false }));
       setOtherUserLeft(true);
-    });
+    };
+
+    socket.on('reconnect', reconnectHandler);
+    socket.on('otherUser disconnected', otherUserDisconnectedHandler);
+    socket.on('otherUser reconnected', otherUserReconnectedHandler);
+    socket.on('match found', matchFoundHandler);
+    socket.on('new msg', newMsgHandler);
+    socket.on('user left', userLeftHandler);
 
     return () => {
-      socket.off('reconnect');
-      socket.off('otherUser disconnected');
-      socket.off('otherUser reconnected');
-      socket.off('match found');
-      socket.off('new msg');
-      socket.off('user left');
+      socket.off('reconnect', reconnectHandler);
+      socket.off('otherUser disconnected', otherUserDisconnectedHandler);
+      socket.off('otherUser reconnected', otherUserReconnectedHandler);
+      socket.off('match found', matchFoundHandler);
+      socket.off('new msg', newMsgHandler);
+      socket.off('user left', userLeftHandler);
     }
   }, [socket, otherUser, action]);
 

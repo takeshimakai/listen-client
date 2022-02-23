@@ -18,17 +18,20 @@ const MsgForm = ({ setThreads, setCompose }) => {
   });
 
   useEffect(() => {
-    socket.on('dm success', (msg) => {
+    const dmSuccessHandler = (msg) => {
       setThreads(prev => ([...prev, msg]));
       setCompose(false);
       history.push(`/messages/${msg._id}`);
-    });
+    };
 
-    socket.on('dm error', (errors) => setErr(errors));
+    const dmErrorHandler = (errors) => setErr(errors);
+
+    socket.on('dm success', dmSuccessHandler);
+    socket.on('dm error', dmErrorHandler);
 
     return () => {
-      socket.off('dm success');
-      socket.off('dm error');
+      socket.off('dm success', dmSuccessHandler);
+      socket.off('dm error', dmErrorHandler);
     };
   }, [socket, history, setThreads, setCompose]);
 

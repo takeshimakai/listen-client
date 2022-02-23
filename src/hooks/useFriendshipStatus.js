@@ -11,47 +11,52 @@ const useFriendshipStatus = (userID) => {
     if (userID) {
       socket.emit('get friendship status', userID);
 
-      socket.on('friendship status', (friendshipStatus) => {
-        setFriendshipStatus(friendshipStatus);
-      });
-  
-      socket.on('request canceled', ({ canceledBy }) => {
+      const onFriendshipStatus = (status) => setFriendshipStatus(status);
+
+      const onRequestCanceled = ({ canceledBy }) => {
         if (userID === canceledBy) {
           setFriendshipStatus('');
         }
-      });
-  
-      socket.on('request declined', ({ declinedBy }) => {
+      };
+
+      const onRequestDeclined = ({ declinedBy }) => {
         if (userID === declinedBy) {
           setFriendshipStatus('');
         }
-      });
-  
-      socket.on('request received', ({ sentBy }) => {
+      };
+
+      const onRequestReceived = ({ sentBy }) => {
         if (userID === sentBy) {
           setFriendshipStatus('received');
         }
-      });
-  
-      socket.on('unfriended', ({ unfriendedBy }) => {
+      };
+
+      const onUnfriended = ({ unfriendedBy }) => {
         if (userID === unfriendedBy) {
           setFriendshipStatus('');
         }
-      });
-  
-      socket.on('request accepted', ({ acceptedBy }) => {
+      };
+
+      const onRequestAccepted = ({ acceptedBy }) => {
         if (userID === acceptedBy) {
           setFriendshipStatus('friends');
         }
-      });
+      };
+
+      socket.on('friendship status', onFriendshipStatus);
+      socket.on('request canceled', onRequestCanceled);
+      socket.on('request declined', onRequestDeclined);
+      socket.on('request received', onRequestReceived);
+      socket.on('unfriended', onUnfriended);
+      socket.on('request accepted', onRequestAccepted);
   
       return () => {
-        socket.off('friendship status');
-        socket.off('request canceled');
-        socket.off('request declined');
-        socket.off('request received');
-        socket.off('unfriended');
-        socket.off('request accepted');
+        socket.off('friendship status', onFriendshipStatus);
+        socket.off('request canceled', onRequestCanceled);
+        socket.off('request declined', onRequestDeclined);
+        socket.off('request received', onRequestReceived);
+        socket.off('unfriended', onUnfriended);
+        socket.off('request accepted', onRequestAccepted);
       };
     }
   }, [socket, userID]);
