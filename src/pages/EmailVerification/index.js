@@ -3,33 +3,16 @@ import { useHistory } from 'react-router-dom';
 
 import UserContext from '../../contexts/UserContext';
 
-import postData from '../../utils/postData';
 import decodeToken from '../../utils/decodeToken';
+import postData from '../../utils/postData';
+
+import VerifyForm from './VerifyForm';
 
 const EmailVerification = () => {
   const history = useHistory();
   const { token, setToken } = useContext(UserContext);
 
-  const [input, setInput] = useState(['','','','']);
-  const [error, setError] = useState();
-
-  useEffect(() => {
-    const numInputs = document.querySelectorAll('.num-input');
-
-    const autoFocus = (e) => {
-      if (e.key !== ' ' && [...Array(10).keys()].includes(Number(e.key))) {
-        e.target.nextElementSibling.focus();
-      }
-    };
-
-    numInputs.forEach(input => {
-      input.addEventListener('keyup', autoFocus);
-    });
-
-    return () => {
-      numInputs.forEach(input => input.removeEventListener('keyup', autoFocus));
-    }
-  }, []);
+  const [codeSentTo, setCodeSentTo] = useState('');
 
   useEffect(() => {
     if (token) {
@@ -39,91 +22,48 @@ const EmailVerification = () => {
     }
   }, [token, history]);
 
-  const handleChange = (e) => {
-    const { index } = e.target.dataset;
-    let { value } = e.target;
-
-    if (value.length > 1) {
-      return;
-    }
-
-    setInput(prev => {
-      const updated = [...prev];
-      updated.splice(index, 1, value);
-      return updated;
-    });
-  };
-
-  const handleSubmit = async (e) => {
+  const resendCode = async () => {
     try {
-      e.preventDefault();
-      const code = input.join().replace(/,/g, '');
-      
-      if (code.length !== 4) {
-        return setError('Verification code must contain four digits.');
-      }
+      const res = await postData('/auth/resend-code', undefined, token);
 
-      const res = await postData('/auth/verify', { code }, token);
-      const data = await res.json();
+      if (res.ok) {
+        const { email } = await res.json();
+        setCodeSentTo(email);
 
-      if (!res.ok) {
-        return setError(data.msg);
+        setTimeout(() => setCodeSentTo(''), 3000);
       }
-      
-      setToken(data);
     } catch (err) {
       console.log(err);
     }
   };
 
   return (
-    <div className='w-screen h-screen flex flex-col sm:flex-row sm:items-center overflow-auto'>
+    <div className='w-screen h-screen lg:flex lg:items-center overflow-auto'>
       <div className='bg-image' />
       <button
-        className='absolute z-20 right-4 top-2 font-light text-sm'
+        className='absolute right-4 top-2 font-light text-sm'
         onClick={() => setToken('')}
       >
         Sign out
       </button>
-      <div className='relative flex items-center justify-center sm:justify-end h-2/6 sm:h-auto z-10 sm:flex-1 sm:mr-14'>
+      <div className='relative flex items-center justify-center lg:justify-end h-2/6 lg:h-auto lg:flex-1 lg:mr-14'>
         <h1 className='logo-main'>listen</h1>
       </div>
-      <div className='relative z-10 px-12 sm:px-0 flex-1 sm:ml-14'>
-        <form
-          className='max-w-xs mx-auto sm:mx-0 flex flex-col items-center justify-between h-full sm:h-80 pb-12 sm:pb-0'
-          onSubmit={handleSubmit}
-        >
-          <div className='text-center'>
-            <p>
-              An email has been sent with a four digit verification code.
-            </p>
-            <p className='mt-2'>
-              Please enter it below.
-            </p>
-            <div className='w-full text-center mt-8'>
-              {input.map((el, i) => (
-                <input
-                  className='num-input border border-gray-400 rounded-md text-gray-900 text-xl text-center h-12 w-10 mx-1'
-                  key={i}
-                  type='number'
-                  data-index={i}
-                  value={el}
-                  max='9'
-                  min='0'
-                  onChange={handleChange}
-                />
-              ))}
-              <p className='error-msg'>{error && error}</p>
-            </div>
-          </div>
-          <div className='w-full text-center space-y-4'>
-            <p className='text-white sm:text-black text-sm'>
-              Didn't receive it? <span className='text-blue-700 hover:text-blue-900 cursor-pointer'>Send it again.</span>
-            </p>
-            <input className='primary-btn' type='submit' value='Verify' />
-          </div>
-        </form>
+      <div className='relative px-12 lg:px-0 lg:flex-1 lg:ml-14 mb-12 lg:mb-0'>
+        <VerifyForm />
+        <p className='max-w-2xs mx-auto lg:mx-0 text-sm mt-6 text-center'>
+          Didn't receive it? <span className='text-blue-700 hover:text-blue-900 cursor-pointer' onClick={resendCode}>
+            Send it again.
+          </span>
+        </p>
       </div>
+      {codeSentTo &&
+        <div className='absolute top-0 p-4 flex justify-center items-center h-full w-full bg-gray-200 bg-opacity-60'>
+          <p className='p-10 bg-gray-50 border rounded-lg shadow-md text-center font-light sm:text-sm'>
+            A new code has been sent to <span className='text-green-700 font-normal'>{codeSentTo}</span>.
+          </p>
+        </div>
+      }
     </div>
   )
 }

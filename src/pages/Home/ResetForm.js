@@ -88,14 +88,12 @@ const ResetForm = ({ input, setPage, handleInput, setStep }) => {
         </button>
         <button className='primary-btn'>Reset password</button>
       </div>
-      <div className='text-center mt-6'>
-        <p className='text-sm'>Didn't receive it? <span
-          className='text-blue-700 hover:text-blue-900 cursor-pointer'
-          onClick={() => setStep('email')}
-        >
-          Send it again.
-        </span></p>
-      </div>
+      <p className='text-sm text-center mt-6'>Didn't receive it? <span
+        className='text-blue-700 hover:text-blue-900 cursor-pointer'
+        onClick={() => setStep('email')}
+      >
+        Send it again.
+      </span></p>
     </form>
   )
 }

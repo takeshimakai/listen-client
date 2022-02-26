@@ -34,7 +34,7 @@ const EmailForm = ({ email, handleInput, setStep, setPage }) => {
   return (
     <form className='max-w-2xs mx-auto lg:mx-0' onSubmit={handleSubmit}>
       <p className='font-light sm:text-sm text-center mb-12'>
-        We will send a verification code to your email and it will be necessary to reset your password.
+        We will send a verification code to your email. It will be necessary to reset your password.
       </p>
       <div className='mb-1'>
         <label className='label' htmlFor='email'>Email</label>
