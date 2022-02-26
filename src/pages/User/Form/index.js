@@ -1,5 +1,4 @@
-import { useEffect, useState, useContext } from "react";
-import { useHistory } from 'react-router-dom';
+import { useState, useContext } from "react";
 
 import UserContext from "../../../contexts/UserContext";
 
@@ -11,47 +10,23 @@ import ProblemTopicsInput from "./ProblemTopicsInput";
 
 import putDataWithFile from "../../../utils/putDataWithFile";
 import putData from '../../../utils/putData';
-import getData from "../../../utils/getData";
 import deleteData from '../../../utils/deleteData';
-import formatDate from "../../../utils/formatDate";
-import decodeToken from "../../../utils/decodeToken";
+import formatDateForInput from "../../../utils/formatDateForInput";
 
-const ProfileForm = ({ setProfile }) => {
-  const history = useHistory();
+const ProfileForm = ({ profile, setProfile, setEditMode }) => {
   const { token, setToken } = useContext(UserContext);
 
   const [err, setErr] = useState();
   const [newPic, setNewPic] = useState(false);
-  const [pic, setPic] = useState();
+  const [pic, setPic] = useState(profile.img);
   const [profileInput, setProfileInput] = useState({
-    username: '',
-    dob: '',
-    gender: '',
-    interests: [],
-    problemTopics: [],
-    public: []
+    username: profile.username,
+    dob: profile.dob,
+    gender: profile.gender,
+    interests: profile.interests,
+    problemTopics: profile.problemTopics,
+    public: profile.public
   });
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await getData(`/users/${decodeToken(token).id}`, token);
-        const { profile } = await res.json();
-
-        setPic(profile.img);
-        setProfileInput({
-          username: profile.username,
-          dob: profile.dob ? formatDate(profile.dob) : '',
-          gender: profile.gender || '',
-          interests: profile.interests || [],
-          problemTopics: profile.problemTopics || [],
-          public: profile.public || []
-        })
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, [token]);
 
   const handleSubmit = async (e) => {
     try {
@@ -74,13 +49,14 @@ const ProfileForm = ({ setProfile }) => {
       setProfile(prev => ({
         ...prev,
         img: data.profile.img,
-        dob: !data.profile.dob ? '' : formatDate(data.profile.dob),
+        dob: data.profile.dob ? formatDateForInput(data.profile.dob) : '',
         gender: data.profile.gender,
         interests: data.profile.interests,
         problemTopics: data.profile.problemTopics,
+        public: data.profile.public
       }));
 
-      history.replace('/profile');
+      setEditMode(false);
     } catch (err) {
       if (err.status === 413) {
         const { msg } = await err.json();
@@ -148,7 +124,7 @@ const ProfileForm = ({ setProfile }) => {
             className='secondary-btn mr-1 xl:mr-0'
             type='button'
             value='Cancel'
-            onClick={() => history.goBack()}
+            onClick={() => setEditMode(false)}
           />
           <input
             className='primary-btn ml-1 xl:ml-0'
