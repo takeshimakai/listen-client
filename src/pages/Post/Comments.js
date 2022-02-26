@@ -9,7 +9,6 @@ const Comments = ({
   setComments,
   commentToEditId,
   setCommentToEditId,
-  user
 }) => {
   const sorted = sortCommentsBy ? sortData(sortCommentsBy, comments) : sortData('newest', comments);
 
@@ -19,7 +18,6 @@ const Comments = ({
         parentId === comment.replyTo &&
           <Comment
             comment={comment}
-            user={user}
             commentToEditId={commentToEditId}
             setCommentToEditId={setCommentToEditId}
             comments={comments}

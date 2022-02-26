@@ -9,11 +9,11 @@ import CommentForm from "./CommentForm";
 import formatDate from "../../utils/formatDate";
 import putData from "../../utils/putData";
 import deleteData from "../../utils/deleteData";
+import decodeToken from "../../utils/decodeToken";
 
 import deleteIcon from '../../assets/delete.png';
 
 const Comment = ({
-  user,
   comment,
   comments,
   setComments,
@@ -21,6 +21,7 @@ const Comment = ({
   setCommentToEditId,
 }) => {
   const { token } = useContext(UserContext);
+  const { id } = decodeToken(token);
 
   const [reply, setReply] = useState(false);
 
@@ -85,7 +86,7 @@ const Comment = ({
                 }
                 <p className='text-xs font-light text-gray-400'>Relatability {comment.relatable.length}</p>
               </div>
-              {comment.postedBy && comment.postedBy._id === user.id
+              {comment.postedBy && comment.postedBy._id === id
                 ? <div className='flex items-center justify-between'>
                     <button
                       className='font-light text-blue-700 hover:text-blue-900 text-xs'
@@ -103,7 +104,7 @@ const Comment = ({
                       data-comment-id={comment._id}
                       onClick={voteCommentRelatability}
                     >
-                      {comment.relatable.includes(user.id) ? 'Unrelatable' : 'Relatable'}
+                      {comment.relatable.includes(id) ? 'Unrelatable' : 'Relatable'}
                     </button>
                     <button
                       className='font-light text-blue-700 hover:text-blue-900 text-xs'
@@ -123,7 +124,6 @@ const Comment = ({
         setComments={setComments}
         commentToEditId={commentToEditId}
         setCommentToEditId={setCommentToEditId}
-        user={user}
       />
     </div>
   )

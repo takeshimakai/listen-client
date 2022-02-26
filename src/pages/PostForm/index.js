@@ -14,7 +14,7 @@ import setErrMsgs from '../../utils/setErrMsgs';
 
 import deleteIcon from '../../assets/delete.png';
 
-const PostForm = ({ post, setPosts, setComments }) => {
+const PostForm = ({ post, setPosts, setComments, setEditMode }) => {
   const history = useHistory();
   const { token } = useContext(UserContext);
 
@@ -80,22 +80,27 @@ const PostForm = ({ post, setPosts, setComments }) => {
       e.preventDefault();
 
       const res = await putData(`/posts/${post._id}`, input, token);
-      const data = await res.json();
-
-      if (res.ok) {
-        setPosts(prevPosts => {
-          const updated = [...prevPosts];
-          const index = updated.findIndex(post => post._id === data._id);
-          updated.splice(index, 1, data);
-          return updated;
-        });
-        history.replace(`/forum/${data._id}`);
-      }
 
       if (!res.ok) {
-        setErrors(setErrMsgs(data.errors));
+        throw res;
       }
+
+      const data = await res.json();
+
+      setPosts(prevPosts => {
+        const updated = [...prevPosts];
+        const index = updated.findIndex(post => post._id === data._id);
+        updated.splice(index, 1, data);
+        return updated;
+      });
+
+      setEditMode(false);
     } catch (err) {
+      if (err.status === 400) {
+        const { errors } = await err.json();
+        return setErrors(setErrMsgs(errors));
+      }
+
       console.log(err);
     }
   }

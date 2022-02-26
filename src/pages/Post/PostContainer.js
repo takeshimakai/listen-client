@@ -1,15 +1,15 @@
-import { Link, useRouteMatch } from 'react-router-dom';
 import { useContext } from 'react';
 
 import UserContext from '../../contexts/UserContext';
 
+import decodeToken from '../../utils/decodeToken';
 import putData from '../../utils/putData';
 import formatDate from '../../utils/formatDate';
 import convertArrToStr from '../../utils/convertArrToStr';
 
-const PostContainer = ({ user, post, setPosts }) => {
-  const match = useRouteMatch();
+const PostContainer = ({ post, setPosts, setEditMode }) => {
   const { token } = useContext(UserContext);
+  const { id } = decodeToken(token);
 
   const votePostRelatability = async () => {
     try {
@@ -30,9 +30,9 @@ const PostContainer = ({ user, post, setPosts }) => {
     <span>
       {!post.postedBy
         ? 'deleted user'
-        : <Link className='text-blue-700 hover:text-blue-900' to={`/users/${post.postedBy._id}`}>
+        : <button className='font-light text-blue-700 hover:text-blue-900' to={`/users/${post.postedBy._id}`}>
             {post.postedBy.profile.username}
-          </Link>
+          </button>
       }
     </span>
   )
@@ -51,15 +51,15 @@ const PostContainer = ({ user, post, setPosts }) => {
         <p className='text-xs font-light text-gray-400'>Filed under: {convertArrToStr(post.topics)}</p>
         <p className='text-xs font-light text-gray-400'>Relatability {post.relatable.length}</p>
       </div>
-      {post.postedBy && post.postedBy._id === user.id
-        ? <Link
-            className='block font-light text-blue-700 hover:text-blue-900 text-xs w-max'
-            to={`${match.url}/edit`}
+      {post.postedBy && post.postedBy._id === id
+        ? <button
+            className='font-light text-blue-700 hover:text-blue-900 text-xs'
+            onClick={() => setEditMode(true)}
           >
             Edit post
-          </Link>
+          </button>
         : <button className='font-light text-blue-700 hover:text-blue-900 text-xs' onClick={votePostRelatability}>
-            {post.relatable.includes(user.id)
+            {post.relatable.includes(id)
               ? 'Unrelatable'
               : 'Relatable'
             }
