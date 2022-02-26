@@ -22,13 +22,17 @@ const UsernameInput = ({
       const res = await getData(`/users/username/${profileInput.username}`, token);
 
       if (!res.ok) {
-        const { errors } = await res.json();
-        return setErr(prev => ({ ...prev, username: errors[0].msg }));
+        throw res;
       }
 
       setErr(prev => ({ ...prev, username: '' }));
       setStep('picture');
     } catch (err) {
+      if (err.status === 400) {
+        const { errors } = await err.json();
+        return setErr(prev => ({ ...prev, username: errors[0].msg }));
+      }
+
       console.log(err);
     }
   };

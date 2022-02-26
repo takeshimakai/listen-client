@@ -20,18 +20,25 @@ const LoginForm = ({ setPage }) => {
     try {
       e.preventDefault();
       const res = await postData('/auth/login', input);
+
+      if (!res.ok) {
+        throw res;
+      }
+
       const data = await res.json();
-
-      if (!res.ok && data.errors) {
-        return setErrors(setErrMsgs(data.errors));
-      }
-
-      if (!res.ok && !data.errors) {
-        return setErrors(data);
-      }
 
       setToken(data);
     } catch (err) {
+      if (err.status === 400) {
+        const { errors } = await err.json();
+        return setErrors(setErrMsgs(errors));
+      }
+
+      if (err.status === 401) {
+        const data = await err.json();
+        return setErrors(data);
+      }
+
       console.log(err);
     }
   };

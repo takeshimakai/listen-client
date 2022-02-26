@@ -70,21 +70,28 @@ const AccountSetUp = () => {
   const handleSubmit = async () => {
     try {
       const res = await postDataWithFile('/users', profileInput, token);
+
+      if (!res.ok) {
+        throw res;
+      }
+
       const data = await res.json();
 
-      if (res.status === 413) {
+      setToken(data);
+    } catch (err) {
+      const data = await err.json();
+
+      if (err.status === 413) {
         setErr(prev => ({ ...prev, picture: data.msg }));
         return setStep('picture');
       }
 
-      if (res.status === 400) {
+      if (err.status === 400) {
         const { param, msg } = data.errors[0];
         setErr(prev => ({ ...prev, [param]: msg }));
         return setStep('username');
       }
 
-      setToken(data);
-    } catch (err) {
       console.log(err);
     }
   };

@@ -56,17 +56,21 @@ const PostForm = ({ post, setPosts, setComments }) => {
       e.preventDefault();
 
       const res = await postData('/posts', input, token);
-      const data = await res.json();
-
-      if (res.ok) {
-        setPosts(prevPosts => prevPosts.concat(data));
-        history.replace(`/forum/${data._id}`);
-      }
 
       if (!res.ok) {
-        setErrors(setErrMsgs(data.errors));
+        throw res;
       }
+
+      const data = await res.json();
+
+      setPosts(prevPosts => prevPosts.concat(data));
+      history.replace(`/forum/${data._id}`);
     } catch (err) {
+      if (err.status === 400) {
+        const { errors } = await err.json();
+        return setErrors(setErrMsgs(errors));
+      }
+
       console.log(err);
     }
   }

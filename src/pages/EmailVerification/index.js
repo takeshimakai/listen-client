@@ -41,7 +41,7 @@ const EmailVerification = () => {
     <div className='w-screen h-screen lg:flex lg:items-center overflow-auto'>
       <div className='bg-image' />
       <button
-        className='absolute right-4 top-2 font-light text-sm'
+        className='absolute z-10 right-4 top-2 font-light text-sm'
         onClick={() => setToken('')}
       >
         Sign out

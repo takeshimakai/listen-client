@@ -66,8 +66,7 @@ const ProfileForm = ({ setProfile }) => {
       }
 
       if (!res.ok) {
-        const { msg } = await res.json();
-        return setErr(msg);
+        throw res;
       }
 
       const data = await res.json();
@@ -83,6 +82,11 @@ const ProfileForm = ({ setProfile }) => {
 
       history.replace('/profile');
     } catch (err) {
+      if (err.status === 413) {
+        const { msg } = await err.json();
+        return setErr(msg);
+      }
+
       console.log(err);
     }
   };

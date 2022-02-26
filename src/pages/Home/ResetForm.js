@@ -30,12 +30,16 @@ const ResetForm = ({ input, setPage, handleInput, setStep }) => {
       const res = await postData('/auth/reset-password', input);
 
       if (!res.ok) {
-        const { errors } = await res.json();
-        return setErr(setErrMsgs(errors));
+        throw res;
       }
 
       setToken(await res.json());
     } catch (err) {
+      if (err.status === 400) {
+        const { errors } = await err.json();
+        return setErr(setErrMsgs(errors));
+      }
+
       console.log(err);
     }
   };

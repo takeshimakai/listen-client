@@ -35,21 +35,25 @@ const CommentForm = ({
       e.preventDefault();
 
       const res = await postData(`/comments/${postId}`, input, token);
-      const data = await res.json();
-
-      if (res.ok) {
-        setInput({ ...input, content: '' });
-        setComments(prevComments => prevComments.concat(data));
-
-        if (setReply) {
-          setReply(false);
-        }
-      }
 
       if (!res.ok) {
-        setErrors(setErrMsgs(data.errors));
+        throw res;
+      }
+
+      const data = await res.json();
+
+      setInput({ ...input, content: '' });
+      setComments(prevComments => prevComments.concat(data));
+
+      if (setReply) {
+        setReply(false);
       }
     } catch (err) {
+      if (err.status === 400) {
+        const { errors } = await err.json();
+        return setErrors(setErrMsgs(errors));
+      }
+
       console.log(err);
     }
   };

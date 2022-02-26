@@ -41,13 +41,11 @@ const Comment = ({
 
   const handleDelete = async () => {
     try {
-      const res = await deleteData(`/comments/${comment._id}`, undefined, token);
+      await deleteData(`/comments/${comment._id}`, undefined, token);
 
-      if (res.ok) {
-        setComments(prevComments => prevComments.filter(prevComment => (
-          prevComment._id !== comment._id && prevComment.replyTo !== comment._id
-        )))
-      }
+      setComments(prevComments => prevComments.filter(prevComment => (
+        prevComment._id !== comment._id && prevComment.replyTo !== comment._id
+      )));
     } catch (err) {
       console.log(err);
     }

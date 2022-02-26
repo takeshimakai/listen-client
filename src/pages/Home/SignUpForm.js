@@ -26,17 +26,22 @@ const SignUpForm = ({ setPage }) => {
       e.preventDefault();
 
       const res = await postData('/auth/signup', input);
-      const data = await res.json();
 
       if (!res.ok) {
-        setError(setErrMsgs(data.errors));
-        setInput(prev => ({ ...prev, password: '', passwordConfirmation: '' }));
+        throw res;
       }
 
-      if (res.ok) {
-        setToken(data);
-      }
+      const data = await res.json();
+
+      setToken(data);
     } catch (err) {
+      if (err.status === 400) {
+        const { errors } = await err.json();
+        setError(setErrMsgs(errors));
+        setInput(prev => ({ ...prev, password: '', passwordConfirmation: '' }));
+        return;
+      }
+
       console.log(err);
     }
   };

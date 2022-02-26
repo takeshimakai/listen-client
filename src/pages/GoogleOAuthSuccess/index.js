@@ -16,13 +16,13 @@ const GoogleOAuthSuccess = () => {
         });
         
         if (!res.ok) {
-          return history.replace('/');
+          throw new Error();
         }
 
         setToken(await res.json());
         history.replace('/dashboard');
       } catch (err) {
-        console.log(err);
+        history.replace('/');
       }
     })();
   }, [setToken, history]);

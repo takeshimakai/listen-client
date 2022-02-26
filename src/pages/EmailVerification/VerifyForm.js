@@ -53,14 +53,20 @@ const VerifyForm = () => {
       }
 
       const res = await postData('/auth/verify', { code }, token);
-      const data = await res.json();
 
       if (!res.ok) {
-        return setError(data.msg);
+        throw res;
       }
+
+      const data = await res.json();
       
       setToken(data);
     } catch (err) {
+      if (err.status === 400) {
+        const { msg } = await err.json();
+        return setError(msg);
+      }
+
       console.log(err);
     }
   };
