@@ -43,7 +43,7 @@ const MobileMenu = ({ numOfFriendReqs, numOfNewDMs }) => {
         className='hidden w-full absolute flex flex-col items-center bg-gray-50 left-0 top-0 pt-16 pb-10 space-y-10 shadow-lg'
       >
         <div id='mobile-app-menu' className='flex flex-col items-center space-y-2'>
-          <Link to='/dashboard' className='font-light'>Dashboard</Link>
+          <Link to='/home' className='font-light'>Home</Link>
           <Link to={{ pathname: '/chat', state: { action: 'listen' } }} className='font-light'>Listen</Link>
           <Link to={{ pathname: '/chat', state: { action: 'talk' } }} className='font-light'>Talk</Link>
           <Link to='/forum' className='font-light'>Forum</Link>

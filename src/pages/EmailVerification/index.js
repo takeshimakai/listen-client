@@ -16,7 +16,7 @@ const EmailVerification = () => {
 
   useEffect(() => {
     if (token) {
-      decodeToken(token).verified && history.replace('/dashboard');
+      decodeToken(token).verified && history.replace('/home');
     } else {
       history.replace('/')
     }

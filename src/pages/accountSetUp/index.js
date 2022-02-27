@@ -36,7 +36,7 @@ const AccountSetUp = () => {
       const { username, verified } = decodeToken(token);
 
       !verified && history.replace('/verify');
-      username && history.replace('/dashboard');
+      username && history.replace('/home');
     } else {
       history.replace('/');
     }

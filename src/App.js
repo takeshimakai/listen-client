@@ -13,9 +13,9 @@ import Nav from './components/Nav';
 import GoogleOAuthSuccess from './pages/GoogleOAuthSuccess';
 import Forum from './pages/Forum';
 import Profile from './pages/User/Profile';
-import Dashboard from './pages/Dashboard';
-import AccountSetUp from './pages/AccountSetUp';
 import Home from './pages/Home';
+import AccountSetUp from './pages/AccountSetUp';
+import Main from './pages/Main';
 import EmailVerification from './pages/EmailVerification';
 import Friends from './pages/Friends';
 import ForumActivity from './pages/ForumActivity';
@@ -75,12 +75,12 @@ const App = () => {
             <ProtectedRoute path='/forum-activity' component={ForumActivity} />
             <ProtectedRoute path='/friends' component={Friends} />
             <ProtectedRoute path='/profile' component={Profile} />
-            <ProtectedRoute path='/dashboard' component={Dashboard} />
+            <ProtectedRoute path='/home' component={Home} />
             <ProtectedRoute path='/messages' component={DirectMsgs} />
             <Route path='/verify' component={EmailVerification} />
             <Route path='/account-setup' component={AccountSetUp} />
             <Route path='/auth/google/success' component={GoogleOAuthSuccess} />
-            <Route path='/' component={Home} />
+            <Route path='/' component={Main} />
           </Switch>
         </BrowserRouter>
       </SocketContext.Provider>

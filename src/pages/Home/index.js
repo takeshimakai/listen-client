@@ -1,35 +1,46 @@
-import { useState, useEffect, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useContext } from 'react';
 
 import UserContext from '../../contexts/UserContext';
 
-import LoginForm from './LoginForm';
-import SignUpForm from './SignUpForm';
-import ForgotPass from './ForgotPass';
+import decodeToken from '../../utils/decodeToken';
+import illustrationA from '../../assets/getting-coffee.svg';
+import illustrationB from '../../assets/a-day-off.svg';
+import illustrationC from '../../assets/public-discussion.svg';
 
-const Home = () => {
-  const history = useHistory();
+import MenuCard from './MenuCard';
+
+const Dashboard = () => {
   const { token } = useContext(UserContext);
-
-  const [page, setPage] = useState('login');
-
-  useEffect(() => {
-    token && history.replace('/dashboard');
-  }, [token, history]);
+  const { username } = decodeToken(token);
 
   return (
-    <div className='w-screen h-screen lg:flex lg:items-center overflow-auto'>
-      <div className='bg-image' />
-      <div className='relative flex items-center justify-center lg:justify-end h-2/6 lg:h-auto z-10 lg:flex-1 lg:mr-14'>
-        <h1 className='logo-main'>listen</h1>
+    <div className='flex flex-col items-center justify-center p-12 mb-12 xl:mb-0 xl:mx-auto space-y-6 xl:space-y-16 xl:h-screen xl:max-w-5xl'>
+      <div className='text-center space-y-4 mt-10 xl:mt-0'>
+        <h3 className='text-gray-600 font-light'>Hey <span className='font-bold text-green-700'>{username}</span>!</h3>
+        <p className='text-gray-600 font-light'>What would you like to do today?</p>
       </div>
-      <div className='relative z-10 px-12 lg:px-0 lg:flex-1 lg:ml-14 mb-12 lg:mb-0'>
-        {page === 'login' && <LoginForm setPage={setPage} />}
-        {page === 'signup' && <SignUpForm setPage={setPage} />}
-        {page === 'forgot' && <ForgotPass setPage={setPage} />}
+      <div className='space-y-28 xl:space-y-0 xl:w-full xl:flex xl:space-x-16'>
+        <MenuCard
+          illustration={illustrationA}
+          summary='Help someone feel heard by giving your time and attention to those in need of a compassionate listener.'
+          label='Listen'
+          to={{ pathname: '/chat', state: { action: 'listen' } }}
+        />
+        <MenuCard
+          illustration={illustrationB}
+          summary='We all need someone to talk to sometimes. Connect with someone who wants to be there for you.'
+          label='Talk'
+          to={{ pathname: '/chat', state: { action: 'talk' } }}
+        />
+        <MenuCard
+          illustration={illustrationC}
+          summary="Join the discussions and see that you're not alone."
+          label='Join Discussions'
+          to={{ pathname: '/forum' }}
+        />
       </div>
     </div>
   )
 }
 
-export default Home;
+export default Dashboard;

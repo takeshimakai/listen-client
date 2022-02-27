@@ -139,7 +139,7 @@ const Chat = ({ location }) => {
 
   const toggleView = () => setViewProfile(!viewProfile);
 
-  const leaveConversation = () => history.push('/dashboard');
+  const leaveConversation = () => history.push('/home');
 
   return (
     <div className='h-screen pt-16'>

@@ -20,7 +20,7 @@ const GoogleOAuthSuccess = () => {
         }
 
         setToken(await res.json());
-        history.replace('/dashboard');
+        history.replace('/home');
       } catch (err) {
         history.replace('/');
       }

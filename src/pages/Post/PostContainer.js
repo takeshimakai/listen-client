@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 import UserContext from '../../contexts/UserContext';
 
@@ -30,9 +31,9 @@ const PostContainer = ({ post, setPosts, setEditMode }) => {
     <span>
       {!post.postedBy
         ? 'deleted user'
-        : <button className='font-light text-blue-700 hover:text-blue-900' to={`/users/${post.postedBy._id}`}>
+        : <Link className='text-blue-700 hover:text-blue-900' to={`/users/${post.postedBy._id}`}>
             {post.postedBy.profile.username}
-          </button>
+          </Link>
       }
     </span>
   )
