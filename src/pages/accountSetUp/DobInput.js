@@ -1,4 +1,4 @@
-import formatDate from "../../utils/formatDate";
+import formatDateForInput from '../../utils/formatDateForInput';
 
 import ProgressBar from "./ProgressBar";
 
@@ -21,7 +21,7 @@ const DobInput = ({
             className='py-1 border-b border-gray-500 text-lg text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
             type='date'
             name='dob'
-            max={formatDate(Date.now())}
+            max={formatDateForInput(Date.now())}
             value={profileInput.dob}
             onChange={handleInput}
             onKeyDown={goNext}
