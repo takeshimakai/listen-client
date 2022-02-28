@@ -8,7 +8,6 @@ import useWindowWidth from '../../hooks/useWindowWidth';
 import MobileMenu from "./MobileMenu";
 import Menu from "./Menu";
 
-import getData from '../../utils/getData';
 import decodeToken from "../../utils/decodeToken";
 
 const Nav = () => {
@@ -21,19 +20,8 @@ const Nav = () => {
   const [numOfNewDMs, setNumOfNewDMs] = useState(0);
 
   useEffect(() => {
-    (async () => {
-      try {
-        const res = await getData('/friends/received', token);
-        const { friends } = await res.json();
-        setNumOfFriendReqs(friends.received.length);
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  }, [token]);
-
-  useEffect(() => {
     socket.emit('get unread dm count');
+    socket.emit('get friends', 'received');
 
     const setUnreadCount = (count) => setNumOfNewDMs(count);
 
@@ -57,6 +45,9 @@ const Nav = () => {
       }
     };
 
+    const receivedFriendsHandler = (data) => setNumOfFriendReqs(data.length);
+
+    socket.on('received friends', receivedFriendsHandler);
     socket.on('unread dm count', setUnreadCount);
     socket.on('new dm', newDMHandler);
     socket.on('marked as read', markedAsRead);
@@ -66,6 +57,7 @@ const Nav = () => {
     socket.on('request accepted', requestAccepted);
 
     return () => {
+      socket.off('received friends', receivedFriendsHandler);
       socket.off('unread dm count', setUnreadCount);
       socket.off('new dm', newDMHandler);
       socket.off('marked as read', markedAsRead);
