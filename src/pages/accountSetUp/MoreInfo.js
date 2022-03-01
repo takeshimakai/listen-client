@@ -1,7 +1,7 @@
 const MoreInfo = ({ moreInfo, setMoreInfo }) => {
   return (
     <div className='absolute flex justify-center items-center h-full w-full bg-gray-200 bg-opacity-60'>
-      <div className='relative bg-white w-3/4 max-w-md max-h-3/4 p-10 rounded-lg overflow-auto'>
+      <div className='relative bg-gray-50 w-3/4 max-w-md max-h-3/4 p-10 rounded-lg overflow-auto'>
         <button
           className='absolute top-1 right-1 w-6 h-6 rounded-full'
           onClick={() => setMoreInfo(!moreInfo)}

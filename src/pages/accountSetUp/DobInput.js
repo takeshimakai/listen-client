@@ -1,52 +1,18 @@
 import formatDateForInput from '../../utils/formatDateForInput';
 
-import ProgressBar from "./ProgressBar";
-
-const DobInput = ({
-  profileInput,
-  handleInput,
-  goNext,
-  step,
-  changeStep,
-  moreInfo,
-  setMoreInfo
-}) => {
+const DobInput = ({ profileInput, handleInput }) => {
   return (
     <>
-      <div className='account-setup-input-container'>
-        <ProgressBar step={step} />
-        <p className='account-setup-input-title'>When is your birthday?</p>
-        <div className='flex justify-center items-center mt-10'>
-          <input
-            className='py-1 border-b border-gray-500 text-lg text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
-            type='date'
-            name='dob'
-            max={formatDateForInput(Date.now())}
-            value={profileInput.dob}
-            onChange={handleInput}
-            onKeyDown={goNext}
-          />
-        </div>
-        <p className='account-setup-moreinfo' onClick={() => setMoreInfo(!moreInfo)}>
-          What's this for?
-        </p>
-      </div>
-      <div className='w-full flex max-w-xs'>
-        <button
-          className='secondary-btn mr-1'
-          value='picture'
-          onClick={changeStep}
-        >
-          Back
-        </button>
-        <button
-          className='primary-btn ml-1'
-          id='next-btn'
-          value='gender'
-          onClick={changeStep}
-        >
-          {profileInput.dob ? 'Next' : 'Skip'}
-        </button>
+      <p className='font-light'>When is your birthday?</p>
+      <div className='flex justify-center items-center mt-10'>
+        <input
+          className='py-1 border-b border-gray-500 text-lg text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
+          type='date'
+          name='dob'
+          max={formatDateForInput(Date.now())}
+          value={profileInput.dob}
+          onChange={handleInput}
+        />
       </div>
     </>
   )

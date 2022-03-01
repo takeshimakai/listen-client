@@ -96,32 +96,32 @@ const Talk = ({ initialize, action }) => {
         }
       </div>
       <div className='w-full flex justify-center max-w-xs'>
-      {step === 'intro' && <button className='tertiary-btn w-40' type='button' onClick={next}>OK</button>}
-      {step === 'age' &&
-        <button className='primary-btn w-40' type='button' onClick={next}>
-          {input.minAge || input.maxAge ? 'Next' : 'Skip'}
-        </button>
-      }
-      {['gender', 'interests', 'problemTopics'].includes(step) &&
-        <>
-          <button className='secondary-btn mr-1' type='button' onClick={back}>Back</button>
-          <button className='primary-btn ml-1' type='button' onClick={next}>
-            {
-              (step === 'gender' && input.gender) ||
-              (step === 'interests' && input.interests.length > 0) ||
-              (step === 'problemTopics' && input.problemTopics.length > 0)
-                ? 'Next'
-                : 'Skip'
-            }
+        {step === 'intro' && <button className='tertiary-btn w-40' type='button' onClick={next}>OK</button>}
+        {step === 'age' &&
+          <button className='primary-btn w-40' type='button' onClick={next}>
+            {input.minAge || input.maxAge ? 'Next' : 'Skip'}
           </button>
-        </>
-      }
-      {step === 'confirm' &&
-        <>
-          <button className='secondary-btn mr-1' type='button' onClick={back}>Back</button>
-          <button className='primary-btn ml-1'>Connect</button>
-        </>
-      }
+        }
+        {['gender', 'interests', 'problemTopics'].includes(step) &&
+          <>
+            <button className='secondary-btn mr-1' type='button' onClick={back}>Back</button>
+            <button className='primary-btn ml-1' type='button' onClick={next}>
+              {
+                (step === 'gender' && input.gender) ||
+                (step === 'interests' && input.interests.length > 0) ||
+                (step === 'problemTopics' && input.problemTopics.length > 0)
+                  ? 'Next'
+                  : 'Skip'
+              }
+            </button>
+          </>
+        }
+        {step === 'confirm' &&
+          <>
+            <button className='secondary-btn mr-1' type='button' onClick={back}>Back</button>
+            <button className='primary-btn ml-1'>Connect</button>
+          </>
+        }
       </div>
     </form>
   )

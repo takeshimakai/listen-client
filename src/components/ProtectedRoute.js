@@ -8,20 +8,20 @@ import decodeToken from '../utils/decodeToken';
 
 const ProtectedRoute = (props) => {
   const { token } = useContext(UserContext);
-  const user = token ? decodeToken(token) : '';
+  const { username, verified } = token ? decodeToken(token) : '';
 
-  if (user.verified && user.username) {
+  if (verified && username) {
     if (props.path === '/chat') {
       return <Route { ...props } key={uuidv4()} />
     }
     return <Route { ...props } />;
   }
 
-  if (user.verified && !user.username) {
+  if (verified && !username) {
     return <Redirect to='/account-setup' />
   }
 
-  if (user && !user.verified) {
+  if (token && !verified) {
     return <Redirect to='/verify' />
   }
 
