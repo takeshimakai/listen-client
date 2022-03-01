@@ -208,26 +208,26 @@ const AccountSetUp = () => {
           {step !== 'username' &&
             <SecondaryBtn label='Back' type='button' onClick={previousStep} />
           }
-          {step === 'username' && 'Next' &&
+          {step === 'username' &&
             <PrimaryBtn label='Next' id='next-btn' type='button' disabled={!profileInput.username} onClick={usernameValidation} />
           }
-          {step === 'picture' &&
-            <PrimaryBtn label={profileInput.img ? 'Next' : 'Skip'} id='next-btn' type='button' onClick={nextStep} />
+          {!['username', 'confirm'].includes(step) &&
+            <PrimaryBtn
+              label={
+                (step === 'picture' && profileInput.img) ||
+                (step === 'dob' && profileInput.dob) ||
+                (step === 'gender' && profileInput.gender) ||
+                (step === 'interests' && profileInput.interests.length > 0) ||
+                (step === 'problemTopics' && profileInput.problemTopics.length > 0)
+                  ? 'Next'
+                  : 'Skip'
+              }
+              id='next-btn'
+              type='button'
+              onClick={nextStep}
+            />
           }
-          {step === 'dob' &&
-            <PrimaryBtn label={profileInput.dob ? 'Next' : 'Skip'} id='next-btn' type='button' onClick={nextStep} />
-          }
-          {step === 'gender' &&
-            <PrimaryBtn label={profileInput.gender ? 'Next' : 'Skip'} id='next-btn' type='button' onClick={nextStep} />
-          }
-          {step === 'interests' &&
-            <PrimaryBtn label={profileInput.interests.length > 0 ? 'Next' : 'Skip'} id='next-btn' type='button' onClick={nextStep} />
-          }
-          {step === 'problemTopics' &&
-            <PrimaryBtn label={profileInput.problemTopics.length > 0 ? 'Next' : 'Skip'} id='next-btn' type='button' onClick={nextStep} />
-          }
-          {step === 'confirm' && <PrimaryBtn label='Save profile' id='next-btn' />
-          }
+          {step === 'confirm' && <PrimaryBtn label='Save profile' id='next-btn' />}
         </div>
       </form>
       {moreInfo && <MoreInfo moreInfo={moreInfo} setMoreInfo={setMoreInfo} />}

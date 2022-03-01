@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import capitalizeStrAt0 from '../../../utils/capitalizeStrAt0';
 import sanitizeStr from '../../../utils/sanitizeStr';
@@ -6,6 +6,22 @@ import sanitizeStr from '../../../utils/sanitizeStr';
 const InterestsInput = ({ input, setInput }) => {
   const [interestInput, setInterestInput] = useState('');
   const [duplicate, setDuplicate] = useState();
+
+  useEffect(() => {
+    const nextOnEnter = (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        if (interestInput) {
+          document.querySelector('#add-btn').click();
+        } else {
+          document.querySelector('#next-btn').click();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', nextOnEnter);
+    return () => window.removeEventListener('keydown', nextOnEnter);
+  }, [interestInput]);
 
   const addInterest = () => {
     const formatted = capitalizeStrAt0(sanitizeStr(interestInput));
@@ -42,9 +58,9 @@ const InterestsInput = ({ input, setInput }) => {
       <label className='subtitle text-center mb-6'>
         What common interests would you like them to have?
       </label>
-      <div className='relative'>
+      <div className='relative w-full'>
         <input
-          className='text-center pr-10 py-1 border-b border-gray-500 sm:text-sm text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
+          className='w-full text-center pr-10 py-1 border-b border-gray-500 sm:text-sm text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
           type='text'
           value={interestInput}
           onChange={handleInput}
