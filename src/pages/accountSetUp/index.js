@@ -174,37 +174,35 @@ const AccountSetUp = () => {
         <h1 className='logo-sm'>listen</h1>
         <button className='font-light text-sm' onClick={() => setToken('')}>Sign out</button>
       </div>
-      <form className='h-full flex flex-col items-center px-12 pb-12' onSubmit={handleSubmit}>
-        <div className='min-h-0 flex-grow flex items-center justify-center w-full sm:max-w-lg'>
-          <div className='relative flex flex-col items-center border max-h-3/4 w-full bg-gray-50 shadow-xl rounded-lg text-center pt-14 pb-10 px-5 sm:px-10'>
-            <ProgressBar step={step} />
-            {step === 'username' &&
-              <UsernameInput profileInput={profileInput} handleInput={handleInput} err={err} />
-            }
-            {step === 'picture' &&
-              <ProfilePicInput pic={profileInput.img} setProfileInput={setProfileInput} err={err} setErr={setErr} />
-            }
-            {step === 'dob' &&
-              <DobInput profileInput={profileInput} handleInput={handleInput} />
-            }
-            {step === 'gender' &&
-              <GenderInput profileInput={profileInput} handleInput={handleInput} />
-            }
-            {step === 'interests' &&
-              <InterestsInput profileInput={profileInput} setProfileInput={setProfileInput} />
-            }
-            {step === 'problemTopics' &&
-              <ProblemTopicsInput profileInput={profileInput} handleInput={handleInput} />
-            }
-            {step === 'confirm' &&
-              <ConfirmInput profileInput={profileInput} />
-            }
-            {['dob', 'gender', 'interests', 'problemTopics'].includes(step) &&
-              <p className='account-setup-moreinfo' onClick={() => setMoreInfo(!moreInfo)}>
-                What's this for?
-              </p>
-            }
-          </div>
+      <form className='h-full flex flex-col items-center justify-between px-12 pb-12' onSubmit={handleSubmit}>
+        <div className='my-auto w-full sm:max-w-lg relative flex flex-col items-center border max-h-3/4 bg-gray-50 shadow-xl rounded-lg pt-14 pb-10 px-5 sm:px-10 text-center'>
+          <ProgressBar step={step} />
+          {step === 'username' &&
+            <UsernameInput profileInput={profileInput} handleInput={handleInput} err={err} />
+          }
+          {step === 'picture' &&
+            <ProfilePicInput pic={profileInput.img} setProfileInput={setProfileInput} err={err} setErr={setErr} />
+          }
+          {step === 'dob' &&
+            <DobInput profileInput={profileInput} handleInput={handleInput} />
+          }
+          {step === 'gender' &&
+            <GenderInput profileInput={profileInput} handleInput={handleInput} />
+          }
+          {step === 'interests' &&
+            <InterestsInput profileInput={profileInput} setProfileInput={setProfileInput} />
+          }
+          {step === 'problemTopics' &&
+            <ProblemTopicsInput profileInput={profileInput} handleInput={handleInput} />
+          }
+          {step === 'confirm' &&
+            <ConfirmInput profileInput={profileInput} />
+          }
+          {['dob', 'gender', 'interests', 'problemTopics'].includes(step) &&
+            <p className='account-setup-moreinfo' onClick={() => setMoreInfo(!moreInfo)}>
+              What's this for?
+            </p>
+          }
         </div>
         <div className='w-full flex justify-center max-w-xs space-x-2'>
           {step !== 'username' &&
