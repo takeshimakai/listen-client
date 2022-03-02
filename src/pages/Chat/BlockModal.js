@@ -3,6 +3,9 @@ import { useContext } from 'react';
 
 import SocketContext from '../../contexts/SocketContext';
 
+import PrimaryBtn from '../../components/PrimaryBtn';
+import SecondaryBtn from '../../components/SecondaryBtn';
+
 const BlockModal = ({ unblock, path, setPreventNav }) => {
   const history = useHistory();
   const socket = useContext(SocketContext);
@@ -21,9 +24,9 @@ const BlockModal = ({ unblock, path, setPreventNav }) => {
           <p className='font-light sm:text-sm'>You will be disconnected.</p>
           <p className='font-light sm:text-sm'>Are you sure you want to leave?</p>
         </div>
-        <div className='flex mx-auto mt-6 max-w-xs'>
-          <button className='secondary-btn mr-1' onClick={() => setPreventNav(false)}>Cancel</button>
-          <button className='primary-btn ml-1' onClick={confirmNav}>Yes</button>
+        <div className='flex mx-auto mt-6 max-w-xs space-x-2'>
+          <SecondaryBtn label='Cancel' onClick={() => setPreventNav(false)} />
+          <PrimaryBtn label='Yes' onClick={confirmNav} />
         </div>
       </div>
     </div>

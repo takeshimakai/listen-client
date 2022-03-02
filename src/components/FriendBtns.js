@@ -2,6 +2,10 @@ import { useContext } from 'react';
 
 import SocketContext from '../contexts/SocketContext';
 
+import PrimaryBtn from './PrimaryBtn';
+import SecondaryBtn from './SecondaryBtn';
+import TertiaryBtn from './TertiaryBtn';
+
 const FriendBtns = ({ userId, friendshipStatus, setFriendshipStatus }) => {
   const socket = useContext(SocketContext);
 
@@ -32,31 +36,15 @@ const FriendBtns = ({ userId, friendshipStatus, setFriendshipStatus }) => {
 
   return (
     <>
-      {!friendshipStatus &&
-        <button className='tertiary-btn w-40' onClick={send}>
-          Send friend request
-        </button>
-      }
-      {friendshipStatus === 'sent' &&
-        <button className='tertiary-btn w-40' onClick={cancel}>
-          Cancel request
-        </button>
-      }
+      {!friendshipStatus && <TertiaryBtn label='Send friend request' onClick={send} />}
+      {friendshipStatus === 'sent' && <TertiaryBtn label='Cancel request' onClick={cancel} />}
       {friendshipStatus === 'received' &&
         <>
-          <button className='secondary-btn' onClick={decline}>
-            Decline request
-          </button>
-          <button className='primary-btn' onClick={accept}>
-            Accept request
-          </button>
+          <SecondaryBtn label='Decline requeset' onClick={decline} />
+          <PrimaryBtn label='Accept request' onClick={accept} />
         </>
       }
-      {friendshipStatus === 'friends' &&
-        <button className='secondary-btn w-40' onClick={unfriend}>
-          Unfriend
-        </button>
-      }
+      {friendshipStatus === 'friends' && <SecondaryBtn label='Unfriend' onClick={unfriend} />}
     </>
   )
 }

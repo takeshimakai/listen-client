@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useContext } from 'react';
+import { useState, useRef, useContext } from 'react';
 
 import UserContext from '../../contexts/UserContext';
 import SocketContext from '../../contexts/SocketContext';
@@ -14,25 +14,6 @@ const Input = ({ setMsgs, otherUserLeft }) => {
   const [input, setInput] = useState('');
 
   const chatInput = useRef();
-
-  useEffect(() => {
-    const chatInputCopy = chatInput.current;
-    const chatInputInitHeight = chatInput.current.scrollHeight + 2;
-    const maxHeight = 4 * (chatInputInitHeight);
-
-    chatInput.current.style.maxHeight = `${maxHeight}px`;
-
-    const resize = () => {
-      chatInput.current.style.height = 'auto';
-      chatInput.current.style.height = `calc(${chatInput.current.scrollHeight}px + 2px)`;
-      if (maxHeight < chatInput.current.scrollHeight) {
-        chatInput.current.scrollTop = chatInput.current.scrollHeight;
-      }
-    };
-
-    chatInput.current.addEventListener('input', resize);
-    return () => chatInputCopy.removeEventListener('input', resize);
-  }, []);
 
   const submitOnEnter = (e) => {
     if (e.code === 'Enter' && !e.shiftKey) {
@@ -51,15 +32,23 @@ const Input = ({ setMsgs, otherUserLeft }) => {
     }
   };
 
+  const autoResize = () => {
+   chatInput.current.style.height = 'auto';
+   chatInput.current.style.height = chatInput.current.scrollHeight + 2 + 'px';
+   chatInput.current.scrollTop = chatInput.current.scrollHeight;
+  };
+
   return (
-    <form className='relative flex mt-4' onSubmit={sendMessage}>
+    <form className='relative flex mt-4 flex-shrink-0' onSubmit={sendMessage}>
       <textarea
         ref={chatInput}
-        className='outline-none resize-none border border-gray-400 rounded-lg flex-grow mr-12 p-2 sm:text-sm'
+        className='outline-none resize-none border border-gray-400 rounded-lg flex-grow mr-12 px-3 py-2 sm:text-sm'
+        style={{ 'borderRadius': '20px' }}
         id='chat-input'
         rows={1}
         value={input}
         onChange={(e) => setInput(e.target.value)}
+        onInput={autoResize}
         onKeyDown={submitOnEnter}
         disabled={otherUserLeft}
       />

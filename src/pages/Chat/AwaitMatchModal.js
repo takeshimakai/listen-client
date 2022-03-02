@@ -2,6 +2,8 @@ import { useEffect, useState, useContext } from 'react';
 
 import SocketContext from '../../contexts/SocketContext';
 
+import TertiaryBtn from '../../components/TertiaryBtn';
+
 const AwaitMatchModal = ({ action, setAwaitMatch, setConnected }) => {
   const socket = useContext(SocketContext);
   
@@ -52,13 +54,13 @@ const AwaitMatchModal = ({ action, setAwaitMatch, setConnected }) => {
         </p>
         {timeOut &&
           <>
-            <p className='font-light sm:text-sm'>
+            <p className='font-light sm:text-sm mb-6'>
               {action === 'talk'
                 ? "Please try again after modifying your criteria or at a later time."
                 : "Please try again later."
               }
             </p>
-            <button className='tertiary-btn mt-6 w-40' onClick={confirm}>OK</button>
+            <TertiaryBtn label='OK' onClick={confirm} />
           </>
         }
       </div>

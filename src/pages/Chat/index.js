@@ -14,7 +14,7 @@ import MobileOptions from './MobileOptions';
 import Options from './Options';
 import Profile from './Profile';
 
-import formatDate from '../../utils/formatDate';
+import formatDateForInput from '../../utils/formatDateForInput';
 
 const Chat = ({ location }) => {
   const history = useHistory();
@@ -69,7 +69,7 @@ const Chat = ({ location }) => {
         userID: otherUser.userID,
         img: otherUser.img || '',
         username: otherUser.username,
-        dob: otherUser.dob ? formatDate(otherUser.dob) : '',
+        dob: otherUser.dob ? formatDateForInput(otherUser.dob) : '',
         gender: otherUser.gender || '',
         interests: otherUser.interests || [],
         problemTopics: otherUser.problemTopics || [],
@@ -90,7 +90,7 @@ const Chat = ({ location }) => {
         userID: otherUser.userID,
         img: otherUser.img || '',
         username: otherUser.username,
-        dob: otherUser.dob ? formatDate(otherUser.dob) : '',
+        dob: otherUser.dob ? formatDateForInput(otherUser.dob) : '',
         gender: otherUser.gender || '',
         interests: otherUser.interests || [],
         problemTopics: otherUser.problemTopics || [],
@@ -156,7 +156,7 @@ const Chat = ({ location }) => {
             <Options leaveConversation={leaveConversation} />
             <MobileOptions leaveConversation={leaveConversation} />
           </div>
-          <div className='flex-grow flex flex-col min-h-0'>
+          <div className='flex-grow flex flex-col overflow-auto'>
             <Messages msgs={msgs} otherUser={otherUser} otherUserLeft={otherUserLeft} />
             <Input setMsgs={setMsgs} otherUserLeft={otherUserLeft} />
           </div>
