@@ -62,28 +62,32 @@ const Menu = ({ numOfFriendReqs, numOfNewDMs }) => {
           <Link to='/profile' className='font-light text-sm hover:text-gray-500 w-max'>
             Profile
           </Link>
-          <Link to='/friends' className='flex items-center relative font-light text-sm hover:text-gray-500 w-max'>
-            Friends
+          <div className='flex items-center relative w-max'>
+            <Link to='/friends' className='font-light text-sm hover:text-gray-500'>
+              Friends
+            </Link>
             {numOfFriendReqs > 0 &&
-              <span
-                title='num of friend requests'
-                className='flex justify-center items-center rounded-full bg-gray-400 absolute -right-6 h-5 w-5 text-xs font-medium text-white'
-              >
-                {numOfFriendReqs}
-              </span>
-            }
-          </Link>
-          <Link to='/messages' className='flex items-center relative font-light text-sm hover:text-gray-500 w-max'>
-            Messages
+                <span
+                  title='num of friend requests'
+                  className='flex justify-center items-center rounded-full bg-gray-400 absolute -right-6 h-5 w-5 text-xs font-medium text-white'
+                >
+                  {numOfFriendReqs}
+                </span>
+              }
+          </div>
+          <div className='flex items-center relative w-max'>
+            <Link to='/messages' className='font-light text-sm hover:text-gray-500'>
+              Messages
+            </Link>
             {numOfNewDMs > 0 &&
-              <span
-                title='num of new messages'
-                className='flex justify-center items-center rounded-full bg-gray-400 absolute -right-6 h-5 w-5 text-xs font-medium text-white'
-              >
-                {numOfNewDMs}
-              </span>
-            }
-          </Link>
+                <span
+                  title='num of new messages'
+                  className='flex justify-center items-center rounded-full bg-gray-400 absolute -right-6 h-5 w-5 text-xs font-medium text-white'
+                >
+                  {numOfNewDMs}
+                </span>
+              }
+          </div>
           <Link to='/forum-activity' className='font-light hover:text-gray-500 text-sm w-max'>
             Forum Activity
           </Link>

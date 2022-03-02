@@ -52,28 +52,28 @@ const MobileMenu = ({ numOfFriendReqs, numOfNewDMs }) => {
           <Link to='/profile' className='font-light'>
             Profile
           </Link>
-          <Link to='/friends' className='font-light relative flex items-center'>
-            Friends
+          <div className='relative flex items-center'>
+            <Link to='/friends' className='font-light'>Friends</Link>
             {numOfFriendReqs > 0 &&
-              <span
-                title='num of friend requests'
-                className='flex items-center justify-center rounded-full bg-gray-400 absolute -right-6 h-5 w-5 text-xs font-medium text-white'
-              >
-                {numOfFriendReqs}
-              </span>
-            }
-          </Link>
-          <Link to='/messages' className='font-light relative flex items-center'>
-            Messages
+                <span
+                  title='num of friend requests'
+                  className='flex items-center justify-center rounded-full bg-gray-400 absolute -right-6 h-5 w-5 text-xs font-medium text-white'
+                >
+                  {numOfFriendReqs}
+                </span>
+              }
+          </div>
+          <div className='relative flex items-center'>
+            <Link to='/messages' className='font-light'>Messages </Link>
             {numOfNewDMs > 0 &&
-              <span
-                title='num of new messages'
-                className='flex items-center justify-center rounded-full bg-gray-400 absolute -right-6 h-5 w-5 text-xs font-medium text-white'
-              >
-                {numOfNewDMs}
-              </span>
-            }
-          </Link>
+                <span
+                  title='num of new messages'
+                  className='flex items-center justify-center rounded-full bg-gray-400 absolute -right-6 h-5 w-5 text-xs font-medium text-white'
+                >
+                  {numOfNewDMs}
+                </span>
+              }
+          </div>
           <Link to='/forum-activity' className='font-light'>
             Forum Activity
           </Link>
