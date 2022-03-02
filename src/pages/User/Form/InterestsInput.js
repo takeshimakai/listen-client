@@ -49,7 +49,7 @@ const InterestsInput = ({ profileInput, setProfileInput, handleInput }) => {
       </div>
       <div className='relative w-full mt-1'>
         <input
-          className='text-center pr-10 w-full py-1 border-b border-gray-500 sm:text-sm text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
+          className='text-center xl:text-left pr-10 w-full py-1 border-b border-gray-500 sm:text-sm text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
           type='text'
           value={input}
           onChange={handleInterestInput}

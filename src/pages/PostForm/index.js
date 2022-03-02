@@ -117,7 +117,7 @@ const PostForm = ({ post, setPosts, setComments, setEditMode }) => {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   return (
     <form
@@ -129,26 +129,25 @@ const PostForm = ({ post, setPosts, setComments, setEditMode }) => {
         <Categories input={input.topics} setInput={setInput} handleInput={handleInput} errors={errors} />
         <ContentInput input={input.content} handleInput={handleInput} errors={errors} />
       </div>
-      <div className='flex sm:justify-between'>
-        {setComments
-          ? <button
-              className='mr-10 sm:mr-0 flex-none'
-              type='button'
-              onClick={handleDelete}
-            >
-              <img className='h-6' src={deleteIcon} alt='' />
-            </button>
-          : <span />
+      <div className='flex'>
+        {setEditMode &&
+          <button
+            className='mr-10 sm:mr-0 flex-none'
+            type='button'
+            onClick={handleDelete}
+          >
+            <img className='h-6' src={deleteIcon} alt='' />
+          </button>
         }
-        <div className='flex flex-1 sm:flex-none'>
+        <div className='flex justify-end w-full space-x-2'>
           <input
-            className='flex-1 sm:flex-none mr-1 border active:border-0 active:p-px shadow-md active:shadow-inner sm:w-40 h-8 rounded-md cursor-pointer bg-gray-50 text-sm text-gray-600 hover:bg-gray-200'
+            className='flex-1 sm:flex-none border active:border-0 active:p-px shadow-md active:shadow-inner sm:w-40 h-8 rounded-md cursor-pointer bg-gray-50 text-sm text-gray-600 hover:bg-gray-200'
             type='button'
             value='Cancel'
             onClick={() => history.goBack()}
           />
           <input
-            className='flex-1 sm:flex-none ml-1 shadow-md sm:w-40 h-8 rounded-md cursor-pointer bg-green-700 text-sm text-white hover:bg-green-800 active:shadow-inner-2'
+            className='flex-1 sm:flex-none shadow-md sm:w-40 h-8 rounded-md cursor-pointer bg-green-700 text-sm text-white hover:bg-green-800 active:shadow-inner-2'
             type='submit'
             value='Post'
           />

@@ -5,6 +5,9 @@ import SocketContext from '../../../contexts/SocketContext';
 
 import Recipient from './Recipient';
 
+import PrimaryBtn from '../../../components/PrimaryBtn';
+import SecondaryBtn from '../../../components/SecondaryBtn';
+
 const MsgForm = ({ setThreads, setCompose }) => {
   const history = useHistory();
   const socket = useContext(SocketContext);
@@ -82,9 +85,9 @@ const MsgForm = ({ setThreads, setCompose }) => {
             onChange={handleInput}
           />
         </div>
-        <div className='flex flex-grow flex-col w-full mb-1'>
+        <div className='flex flex-grow flex-col w-full'>
           <textarea
-            className='resize-none p-2 h-full w-full border border-gray-400 focus:border-gray-700 rounded sm:text-sm text-gray-900 focus:outline-none'
+            className='resize-none p-2 flex-grow w-full border border-gray-400 focus:border-gray-700 rounded sm:text-sm text-gray-900 focus:outline-none'
             placeholder='Message'
             name='body'
             value={newMsg.body}
@@ -92,11 +95,9 @@ const MsgForm = ({ setThreads, setCompose }) => {
           />
           <p className='error-msg'>{err.body}</p>
         </div>
-        <div className='flex justify-center max-w-sm w-full'>
-          <button className='secondary-btn mr-1 sm:w-40' type='button' onClick={() => setCompose(false)}>
-            Cancel
-          </button>
-          <button className='primary-btn ml-1 sm:w-40'>Send</button>
+        <div className='flex justify-center max-w-sm w-full space-x-2'>
+          <SecondaryBtn label='Cancel' type='button' onClick={() => setCompose(false)} />
+          <PrimaryBtn label='Send' />
         </div>
       </form>
     </div>

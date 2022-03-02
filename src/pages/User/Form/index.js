@@ -8,6 +8,9 @@ import GenderInput from "./GenderInput";
 import InterestsInput from "./InterestsInput";
 import ProblemTopicsInput from "./ProblemTopicsInput";
 
+import PrimaryBtn from '../../../components/PrimaryBtn';
+import SecondaryBtn from '../../../components/SecondaryBtn';
+
 import putDataWithFile from "../../../utils/putDataWithFile";
 import putData from '../../../utils/putData';
 import deleteData from '../../../utils/deleteData';
@@ -119,18 +122,9 @@ const ProfileForm = ({ profile, setProfile, setEditMode }) => {
         </div>
       </div>
       <div className='text-center xl:absolute xl:left-4 xl:top-80 mt-10 xl:mt-0 w-full xl:w-40 max-w-xs'>
-        <div className='flex xl:flex-col w-full xl:space-y-2.5'>
-          <input
-            className='secondary-btn mr-1 xl:mr-0'
-            type='button'
-            value='Cancel'
-            onClick={() => setEditMode(false)}
-          />
-          <input
-            className='primary-btn ml-1 xl:ml-0'
-            type='submit'
-            value='Save'
-          />
+        <div className='flex xl:flex-col w-full space-x-2 xl:space-x-0 xl:space-y-2.5'>
+          <SecondaryBtn label='Cancel' type='button' onClick={() => setEditMode(false)} />
+          <PrimaryBtn label='Save' />
         </div>
         <button className='mt-5 text-red-600 text-xs' type='button' onClick={deleteAccount} >
           Delete account

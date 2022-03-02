@@ -10,8 +10,11 @@ import defaultPic from '../../../assets/default-profile.jpg';
 
 import ProfileForm from "../Form";
 import Card from "./Card";
-import FriendBtns from "../../../components/FriendBtns";
 import DMForm from "./DMForm";
+
+import FriendBtns from "../../../components/FriendBtns";
+import PrimaryBtn from "../../../components/PrimaryBtn";
+import TertiaryBtn from "../../../components/TertiaryBtn";
 
 import useFriendshipStatus from '../../../hooks/useFriendshipStatus';
 
@@ -65,7 +68,7 @@ const Profile = () => {
     <>
       {editMode
         ? <ProfileForm profile={profile} setProfile={setProfile} setEditMode={setEditMode} />
-        : <div className='h-screen xl:h-auto overflow-auto pt-20 sm:pt-24 pb-12 px-12 xl:px-0 flex flex-col xl:flex-row items-center xl:items-start xl:relative xl:w-max xl:mx-auto'>
+        : <div className='overflow-auto pt-20 sm:pt-24 pb-12 px-12 xl:px-0 flex flex-col xl:flex-row items-center xl:items-start xl:relative xl:w-max xl:mx-auto'>
             {compose && <DMForm userId={userId} username={profile.username} setCompose={setCompose} />}
             <img
               className='h-36 sm:h-48 rounded-full'
@@ -88,20 +91,14 @@ const Profile = () => {
             <div className='xl:absolute xl:left-4 xl:top-80 mt-12 xl:mt-0 w-full max-w-xs xl:w-40 flex justify-center xl:flex-col space-x-2 xl:space-x-0 xl:space-y-2.5'>
               {userId
                 ? <>
-                    {friendshipStatus === 'friends' &&
-                      <button className='primary-btn w-40' onClick={() => setCompose(true)}>
-                        Send message
-                      </button>
-                    }
+                    {friendshipStatus === 'friends' && <PrimaryBtn label='Send message' onClick={() => setCompose(true)} />}
                     <FriendBtns
                       userId={userId}
                       friendshipStatus={friendshipStatus}
                       setFriendshipStatus={setFriendshipStatus}
                     />
                   </>
-                : <button className='tertiary-btn w-40' onClick={() => setEditMode(true)}>
-                    Edit
-                  </button>
+                : <TertiaryBtn label='Edit' onClick={() => setEditMode(true)} />
               }
             </div>
           </div>

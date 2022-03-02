@@ -70,7 +70,7 @@ const Filters = ({ filters, setFilters }) => {
       </button>
       <div
         id='filters-container'
-        className='z-10 absolute top-8 bg-gray-50 border shadow-lg rounded-lg p-4 sm:w-max filters'
+        className='z-10 absolute top-8 bg-gray-50 border shadow-lg rounded-lg p-4 filters'
         hidden
       >
         <div className='flex mb-6 filters'>
