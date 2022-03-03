@@ -46,7 +46,7 @@ const Categories = ({ input, setInput, handleInput, errors}) => {
       <p className='error-msg'>{errors && errors.topics}</p>
       <div
         id='categories-container'
-        className='hidden absolute top-7 bg-gray-50 border shadow-lg rounded-lg px-4 pt-2 pb-4 w-max flex flex-col items-center categories'
+        className='hidden absolute top-7 bg-gray-50 border shadow-lg rounded-lg px-4 pt-2 pb-4 flex flex-col items-center categories'
       >
         <div className='categories'>
           {data.categories.map(category => (
