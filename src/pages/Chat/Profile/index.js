@@ -14,7 +14,7 @@ const Profile = ({ profile, toggleView }) => {
         &#x2715;
       </button>
       <div className='flex flex-col items-center h-full w-full'>
-        <div className='flex flex-col items-center'>
+        <div className='text-center'>
           <img
             className='h-24 rounded-full'
             src={
@@ -24,15 +24,15 @@ const Profile = ({ profile, toggleView }) => {
             }
             alt=''
           />
-          <p className='mt-4 font-bold text-gray-800'>{profile && profile.username}</p>
+          <p className='my-4 font-bold text-gray-800'>{profile && profile.username}</p>
         </div>
-        <div className='overflow-auto w-full flex-grow flex flex-col items-center space-y-7 mt-9'>
+        <div className='no-scrollbar scroll-fade overflow-auto pt-5 pb-10 w-full h-full space-y-7'>
           <Card title='Date of birth' data={profile.dob} />
           <Card title='Gender' data={profile.gender} />
           <Card title='Interests' data={profile.interests} />
           <Card title='Problem topics' data={profile.problemTopics} />
         </div>
-        <div className='w-full mt-4 flex justify-center space-x-2'>
+        <div className='w-full mt-4 text-center space-x-2'>
           <FriendBtns
             userId={profile.userID}
             friendshipStatus={friendshipStatus}

@@ -104,13 +104,15 @@
 
   /* Hide scrollbar for IE, Edge and Firefox */
   .no-scrollbar {
+    -webkit-scrollbar: none;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
   }
-}
 
-#msgs-container::-webkit-scrollbar {
-  display: none;
+  .scroll-fade {
+    -webkit-mask-image: linear-gradient(transparent, black 5%, black 90%, transparent 100%);
+    mask-image: linear-gradient(transparent, black 5%, black 90%, transparent 100%);
+  }
 }
 
 input::-webkit-outer-spin-button,

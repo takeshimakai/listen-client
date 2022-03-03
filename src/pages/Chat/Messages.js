@@ -32,7 +32,7 @@ const Messages = ({ msgs, otherUser, otherUserLeft }) => {
   return (
     <div
       id='msgs-container'
-      className='overflow-auto flex-grow flex flex-col space-y-2 mt-10 sm:mt-0'
+      className='no-scrollbar overflow-auto flex-grow flex flex-col space-y-2 mt-10 sm:mt-0'
       onScroll={detectScroll}
     >
       {msgs.map(({ msg, from }) => (

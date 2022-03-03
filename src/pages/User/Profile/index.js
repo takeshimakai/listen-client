@@ -64,11 +64,6 @@ const Profile = () => {
     })();
   }, [token, userId, id]);
 
-  const fadeStyle = {
-    'WebkitMaskImage': 'linear-gradient(transparent, black 5%, black 90%, transparent 100%)',
-    'maskImage': 'linear-gradient(transparent, black 5%, black 90%, transparent 100%)'
-  };
-
   return (
     <>
       {compose && <DMForm userId={userId} username={profile.username} setCompose={setCompose} />}
@@ -86,7 +81,7 @@ const Profile = () => {
             />
             <div className='rounded-xl min-h-0 h-full w-full flex flex-col items-center xl:items-start xl:ml-20 xl:w-60'>
               <p className='mb-4 mt-4 xl:mt-0 xl:mt-0 text-lg font-bold text-gray-800'>{profile && profile.username}</p>
-              <div className='no-scrollbar pt-5 pb-10 overflow-auto h-full w-full space-y-9' style={fadeStyle}>
+              <div className='scroll-fade no-scrollbar pt-5 pb-10 overflow-auto h-full w-full space-y-9'>
                 <Card title='Date of birth' data={profile && profile.dob} />
                 <Card title='Gender' data={profile && profile.gender} />
                 <Card title='Interests' data={profile && profile.interests} />
