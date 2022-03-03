@@ -42,7 +42,6 @@ const Menu = ({ numOfFriendReqs, numOfNewDMs }) => {
   return (
     <div className='flex space-x-8'>
       <div className='flex items-center space-x-8'>
-        <Link to='/home' className='font-light text-sm hover:text-gray-500'>Home</Link>
         <Link to={{ pathname: '/chat', state: { action: 'listen' } }} className='font-light text-sm hover:text-gray-500'>Listen</Link>
         <Link to={{ pathname: '/chat', state: { action: 'talk' } }} className='font-light text-sm hover:text-gray-500'>Talk</Link>
         <Link to='/forum' className='font-light text-sm hover:text-gray-500'>Forum</Link>

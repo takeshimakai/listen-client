@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+import { Link } from 'react-router-dom';
 
 import SocketContext from "../../contexts/SocketContext";
 import UserContext from "../../contexts/UserContext";
@@ -70,7 +71,9 @@ const Nav = () => {
 
   return (
     <div className='z-10 fixed w-full h-12 flex items-center justify-between py-2 px-4 bg-gray-50'>
-      <h1 id='logo' className='text-gray-800 font-serif text-2xl z-10'>listen</h1>
+      <Link to='/home'>
+        <h1 id='logo' className='text-gray-800 font-serif text-2xl z-10'>listen</h1>
+      </Link>
       {windowWidth < 640
         ? <MobileMenu numOfFriendReqs={numOfFriendReqs} numOfNewDMs={numOfNewDMs} />
         : <Menu numOfFriendReqs={numOfFriendReqs} numOfNewDMs={numOfNewDMs} />

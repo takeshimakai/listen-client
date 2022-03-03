@@ -86,7 +86,7 @@ const CommentForm = ({
     <form onSubmit={comment ? handleEditSubmit : handleSubmit}>
       <p className='error-msg mt-0 mb-1'>{errors && errors.content}</p>
       <textarea
-        className='p-1 w-full h-16 border border-gray-400 focus:border-gray-700 rounded-md sm:text-sm text-gray-900 focus:outline-none'
+        className='p-2 w-full h-16 border border-gray-400 focus:border-gray-700 rounded-md sm:text-sm text-gray-900 focus:outline-none'
         placeholder='Add comment'
         value={input.content}
         onChange={handleInput}
