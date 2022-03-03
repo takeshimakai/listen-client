@@ -1,22 +1,7 @@
-import { useEffect, useState, useContext } from 'react';
+import { useState } from 'react';
 
-import SocketContext from '../../../contexts/SocketContext';
-
-const Recipient = ({ err, to, setNewMsg }) => {
-  const socket = useContext(SocketContext);
-
-  const [friends, setFriends] = useState([]);
+const Recipient = ({ friends, err, to, setNewMsg }) => {
   const [input, setInput] = useState(to || '');
-
-  useEffect(() => {
-    socket.emit('get friends', 'accepted');
-
-    const acceptedFriendsHandler = (friends) => setFriends(friends);
-
-    socket.on('accepted friends', acceptedFriendsHandler);
-
-    return () => socket.off('accepted friends', acceptedFriendsHandler);
-  }, [socket]);
 
   const handleInput = (e) => {
     const { value } = e.target;
@@ -35,23 +20,23 @@ const Recipient = ({ err, to, setNewMsg }) => {
     <div className='flex flex-col w-full mb-1'>
       <label className='subtitle' htmlFor='to'>Recipient</label>
       <input
-        className='w-full py-1 border-b border-gray-400 focus:border-gray-700 sm:text-sm text-gray-900 bg-transparent focus:outline-none'
+        className='w-full py-1 border-b border-gray-400 focus:border-gray-700 sm:text-sm text-gray-900 bg-transparent focus:outline-none disabled:text-gray-500'
         list='to-list'
-        value={input}
+        value={friends && friends.length === 0 ? 'Your friends list is empty.' : input}
+        disabled={friends && friends.length === 0}
         onChange={handleInput}
       />
       <p className='error-msg'>{err.to}</p>
       <datalist id='to-list'>
-        {friends.length > 0
-          ? friends.map(friend => (
-              <option
-                key={friend._id}
-                id={friend.profile.username}
-                value={friend.profile.username}
-                data-friend-id={friend._id}
-              />
-            ))
-          : <option value=''>Unable to find friends</option>
+        {friends && friends.length > 0 &&
+          friends.map(friend => (
+            <option
+              key={friend._id}
+              id={friend.profile.username}
+              value={friend.profile.username}
+              data-friend-id={friend._id}
+            />
+          ))
         }
       </datalist>
     </div>

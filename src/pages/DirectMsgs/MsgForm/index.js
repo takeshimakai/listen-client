@@ -12,6 +12,7 @@ const MsgForm = ({ setThreads, setCompose }) => {
   const history = useHistory();
   const socket = useContext(SocketContext);
 
+  const [friends, setFriends] = useState();
   const [err, setErr] = useState({ body: '', to: '' });
   const [newMsg, setNewMsg] = useState({
     isParent: true,
@@ -21,6 +22,10 @@ const MsgForm = ({ setThreads, setCompose }) => {
   });
 
   useEffect(() => {
+    socket.emit('get friends', 'accepted');
+
+    const acceptedFriendsHandler = (friends) => setFriends(friends);
+
     const dmSuccessHandler = (msg) => {
       setThreads(prev => ([...prev, msg]));
       setCompose(false);
@@ -29,12 +34,14 @@ const MsgForm = ({ setThreads, setCompose }) => {
 
     const dmErrorHandler = (errors) => setErr(errors);
 
+    socket.on('accepted friends', acceptedFriendsHandler);
     socket.on('dm success', dmSuccessHandler);
     socket.on('dm error', dmErrorHandler);
 
     return () => {
       socket.off('dm success', dmSuccessHandler);
       socket.off('dm error', dmErrorHandler);
+      socket.off('accepted friends', acceptedFriendsHandler)
     };
   }, [socket, history, setThreads, setCompose]);
 
@@ -73,7 +80,7 @@ const MsgForm = ({ setThreads, setCompose }) => {
         className='flex flex-col items-center bg-gray-50 shadow-md rounded-lg p-4 sm:p-8 h-3/4 w-full sm:w-3/4 lg:w-1/2 mx-4 sm:mx-0'
         onSubmit={handleSubmit}
       >
-        <Recipient err={err} to={newMsg.to} setNewMsg={setNewMsg} />
+        <Recipient friends={friends} err={err} to={newMsg.to} setNewMsg={setNewMsg} />
         <div className='w-full mb-5'>
           <label className='subtitle' htmlFor='subject'>Subject</label>
           <input
@@ -97,7 +104,7 @@ const MsgForm = ({ setThreads, setCompose }) => {
         </div>
         <div className='flex justify-center max-w-sm w-full space-x-2'>
           <SecondaryBtn label='Cancel' type='button' onClick={() => setCompose(false)} />
-          <PrimaryBtn label='Send' />
+          <PrimaryBtn label='Send' disabled={friends && friends.length === 0} />
         </div>
       </form>
     </div>
