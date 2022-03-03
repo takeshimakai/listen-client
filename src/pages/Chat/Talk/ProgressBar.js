@@ -2,7 +2,11 @@ import { useState, useEffect } from 'react';
 
 const ProgressBar = ({ step }) => {
   const [current, setCurrent] = useState();
-  const style = 'h-full w-1/5 border border-gray-300 mx-px';
+
+  const styles = {
+    bar: 'h-full w-1/5 border border-gray-300 mx-px',
+    fill: 'bg-green-900 bg-opacity-40'
+  };
 
   useEffect(() => {
     switch (step) {
@@ -23,11 +27,11 @@ const ProgressBar = ({ step }) => {
 
   return (
     <div className='absolute top-0 left-0 w-full flex h-3 pt-1 px-1'>
-      <div className={`${style} rounded-l ${current >= 0 && 'progress-bar-fill'}`} />
-      <div className={`${style} ${current > 0 && 'progress-bar-fill'}`} />
-      <div className={`${style} ${current > 1 && 'progress-bar-fill'}`} />
-      <div className={`${style} ${current > 2 && 'progress-bar-fill'}`} />
-      <div className={`${style} rounded-r ${current > 3 && 'progress-bar-fill'}`} />
+      <div className={`${styles.bar} rounded-l ${current >= 0 && styles.fill}`} />
+      <div className={`${styles.bar} ${current > 0 && styles.fill}`} />
+      <div className={`${styles.bar} ${current > 1 && styles.fill}`} />
+      <div className={`${styles.bar} ${current > 2 && styles.fill}`} />
+      <div className={`${styles.bar} rounded-r ${current > 3 && styles.fill}`} />
     </div>
   )
 }

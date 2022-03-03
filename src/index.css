@@ -8,15 +8,7 @@
   }
 
   .subtitle {
-    @apply text-gray-600 font-light sm:text-sm;
-  }
-
-  .progress-bar {
-    @apply h-full w-1/6 border border-gray-300 mx-px;
-  }
-
-  .progress-bar-fill {
-    @apply bg-green-900 bg-opacity-40;
+    @apply text-gray-500 font-light sm:text-sm;
   }
 
   .input {

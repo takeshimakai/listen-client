@@ -3,16 +3,16 @@ import defaultPic from '../../assets/default-profile.jpg';
 const ConfirmInput = ({ profileInput }) => {
   return (
     <>
-        <p className='font-light'>Please confirm your information.</p>
-        <p className='font-light'>The username can't be changed once saved.</p>
-        <div className='mt-10 space-y-0.5 overflow-auto w-full'>
+        <p className='font-light sm:text-sm'>Please confirm your information.</p>
+        <p className='font-light sm:text-sm'>The username can't be changed once saved.</p>
+        <div className='mt-6 space-y-0.5 overflow-auto w-full scroll-fade no-scrollbar pt-2 pb-6'>
           <div>
-            <p className='text-gray-500 font-light mb-1.5 text-sm'>Username</p>
-            <p>{profileInput.username}</p>
+            <p className='subtitle mb-1'>Username</p>
+            <p className='sm:text-sm text-gray-900'>{profileInput.username}</p>
           </div>
           <p className='text-5xl text-green-900 text-opacity-40'>&middot;</p>
           <div>
-            <p className='text-gray-500 font-light mb-1.5 text-sm'>Profile picture</p>
+            <p className='subtitle mb-1'>Profile picture</p>
             <img
               className='mx-auto mt-3.5 h-28 rounded-full cursor-pointer'
               src={profileInput.img ? URL.createObjectURL(profileInput.img) : defaultPic}
@@ -21,32 +21,36 @@ const ConfirmInput = ({ profileInput }) => {
           </div>
           <p className='text-5xl text-green-900 text-opacity-40'>&middot;</p>
           <div>
-            <p className='text-gray-500 font-light mb-1.5 text-sm'>Date of birth</p>
-            <p>{profileInput.dob || 'Undisclosed'}</p>
+            <p className='subtitle mb-1'>Date of birth</p>
+            <p className='sm:text-sm text-gray-900'>{profileInput.dob || 'Undisclosed'}</p>
           </div>
           <p className='text-5xl text-green-900 text-opacity-40'>&middot;</p>
           <div>
-            <p className='text-gray-500 font-light mb-1.5 text-sm'>Gender</p>
-            <p>{profileInput.gender || 'Undisclosed'}</p>
+            <p className='subtitle mb-1'>Gender</p>
+            <p className='sm:text-sm text-gray-900'>{profileInput.gender || 'Undisclosed'}</p>
           </div>
           <p className='text-5xl text-green-900 text-opacity-40'>&middot;</p>
           <div>
-            <p className='text-gray-500 font-light mb-1.5 text-sm'>Interests</p>
+            <p className='subtitle mb-1'>Interests</p>
             {profileInput.interests.length > 0
               ? <ul>
-                  {profileInput.interests.map(interest => <li key={interest}>{interest}</li>)}
+                  {profileInput.interests.map(interest => (
+                    <li className='sm:text-sm text-gray-900' key={interest}>{interest}</li>
+                  ))}
                 </ul>
-              : <p>Undisclosed</p>
+              : <p className='sm:text-sm text-gray-900'>Undisclosed</p>
             }
           </div>
           <p className='text-5xl text-green-900 text-opacity-40'>&middot;</p>
           <div>
-            <p className='text-gray-500 font-light mb-1.5 text-sm'>Problem topics</p>
+            <p className='subtitle mb-1'>Problem topics</p>
             {profileInput.problemTopics.length > 0
               ? <ul>
-                  {profileInput.problemTopics.map(topic => <li key={topic}>{topic}</li>)}
+                  {profileInput.problemTopics.map(topic => (
+                    <li className='sm:text-sm text-gray-900' key={topic}>{topic}</li>
+                  ))}
                 </ul>
-              : <p>Undisclosed</p>
+              : <p className='sm:text-sm text-gray-900'>Undisclosed</p>
             }
           </div>
         </div>

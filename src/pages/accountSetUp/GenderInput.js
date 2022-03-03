@@ -3,7 +3,7 @@ import data from "../../data/data";
 const GenderInput = ({ profileInput, handleInput }) => {
   return (
     <>
-      <p className='font-light'>What is your gender?</p>
+      <p className='font-light sm:text-sm'>What is your gender?</p>
       <div className='flex items-center justify-center mt-10'>
         <div>
           {data.genders.map(gender => (
@@ -17,7 +17,7 @@ const GenderInput = ({ profileInput, handleInput }) => {
                 checked={profileInput.gender === gender}
                 onChange={handleInput}
               />
-              <label className='text-base' htmlFor={gender}>{gender}</label>
+              <label className='sm:text-sm' htmlFor={gender}>{gender}</label>
             </div>
           ))}
           <button

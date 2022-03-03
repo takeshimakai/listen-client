@@ -5,8 +5,8 @@ import Checkbox from "../../components/Checkbox";
 const ProblemTopicsInput = ({ profileInput, handleInput }) => {
   return (
     <>
-      <p className='font-light'>Please select all relevant topics.</p>
-      <div className='overflow-auto mt-10 w-full'>
+      <p className='font-light sm:text-sm'>Please select all relevant topics.</p>
+      <div className='pt-2 pb-6 scroll-fade no-scrollbar overflow-auto mt-6 w-full'>
         <div className='sm:w-max mx-auto'>
           {data.categories.map(category => (
             <Checkbox

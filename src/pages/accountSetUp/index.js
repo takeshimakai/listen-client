@@ -174,7 +174,7 @@ const AccountSetUp = () => {
         <h1 className='text-gray-800 font-serif text-2xl'>listen</h1>
         <button className='font-light text-sm' onClick={() => setToken('')}>Sign out</button>
       </div>
-      <form className='h-full flex flex-col items-center justify-between px-12 pb-12' onSubmit={handleSubmit}>
+      <form className='h-full flex flex-col items-center justify-between px-10 pb-10' onSubmit={handleSubmit}>
         <div className='my-auto w-full sm:max-w-lg relative flex flex-col items-center border max-h-3/4 bg-gray-50 shadow-xl rounded-lg pt-14 pb-10 px-5 sm:px-10 text-center'>
           <ProgressBar step={step} />
           {step === 'username' &&
