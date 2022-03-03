@@ -64,12 +64,17 @@ const Profile = () => {
     })();
   }, [token, userId, id]);
 
+  const fadeStyle = {
+    'WebkitMaskImage': 'linear-gradient(transparent, black 5%, black 90%, transparent 100%)',
+    'maskImage': 'linear-gradient(transparent, black 5%, black 90%, transparent 100%)'
+  };
+
   return (
     <>
+      {compose && <DMForm userId={userId} username={profile.username} setCompose={setCompose} />}
       {editMode
         ? <ProfileForm profile={profile} setProfile={setProfile} setEditMode={setEditMode} />
-        : <div className='overflow-auto pt-20 sm:pt-24 pb-12 px-12 xl:px-0 flex flex-col xl:flex-row items-center xl:items-start xl:relative xl:w-max xl:mx-auto'>
-            {compose && <DMForm userId={userId} username={profile.username} setCompose={setCompose} />}
+        : <div className='h-screen pt-20 sm:pt-24 pb-10 px-10 xl:px-0 flex flex-col xl:flex-row items-center xl:items-start xl:relative xl:w-max xl:mx-auto'>
             <img
               className='h-36 sm:h-48 rounded-full'
               src={
@@ -79,16 +84,16 @@ const Profile = () => {
               }
               alt=''
             />
-            <div className='flex-grow flex flex-col items-center xl:items-start xl:ml-20 xl:w-60'>
-              <p className='mt-4 xl:mt-0 text-lg font-bold text-gray-800'>{profile && profile.username}</p>
-              <div className='space-y-9 mt-9'>
+            <div className='rounded-xl min-h-0 h-full w-full flex flex-col items-center xl:items-start xl:ml-20 xl:w-60'>
+              <p className='mb-4 mt-4 xl:mt-0 xl:mt-0 text-lg font-bold text-gray-800'>{profile && profile.username}</p>
+              <div className='no-scrollbar pt-5 pb-10 overflow-auto h-full w-full space-y-9' style={fadeStyle}>
                 <Card title='Date of birth' data={profile && profile.dob} />
                 <Card title='Gender' data={profile && profile.gender} />
                 <Card title='Interests' data={profile && profile.interests} />
                 <Card title='Problem topics' data={profile && profile.problemTopics} />
               </div>
             </div>
-            <div className='xl:absolute xl:left-4 xl:top-80 mt-12 xl:mt-0 w-full max-w-xs xl:w-40 flex justify-center xl:flex-col space-x-2 xl:space-x-0 xl:space-y-2.5'>
+            <div className='mt-6 xl:mt-0 xl:absolute xl:left-4 xl:top-80 w-full max-w-xs xl:w-40 flex justify-center xl:flex-col space-x-2 xl:space-x-0 xl:space-y-2.5'>
               {userId
                 ? <>
                     {friendshipStatus === 'friends' && <PrimaryBtn label='Send message' onClick={() => setCompose(true)} />}
