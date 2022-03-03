@@ -91,12 +91,12 @@ const Profile = () => {
             <div className='mt-6 xl:mt-0 xl:absolute xl:left-4 xl:top-80 w-full max-w-xs xl:w-40 flex justify-center xl:flex-col space-x-2 xl:space-x-0 xl:space-y-2.5'>
               {userId
                 ? <>
-                    {friendshipStatus === 'friends' && <PrimaryBtn label='Send message' onClick={() => setCompose(true)} />}
                     <FriendBtns
                       userId={userId}
                       friendshipStatus={friendshipStatus}
                       setFriendshipStatus={setFriendshipStatus}
                     />
+                    {friendshipStatus === 'friends' && <PrimaryBtn label='Send message' onClick={() => setCompose(true)} />}
                   </>
                 : <TertiaryBtn label='Edit' onClick={() => setEditMode(true)} />
               }

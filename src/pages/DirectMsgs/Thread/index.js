@@ -17,6 +17,7 @@ const Thread = ({ threads, setThreads }) => {
   const { id } = decodeToken(token);
 
   const [thread, setThread] = useState();
+  const [err, setErr] = useState('');
 
   useEffect(() => {
     if (thread) {
@@ -55,16 +56,22 @@ const Thread = ({ threads, setThreads }) => {
       });
     };
 
-    socket.on('dm success', dmSuccessHandler);
+    const dmErrorHandler = (data) => setErr(data.to);
 
-    return () => socket.off('dm success', dmSuccessHandler);
+    socket.on('dm success', dmSuccessHandler);
+    socket.on('dm error', dmErrorHandler);
+
+    return () => {
+      socket.off('dm success', dmSuccessHandler);
+      socket.off('dm error', dmErrorHandler);
+    }
   }, [socket, setThreads]);
 
   return (
     <>
       <Subject thread={thread} setThreads={setThreads} />
       <MsgsContainer thread={thread} />
-      <Input thread={thread} />
+      <Input thread={thread} err={err} />
     </>
   )
 }

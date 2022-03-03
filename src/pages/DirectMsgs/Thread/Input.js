@@ -8,7 +8,7 @@ import decodeToken from '../../../utils/decodeToken';
 
 import sendIcon from '../../../assets/send.png';
 
-const Input = ({ thread }) => {
+const Input = ({ thread, err }) => {
   const { threadId } = useParams();
   const socket = useContext(SocketContext);
   const { token } = useContext(UserContext);
@@ -41,7 +41,8 @@ const Input = ({ thread }) => {
   };
 
   return (
-    <form className='mt-8 text-right' onSubmit={handleSubmit}>
+    <form className='mt-3 text-right' onSubmit={handleSubmit}>
+      <p className='error-msg text-left mb-1'>{err}</p>
       <textarea
         ref={textarea}
         className='resize-none max-h-44 p-2 w-full border border-gray-400 focus:border-gray-700 rounded-md sm:text-sm text-gray-900 focus:outline-none'
@@ -51,7 +52,7 @@ const Input = ({ thread }) => {
         onInput={autoResize}
       />
       <button className='border rounded-full border-green-700 p-1.5 shadow'>
-        <img className='h-4' src={sendIcon} alt='' />
+        <img className='h-4 w-4' src={sendIcon} alt='' />
       </button>
     </form>
   )
