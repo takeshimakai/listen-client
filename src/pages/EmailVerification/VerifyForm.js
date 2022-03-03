@@ -91,7 +91,7 @@ const VerifyForm = () => {
         ))}
         <p className='error-msg'>{error && error}</p>
       </div>
-      <button className='primary-btn'>Verify</button>
+      <button className='shadow-md max-w-2xs w-full h-8 rounded-md cursor-pointer bg-green-700 text-sm text-white hover:bg-green-800 active:shadow-inner-2'>Verify</button>
     </form>
   )
 }

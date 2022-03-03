@@ -87,10 +87,16 @@ const ResetForm = ({ input, setInput, setPage, handleInput, setStep }) => {
         <p className='error-msg'>{err.passwordConfirmation}</p>
       </div>
       <div className='space-y-2.5'>
-        <button className='secondary-btn' type='button' onClick={() => setPage('login')}>
+        <button
+          className='border active:border-0 active:p-px shadow-md max-w-2xs w-full h-8 rounded-md bg-gray-50 text-sm text-gray-600 hover:bg-gray-200 active:shadow-inner'
+          type='button'
+          onClick={() => setPage('login')}
+        >
           Cancel
         </button>
-        <button className='primary-btn'>Reset password</button>
+        <button className='shadow-md max-w-2xs w-full h-8 rounded-md bg-green-700 text-sm text-white hover:bg-green-800 active:shadow-inner-2'>
+          Reset password
+        </button>
       </div>
       <p className='text-sm text-center mt-6'>Didn't receive it? <span
         className='text-blue-700 hover:text-blue-900 cursor-pointer'

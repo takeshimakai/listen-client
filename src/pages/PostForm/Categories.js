@@ -62,7 +62,7 @@ const Categories = ({ input, setInput, handleInput, errors}) => {
         </div>
         <button
           type='button'
-          className='blue-text mt-4 categories'
+          className='text-sm font-light text-blue-700 hover:text-blue-900 mt-4 categories'
           onClick={() => setInput(prev => ({ ...prev, topics: []}))}
         >
           Clear

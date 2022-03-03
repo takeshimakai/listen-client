@@ -70,7 +70,11 @@ const LoginForm = ({ setPage }) => {
           />
           <p className='error-msg'>{errors && errors.password}</p>
         </div>
-        <input className='primary-btn' type='submit' value='Sign in' />
+        <input
+          className='shadow-md max-w-2xs w-full h-8 rounded-md cursor-pointer bg-green-700 text-sm text-white hover:bg-green-800 active:shadow-inner-2'
+          type='submit'
+          value='Sign in'
+        />
         <button
           className='mt-3.5 text-xs font-light text-blue-700 hover:text-blue-900'
           type='button'
@@ -86,17 +90,20 @@ const LoginForm = ({ setPage }) => {
           <div className='flex-grow h-0 border-b border-gray-300 sm:border-gray-500' />
         </div>
         <button
-          className='secondary-btn'
+          className='border active:border-0 active:p-px shadow-md max-w-2xs w-full h-8 rounded-md bg-gray-50 text-sm text-gray-600 hover:bg-gray-200 active:shadow-inner'
           type="button"
           onClick={() => window.location.href='http://localhost:5000/api/auth/google'}
         >
-          <img className='btn-icon' src={googleIcon} alt='' />
+          <img className='float-left h-3/5 ml-2' src={googleIcon} alt='' />
           Sign in with Google
         </button>
       </form>
       <div className='flex flex-col items-center mt-11'>
         <p className='mb-1.5 text-xs text-white'>Don't have an account?</p>
-        <button className='rounded-btn' onClick={() => setPage('signup')}>
+        <button
+          className='border active:border-0 active:p-px shadow-md max-w-2xs w-full h-8 rounded-full text-gray-600 bg-gray-50 text-sm hover:bg-gray-200 active:shadow-inner'
+          onClick={() => setPage('signup')}
+        >
           Create an account
         </button>
       </div>

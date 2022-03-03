@@ -7,44 +7,8 @@
     @apply w-full h-full absolute top-0 bg-base bg-cover bg-top 2xl:bg-center opacity-70;
   }
 
-  .logo-main {
-    @apply text-gray-800 font-serif text-6xl sm:text-8xl;
-  }
-
-  .logo-sm {
-    @apply text-gray-800 font-serif text-2xl;
-  }
-
   .subtitle {
     @apply text-gray-600 font-light sm:text-sm;
-  }
-
-  .post-title {
-    @apply font-medium text-green-700;
-  }
-
-  .auth-container {
-    @apply flex flex-col justify-between mb-10 sm:mb-0 sm:w-64;
-  }
-
-  .account-setup-input-container {
-    @apply border max-h-3/4 relative bg-gray-50 shadow-xl rounded-lg w-full sm:max-w-lg text-center pt-14 pb-10 px-5 sm:px-10 my-auto;
-  }
-
-  .account-setup-input-title {
-    @apply text-base font-light;
-  }
-
-  .account-setup-confirm-title {
-    @apply text-gray-500 font-light mb-1.5 text-sm;
-  }
-
-  .account-setup-moreinfo {
-    @apply absolute w-max text-xs text-blue-700 hover:text-blue-900 -bottom-8 inset-x-0 mx-auto cursor-pointer;
-  }
-
-  .separator {
-    @apply text-5xl text-green-900 text-opacity-40;
   }
 
   .progress-bar {
@@ -63,36 +27,8 @@
     @apply text-xs text-gray-500;
   }
 
-  .radio {
-    @apply h-4 w-4 mr-1.5;
-  }
-
   .error-msg {
     @apply text-red-600 text-xs h-4 mt-1;
-  }
-
-  .blue-text {
-    @apply text-sm font-light text-blue-700 hover:text-blue-900;
-  }
-
-  .primary-btn {
-    @apply shadow-md max-w-2xs w-full h-8 rounded-md cursor-pointer bg-green-700 text-sm text-white hover:bg-green-800 active:shadow-inner-2;
-  }
-
-  .secondary-btn {
-    @apply border active:border-0 active:p-px shadow-md max-w-2xs w-full h-8 rounded-md cursor-pointer bg-gray-50 text-sm text-gray-600 hover:bg-gray-200 active:shadow-inner;
-  }
-
-  .rounded-btn {
-    @apply border active:border-0 active:p-px shadow-md max-w-2xs w-full h-8 rounded-full cursor-pointer text-gray-600 bg-gray-50 text-sm hover:bg-gray-200 active:shadow-inner;
-  }
-
-  .tertiary-btn {
-    @apply shadow-md border border-green-700 max-w-2xs w-full h-8 rounded-md cursor-pointer bg-gray-50 text-sm text-green-700 hover:text-white hover:bg-green-700 active:shadow-inner;
-  }
-
-  .btn-icon {
-    @apply float-left h-3/5 ml-2;
   }
 }
 
@@ -104,7 +40,6 @@
 
   /* Hide scrollbar for IE, Edge and Firefox */
   .no-scrollbar {
-    -webkit-scrollbar: none;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
   }

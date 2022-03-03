@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import data from "../../data/data";
 
 import Checkbox from "../../components/Checkbox";
+import PrimaryBtn from '../../components/PrimaryBtn';
+import SecondaryBtn from '../../components/SecondaryBtn';
 
 const Filters = ({ filters, setFilters }) => {
   const [filterInput, setFilterInput] = useState([]);
@@ -73,9 +75,9 @@ const Filters = ({ filters, setFilters }) => {
         className='z-10 absolute top-8 bg-gray-50 border shadow-lg rounded-lg p-4 filters'
         hidden
       >
-        <div className='flex mb-6 filters'>
-          <button className='secondary-btn mr-1 filters' onClick={clearFilters}>Clear</button>
-          <button className='primary-btn ml-1' onClick={applyFilters}>Apply</button>
+        <div className='flex mb-6 space-x-2 max-w-2xs filters'>
+          <SecondaryBtn label='Clear' onClick={clearFilters} />
+          <PrimaryBtn label='Apply' onClick={applyFilters} />
         </div>
         {data.categories.map(filter => (
           <Checkbox

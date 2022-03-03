@@ -12,7 +12,7 @@ const PostPreview = ({ post }) => {
 
   return (
     <div className='border rounded-lg shadow-md px-4 py-3'>
-      <h4 className='post-title mb-2'>{post.title}</h4>
+      <h4 className='font-medium text-green-700 mb-2'>{post.title}</h4>
       <div className='space-y-1.5'>
         <p className='truncate font-light sm:text-sm text-gray-700'>{post.content}</p>
         <div>

@@ -7,17 +7,17 @@ const Confirm = ({ input }) => {
           <p className='subtitle mb-1'>Minimum age</p>
           <p className='sm:text-sm text-gray-900'>{input.minAge ? input.minAge : 'No preference'}</p>
         </div>
-        <p className='separator'>&middot;</p>
+        <p className='text-5xl text-green-900 text-opacity-40'>&middot;</p>
         <div className='flex flex-col items-center'>
           <p className='subtitle mb-1'>Maximum age</p>
           <p className='sm:text-sm text-gray-900'>{input.maxAge ? input.maxAge : 'No preference'}</p>
         </div>
-        <p className='separator'>&middot;</p>
+        <p className='text-5xl text-green-900 text-opacity-40'>&middot;</p>
         <div className='flex flex-col items-center'>
           <p className='subtitle mb-1'>Gender</p>
           <p className='sm:text-sm text-gray-900'>{input.gender ? input.gender : 'No preference'}</p>
         </div>
-        <p className='separator'>&middot;</p>
+        <p className='text-5xl text-green-900 text-opacity-40'>&middot;</p>
         <div className='flex flex-col items-center'>
           <p className='subtitle mb-1'>Interests</p>
           {input.interests.length > 0
@@ -29,7 +29,7 @@ const Confirm = ({ input }) => {
               : <p className='sm:text-sm text-gray-900'>No preference</p>
           }
         </div>
-        <p className='separator'>&middot;</p>
+        <p className='text-5xl text-green-900 text-opacity-40'>&middot;</p>
         <div className='flex flex-col items-center'>
           <p className='subtitle mb-1'>Problem topics</p>
           {input.problemTopics.length > 0

@@ -171,7 +171,7 @@ const AccountSetUp = () => {
   return (
     <div className='h-screen flex flex-col'>
       <div className='fixed w-full flex justify-between py-2 px-4'>
-        <h1 className='logo-sm'>listen</h1>
+        <h1 className='text-gray-800 font-serif text-2xl'>listen</h1>
         <button className='font-light text-sm' onClick={() => setToken('')}>Sign out</button>
       </div>
       <form className='h-full flex flex-col items-center justify-between px-12 pb-12' onSubmit={handleSubmit}>
@@ -199,7 +199,7 @@ const AccountSetUp = () => {
             <ConfirmInput profileInput={profileInput} />
           }
           {['dob', 'gender', 'interests', 'problemTopics'].includes(step) &&
-            <p className='account-setup-moreinfo' onClick={() => setMoreInfo(!moreInfo)}>
+            <p className='absolute w-max text-xs text-blue-700 hover:text-blue-900 -bottom-8 inset-x-0 mx-auto cursor-pointer' onClick={() => setMoreInfo(!moreInfo)}>
               What's this for?
             </p>
           }

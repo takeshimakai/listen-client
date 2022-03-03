@@ -47,7 +47,7 @@ const EmailVerification = () => {
         Sign out
       </button>
       <div className='relative flex items-center justify-center lg:justify-end h-2/6 lg:h-auto lg:flex-1 lg:mr-14'>
-        <h1 className='logo-main'>listen</h1>
+        <h1 className='text-gray-800 font-serif text-6xl sm:text-8xl'>listen</h1>
       </div>
       <div className='relative px-12 lg:px-0 lg:flex-1 lg:ml-14 mb-12 lg:mb-0'>
         <VerifyForm />

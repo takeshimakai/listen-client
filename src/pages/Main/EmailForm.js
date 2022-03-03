@@ -53,10 +53,16 @@ const EmailForm = ({ email, handleInput, setStep, setPage }) => {
         <p className='error-msg'>{err}</p>
       </div>
       <div className='space-y-2.5'>
-        <button className='secondary-btn' type='button' onClick={() => setPage('login')}>
+        <button
+          className='border active:border-0 active:p-px shadow-md max-w-2xs w-full h-8 rounded-md bg-gray-50 text-sm text-gray-600 hover:bg-gray-200 active:shadow-inner'
+          type='button'
+          onClick={() => setPage('login')}
+        >
           Cancel
         </button>
-        <button className='primary-btn'>Send code</button>
+        <button className='shadow-md max-w-2xs w-full h-8 rounded-md bg-green-700 text-sm text-white hover:bg-green-800 active:shadow-inner-2'>
+          Send code
+        </button>
       </div>
     </form>
   )

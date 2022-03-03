@@ -3,13 +3,13 @@ import data from "../../data/data";
 const GenderInput = ({ profileInput, handleInput }) => {
   return (
     <>
-      <p className='account-setup-input-title'>What is your gender?</p>
+      <p className='font-light'>What is your gender?</p>
       <div className='flex items-center justify-center mt-10'>
         <div>
           {data.genders.map(gender => (
             <div className='flex items-center my-2' key={gender}>
               <input
-                className='radio'
+                className='h-4 w-4 mr-1.5'
                 type='radio'
                 id={gender}
                 name='gender'

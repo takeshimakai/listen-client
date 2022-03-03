@@ -40,7 +40,7 @@ const PostContainer = ({ post, setPosts, setEditMode }) => {
 
   return (
     <div className='border rounded-xl p-6 sm:p-10 shadow-md space-y-4'>
-      <h3 className='post-title'>{post.title}</h3>
+      <h3 className='font-medium text-green-700'>{post.title}</h3>
       <p className='font-light sm:text-sm text-gray-700 whitespace-pre-wrap'>{post.content}</p>
       <div>
         <p className='text-xs font-light text-gray-400'>

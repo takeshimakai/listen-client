@@ -70,7 +70,7 @@ const Nav = () => {
 
   return (
     <div className='z-10 fixed w-full h-12 flex items-center justify-between py-2 px-4 bg-gray-50'>
-      <h1 id='logo' className='logo-sm z-10'>listen</h1>
+      <h1 id='logo' className='text-gray-800 font-serif text-2xl z-10'>listen</h1>
       {windowWidth < 640
         ? <MobileMenu numOfFriendReqs={numOfFriendReqs} numOfNewDMs={numOfNewDMs} />
         : <Menu numOfFriendReqs={numOfFriendReqs} numOfNewDMs={numOfNewDMs} />
