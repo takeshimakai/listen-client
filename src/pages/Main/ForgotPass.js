@@ -35,6 +35,7 @@ const ForgotPass = ({ setPage }) => {
       {step === 'reset' &&
         <ResetForm
           input={input}
+          setInput={setInput}
           setPage={setPage}
           handleInput={handleInput}
           setStep={setStep}

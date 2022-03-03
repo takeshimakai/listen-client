@@ -14,12 +14,12 @@ const Dashboard = () => {
   const { username } = decodeToken(token);
 
   return (
-    <div className='flex flex-col items-center justify-center p-12 mb-12 xl:mb-0 xl:mx-auto space-y-6 xl:space-y-16 xl:h-screen xl:max-w-5xl'>
-      <div className='text-center space-y-4 mt-10 xl:mt-0'>
+    <div className='flex flex-col items-center justify-center p-12 mb-12 lg:mb-0 lg:mx-auto space-y-6 lg:space-y-16 lg:h-screen lg:max-w-5xl'>
+      <div className='text-center space-y-4 mt-10 lg:mt-0'>
         <h3 className='text-gray-600 font-light'>Hey <span className='font-bold text-green-700'>{username}</span>!</h3>
         <p className='text-gray-600 font-light'>What would you like to do today?</p>
       </div>
-      <div className='space-y-28 xl:space-y-0 xl:w-full xl:flex xl:space-x-16'>
+      <div className='space-y-28 lg:space-y-0 lg:w-full lg:flex lg:space-x-16'>
         <MenuCard
           illustration={illustrationA}
           summary='Help someone feel heard by giving your time and attention to those in need of a compassionate listener.'

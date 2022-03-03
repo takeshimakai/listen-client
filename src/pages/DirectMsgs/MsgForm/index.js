@@ -57,7 +57,7 @@ const MsgForm = ({ setThreads, setCompose }) => {
     }
 
     if (!newMsg.to) {
-      errors.to = 'The recipient must be from your friends list.';
+      errors.to = 'The recipient must be on your friends list.';
     }
 
     if (Object.keys(errors).length > 0) {

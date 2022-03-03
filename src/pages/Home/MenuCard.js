@@ -1,23 +1,17 @@
-import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 
+import useWindowWidth from '../../hooks/useWindowWidth';
+
 const MenuCard = ({ illustration, summary, label, to }) => {
-  const [isLessThan1280, setIsLessThan1280] = useState(window.innerWidth < 1280);
-
-  useEffect(() => {
-    const updateIsLessThan1280 = () => setIsLessThan1280(window.innerWidth < 1280);
-
-    window.addEventListener('resize', updateIsLessThan1280);
-    return () => window.removeEventListener('resize', updateIsLessThan1280);
-  });
+  const windowWidth = useWindowWidth();
 
   const card = (
-    <div className='menu-card flex flex-col items-center xl:justify-between max-w-xs space-y-6 xl:space-y-0 xl:p-8 xl:h-88 xl:border xl:rounded-3xl xl:flex-1 xl:flex xl:shadow-md xl:hover:shadow-lg xl:cursor-pointer xl:active:shadow-inner xl:transition-shadow'>
+    <div className='menu-card flex flex-col items-center lg:justify-between max-w-xs space-y-6 lg:space-y-0 lg:p-8 lg:h-88 lg:border lg:rounded-3xl lg:flex-1 lg:flex lg:shadow-md lg:hover:shadow-lg lg:cursor-pointer lg:active:shadow-inner lg:transition-shadow'>
       <img className='h-36' src={illustration} alt='' />
-      <p className='text-center text-gray-600 font-light xl:text-sm'>
+      <p className='text-center text-gray-600 font-light sm:text-sm'>
         {summary}
       </p>
-      {isLessThan1280
+      {windowWidth < 1024
         ? <Link to={to}>
             <button className='shadow-md border border-green-700 hover:bg-green-700 active:shadow-inner-2 text-green-700 hover:text-white text-sm w-40 h-8 rounded-full'>
               {label}
@@ -32,7 +26,7 @@ const MenuCard = ({ illustration, summary, label, to }) => {
   );
 
   return (
-    isLessThan1280
+    windowWidth < 1024
       ? card
       : <Link to={to}>
           {card}

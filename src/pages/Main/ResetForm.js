@@ -5,7 +5,7 @@ import UserContext from '../../contexts/UserContext';
 import postData from '../../utils/postData';
 import setErrMsgs from '../../utils/setErrMsgs';
 
-const ResetForm = ({ input, setPage, handleInput, setStep }) => {
+const ResetForm = ({ input, setInput, setPage, handleInput, setStep }) => {
   const { setToken } = useContext(UserContext);
 
   const [err, setErr] = useState({
@@ -94,7 +94,15 @@ const ResetForm = ({ input, setPage, handleInput, setStep }) => {
       </div>
       <p className='text-sm text-center mt-6'>Didn't receive it? <span
         className='text-blue-700 hover:text-blue-900 cursor-pointer'
-        onClick={() => setStep('email')}
+        onClick={() => {
+          setStep('email');
+          setInput(prev => ({
+            ...prev,
+            code: '',
+            password: '',
+            passwordConfirmation: ''
+          }));
+        }}
       >
         Send it again.
       </span></p>
