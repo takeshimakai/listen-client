@@ -57,7 +57,7 @@ const Input = ({ setMsgs, otherUserLeft }) => {
         className='absolute right-0 bottom-0 border rounded-full border-green-700 p-2 disabled:opacity-50'
         disabled={otherUserLeft}
       >
-        <img className='h-6 sm:h-5' src={sendIcon} alt='' />
+        <img className='h-6 sm:h-5 w-6 sm:w-5' src={sendIcon} alt='' />
       </button>
     </form>
   )

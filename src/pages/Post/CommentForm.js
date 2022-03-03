@@ -109,7 +109,7 @@ const CommentForm = ({
           />
         }
         <button className='border rounded-full border-green-700 p-1.5 shadow'>
-          <img className='h-4' src={sendIcon} alt='' />
+          <img className='h-4 w-4' src={sendIcon} alt='' />
         </button>
       </div>
     </form>
