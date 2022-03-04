@@ -48,6 +48,10 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 .menu-card:hover .menu-card-arrow {
   position: relative;
   left: 0.5rem;

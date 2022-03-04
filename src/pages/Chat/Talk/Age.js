@@ -8,7 +8,7 @@ const Age = ({ input, handleInput, err }) => {
             Minimum age
           </label>
           <input
-            className='text-center px-1 border rounded border-gray-500 focus:border-gray-900 text-gray-900 sm:text-sm bg-transparent focus:outline-none'
+            className='text-center py-1 px-1.5 border rounded border-gray-500 focus:border-gray-900 text-gray-900 sm:text-sm bg-transparent focus:outline-none'
             id='minAge'
             type='number'
             name='minAge'
@@ -27,7 +27,7 @@ const Age = ({ input, handleInput, err }) => {
             Maximum age
           </label>
           <input
-            className='text-center px-1 border rounded border-gray-500 focus:border-gray-900 text-gray-900 sm:text-sm bg-transparent focus:outline-none'
+            className='text-center py-1 px-1.5 border rounded border-gray-500 focus:border-gray-900 text-gray-900 sm:text-sm bg-transparent focus:outline-none'
             id='maxAge'
             type='number'
             name='maxAge'
