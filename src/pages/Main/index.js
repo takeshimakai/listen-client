@@ -28,11 +28,11 @@ const Home = () => {
   return (
     <div className='bg-image w-screen h-screen'>
       <div className='h-full w-full overflow-auto' onScroll={changeOpacityOnScroll}>
-        <div className='h-full lg:flex lg:items-center'>
-          <div className='relative flex items-center justify-center lg:justify-end h-1/3 lg:h-auto z-10 lg:flex-1 lg:mr-14'>
+        <div className='min-h-full grid grid-rows-3 lg:flex lg:items-center'>
+          <div className='relative flex items-center justify-center lg:justify-end row-span-1 lg:h-auto z-10 lg:flex-1 lg:mr-14'>
             <h1 className='text-gray-800 font-serif text-6xl sm:text-8xl'>listen</h1>
           </div>
-          <div className='relative z-10 px-12 lg:px-0 lg:flex-1 lg:ml-14 mb-12 lg:mb-0'>
+          <div className='row-span-2 relative z-10 px-12 lg:px-0 lg:flex-1 lg:ml-14'>
             {page === 'login' && <LoginForm setPage={setPage} />}
             {page === 'signup' && <SignUpForm setPage={setPage} />}
             {page === 'forgot' && <ForgotPass setPage={setPage} />}
@@ -43,13 +43,13 @@ const Home = () => {
             <div>
               <p className='mb-4 font-light'>What is <i className='mr-0.5 font-normal text-green-700'>listen</i>?</p>
               <p className='max-w-md font-light text-sm'>
-                Listen is a community built together by people just like you. It's a place where those experiencing mental health related stuggles can come together to share, discuss, and receive support to overcome many of life's obstacles – whether they've been professionally evaluated or not.
+                Listen is a community built together by people just like you. It's a place where those experiencing or have an understanding of mental health related stuggles can come together to share, discuss, and receive and provide support to overcome many of life's obstacles – whether they've been professionally evaluated or not.
               </p>
             </div>
             <div>
               <p className='mb-4 font-light'>What it isn't</p>
               <p className='max-w-md font-light text-sm'>
-                Listen is <strong>not</strong> a substitute for professional help. If you are struggling and require immediate attention, please contact your local healthcare provider.
+                Listen is <span className='font-bold'>not</span> a substitute for professional help. If you are struggling and require immediate attention, please contact your local healthcare provider.
               </p>
             </div>
             <div>
