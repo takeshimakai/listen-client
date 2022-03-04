@@ -22,7 +22,7 @@ const Home = () => {
     const opacity = 1 - (clientHeight - scrollTop)/clientHeight;
     if (opacity > 1) return;
     e.target.style.backgroundColor = `rgba(239, 234, 226, ${opacity})`;
-    e.target.querySelector('#extra-content').style.opacity = opacity;
+    e.target.querySelector('#information').style.opacity = opacity;
   };
 
   return (
@@ -39,7 +39,7 @@ const Home = () => {
           </div>
         </div>
         {['login', 'signup'].includes(page) &&
-          <div className='flex flex-col items-center justify-center px-6 space-y-20 w-full min-h-full' id='extra-content'>
+          <div className='flex flex-col items-center justify-center px-6 space-y-20 w-full min-h-full' id='information'>
             <div>
               <p className='mb-4 font-light'>What is <i className='mr-0.5 font-normal text-green-700'>listen</i>?</p>
               <p className='max-w-md font-light text-sm'>
