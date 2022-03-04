@@ -35,7 +35,11 @@ const MobileMenu = ({ numOfFriendReqs, numOfNewDMs }) => {
 
   return (
     <>
-      <button id='mobile-menu-icon' className='z-10 text-xl text-gray-600' onClick={toggleMenu}>
+      <button
+        id='mobile-menu-icon'
+        className={`${(numOfFriendReqs > 0 || numOfNewDMs > 0) && 'text-green-700'} z-10 text-xl text-gray-600`}
+        onClick={toggleMenu}
+      >
         {isVisible ? <span>&#x2715;</span> : <span>&#9776;</span>}
       </button>
       <div

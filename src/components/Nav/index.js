@@ -19,6 +19,7 @@ const Nav = () => {
   const windowWidth = useWindowWidth();
   const [numOfFriendReqs, setNumOfFriendReqs] = useState(0);
   const [numOfNewDMs, setNumOfNewDMs] = useState(0);
+  const [alert, setAlert] = useState();
 
   useEffect(() => {
     socket.emit('get unread dm count');
@@ -26,11 +27,25 @@ const Nav = () => {
 
     const setUnreadCount = (count) => setNumOfNewDMs(count);
 
-    const newDMHandler = () => setNumOfNewDMs(prev => prev + 1);
+    const newDMHandler = (data) => {
+      const { msgs } = data;
+
+      const from = msgs[msgs.length - 1].from.profile.username;
+
+      setNumOfNewDMs(prev => prev + 1);
+      setAlert(`New message from ${from}`);
+      setTimeout(() => setAlert(), 4000);
+    };
 
     const markedAsRead = () => setNumOfNewDMs(prev => prev - 1);
 
-    const requestReceived = () => setNumOfFriendReqs(prev => prev + 1);
+    const requestReceived = (data) => {
+      const { username } = data;
+
+      setNumOfFriendReqs(prev => prev + 1);
+      setAlert(`Friend request from ${username}`);
+      setTimeout(() => setAlert(), 4000);
+    };
 
     const requestCanceled = () => setNumOfFriendReqs(prev => prev - 1);
 
@@ -72,11 +87,16 @@ const Nav = () => {
   return (
     <div className='z-10 fixed w-full h-12 flex items-center justify-between py-2 px-4 bg-gray-50'>
       <Link to='/home'>
-        <h1 id='logo' className='text-gray-800 font-serif text-2xl z-10'>listen</h1>
+        <h1 id='logo' className='relative text-gray-800 font-serif text-2xl z-10'>listen</h1>
       </Link>
       {windowWidth < 640
         ? <MobileMenu numOfFriendReqs={numOfFriendReqs} numOfNewDMs={numOfNewDMs} />
         : <Menu numOfFriendReqs={numOfFriendReqs} numOfNewDMs={numOfNewDMs} />
+      }
+      {alert &&
+        <p className='absolute top-2 inset-x-0 mx-auto w-max bg-gray-50 p-5 border rounded-lg shadow-md text-xs'>
+          {alert}
+        </p>
       }
     </div>
   )
