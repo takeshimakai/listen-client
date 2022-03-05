@@ -22,7 +22,7 @@ const Recipient = ({ friends, err, to, setNewMsg }) => {
       <input
         className='w-full py-1 border-b border-gray-400 focus:border-gray-700 sm:text-sm text-gray-900 bg-transparent focus:outline-none disabled:text-gray-500'
         list='to-list'
-        value={friends && friends.length === 0 ? 'Your friends list is empty.' : input}
+        value={friends && friends.length === 0 ? 'Your friends list is empty' : input}
         disabled={friends && friends.length === 0}
         onChange={handleInput}
       />
