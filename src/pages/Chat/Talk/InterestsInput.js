@@ -56,7 +56,7 @@ const InterestsInput = ({ input, setInput }) => {
   return (
     <>
       <label className='subtitle text-center mb-6'>
-        What common interests would you like them to have?
+        What interests would you like them to have?
       </label>
       <div className='relative w-full'>
         <input

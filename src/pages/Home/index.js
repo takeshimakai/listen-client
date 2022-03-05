@@ -22,20 +22,20 @@ const Dashboard = () => {
       <div className='space-y-28 lg:space-y-0 lg:w-full lg:flex lg:space-x-16'>
         <MenuCard
           illustration={illustrationA}
-          summary='Help someone feel heard by giving your time and attention to those in need of a compassionate listener.'
+          summary='Help someone feel heard. Give your time and attention to those in need of a compassionate listener.'
           label='Listen'
           to={{ pathname: '/chat', state: { action: 'listen' } }}
         />
         <MenuCard
           illustration={illustrationB}
-          summary='We all need someone to talk to sometimes. Connect with someone who wants to be there for you.'
+          summary='We all need someone to talk to. Connect with a person who wants to be there for you.'
           label='Talk'
           to={{ pathname: '/chat', state: { action: 'talk' } }}
         />
         <MenuCard
           illustration={illustrationC}
-          summary="Join the discussions and see that you're not alone."
-          label='Join Discussions'
+          summary="You are not alone. Share and discuss expriences with others."
+          label='Join discussions'
           to={{ pathname: '/forum' }}
         />
       </div>

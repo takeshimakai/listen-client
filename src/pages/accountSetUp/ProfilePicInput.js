@@ -27,7 +27,7 @@ const ProfilePicInput = ({ pic, setProfileInput, err, setErr }) => {
 
   return (
     <>
-      <p className='font-light sm:text-sm'>Upload a profile picture.</p>
+      <p className='font-light sm:text-sm'>Upload a profile picture</p>
       <div className='relative mt-10 mx-auto w-max'>
         <img
           className='h-36 sm:h-48 rounded-full cursor-pointer'

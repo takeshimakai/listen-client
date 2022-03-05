@@ -4,7 +4,7 @@ const ConfirmInput = ({ profileInput }) => {
   return (
     <>
         <p className='font-light sm:text-sm'>Please confirm your information.</p>
-        <p className='font-light sm:text-sm'>The username can't be changed once saved.</p>
+        <p className='font-light sm:text-sm'>The username can't be changed once the profile has been saved.</p>
         <div className='mt-6 space-y-0.5 overflow-auto w-full scroll-fade no-scrollbar pt-2 pb-6'>
           <div>
             <p className='subtitle mb-1'>Username</p>

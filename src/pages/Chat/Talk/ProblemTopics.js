@@ -6,7 +6,7 @@ const ProblemTopics = ({ input, handleInput }) => {
   return (
     <>
       <label className='subtitle text-center mb-6'>
-        Which topics would you like them to have some understanding of?
+        Which topics would you like them to be familiar with?
       </label>
       <div className='scroll-fade no-scrollbar pt-2 pb-5 overflow-auto w-full'>
         <div className='sm:w-max mx-auto'>

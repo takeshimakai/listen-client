@@ -1,7 +1,9 @@
 const Age = ({ input, handleInput, err }) => {
   return (
     <>
-      <p className='subtitle text-center mb-6'>How old would you like your conversation partner to be?</p>
+      <p className='subtitle text-center mb-6'>
+        What age would you prefer your conversation partner to be?
+      </p>
       <div className='flex flex-col sm:flex-row sm:space-x-8'>
         <div className='flex flex-col items-center mb-4 sm:mb-0'>
           <label className='sm:text-sm text-left leading-snug text-gray-900 mb-1' htmlFor='minAge'>

@@ -9,14 +9,13 @@ const MoreInfo = ({ moreInfo, setMoreInfo }) => {
           &#x2715;
         </button>
         <div className='space-y-4'>
-          <p className='mb-8'>Why do I need to provide this information?</p>
-          <p className='font-light text-sm'>All fields are optional with the exception of the username.</p>
+          <p className='mb-8'>Why should I provide this information?</p>
           <p className='font-light text-sm'>
-            Although they're optional, it would help us to better match you 
-            with someone in need of a listener when more information is available.
+            All fields except the username are optional.
           </p>
           <p className='font-light text-sm'>
-            The information will be kept private by default unless you decide to make it public.
+            This additional information helps us provide better matches for those in need of a listener;
+            it remains private unless you choose to make it public.
           </p>
         </div>
       </div>

@@ -43,19 +43,22 @@ const Home = () => {
             <div>
               <p className='mb-4 font-light'>What is <i className='mr-0.5 font-normal text-green-700'>listen</i>?</p>
               <p className='max-w-md font-light text-sm'>
-                Listen is a community built together by people just like you. It's a place where those experiencing or with an understanding of mental health related stuggles can come together to share, discuss, and receive and provide support to overcome many of life's obstacles – whether they've been professionally evaluated or not.
+                Listen is a community made up of people just like you, either struggling with mental health issues or with an understanding of them.
+                It's a place for sharing and discussing, where you can receive and provide support through many of life's obstacles—with or without a diagnosis.
               </p>
             </div>
             <div>
               <p className='mb-4 font-light'>What it isn't</p>
               <p className='max-w-md font-light text-sm'>
-                Listen is <span className='font-bold'>not</span> a substitute for professional help. If you are struggling and require immediate attention, please contact your local healthcare provider.
+                Listen is <span className='font-bold'>not</span> a substitute for professional help.
+                If you are struggling and require immediate assistance, please contact your local helpline or healthcare provider.
               </p>
             </div>
             <div>
               <p className='mb-4 font-light'>What is it <i className='font-normal'>really</i> though?</p>
               <p className='max-w-md font-light text-sm'>
-                Listen is a project by <a className='text-green-700' target='_blank' rel='noreferrer' href='https://github.com/takeshimakai'>Kai Takeshima</a>. He's an aspiring web developer and hopes to do some good in the world with his newly found skill.
+                Listen is a project by <a className='text-green-700' target='_blank' rel='noreferrer' href='https://github.com/takeshimakai'>Kai Takeshima</a>,
+                an aspiring web developer hoping to do some good with his newly found skills.
               </p>
             </div>
           </div>

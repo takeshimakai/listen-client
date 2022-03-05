@@ -3,7 +3,7 @@ import formatDateForInput from '../../utils/formatDateForInput';
 const DobInput = ({ profileInput, handleInput }) => {
   return (
     <>
-      <p className='font-light sm:text-sm'>When is your birthday?</p>
+      <p className='font-light sm:text-sm'>Select your birthday</p>
       <div className='flex justify-center items-center mt-10'>
         <input
           className='py-1 border-b border-gray-500 text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
