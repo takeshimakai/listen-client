@@ -31,7 +31,7 @@ const Confirm = ({ input }) => {
         </div>
         <p className='text-5xl text-green-900 text-opacity-40 text-center'>&middot;</p>
         <div className='flex flex-col items-center'>
-          <p className='subtitle mb-1'>Problem topics</p>
+          <p className='subtitle mb-1'>Topics</p>
           {input.problemTopics.length > 0
               ? <ul className='text-center sm:text-sm text-gray-900'>
                   {input.problemTopics.map(topic => (

@@ -43,7 +43,7 @@ const ConfirmInput = ({ profileInput }) => {
           </div>
           <p className='text-5xl text-green-900 text-opacity-40'>&middot;</p>
           <div>
-            <p className='subtitle mb-1'>Problem topics</p>
+            <p className='subtitle mb-1'>Relevant topics</p>
             {profileInput.problemTopics.length > 0
               ? <ul>
                   {profileInput.problemTopics.map(topic => (

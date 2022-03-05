@@ -30,7 +30,7 @@ const Profile = ({ profile, toggleView }) => {
           <Card title='Date of birth' data={profile.dob} />
           <Card title='Gender' data={profile.gender} />
           <Card title='Interests' data={profile.interests} />
-          <Card title='Problem topics' data={profile.problemTopics} />
+          <Card title='Topics' data={profile.problemTopics} />
         </div>
         <div className='w-full mt-4 text-center space-x-2'>
           <FriendBtns

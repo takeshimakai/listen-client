@@ -85,7 +85,7 @@ const Profile = () => {
                 <Card title='Date of birth' data={profile && profile.dob} />
                 <Card title='Gender' data={profile && profile.gender} />
                 <Card title='Interests' data={profile && profile.interests} />
-                <Card title='Problem topics' data={profile && profile.problemTopics} />
+                <Card title='Topics' data={profile && profile.problemTopics} />
               </div>
             </div>
             <div className='mt-6 xl:mt-0 xl:absolute xl:left-4 xl:top-80 w-full max-w-xs xl:w-40 flex justify-center xl:flex-col space-x-2 xl:space-x-0 xl:space-y-2.5'>
