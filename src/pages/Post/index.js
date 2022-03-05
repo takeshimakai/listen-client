@@ -22,14 +22,6 @@ const Post = ({ posts, setPosts }) => {
   const [sortCommentsBy, setSortCommentsBy] = useState('newest');
 
   useEffect(() => {
-    const savedSort = JSON.parse(sessionStorage.getItem('sortCommentsBy'));
-
-    if (savedSort) {
-      setSortCommentsBy(savedSort);
-    }
-  }, [])
-
-  useEffect(() => {
     setCommentToEditId('');
   }, [comments]);
 
@@ -63,7 +55,7 @@ const Post = ({ posts, setPosts }) => {
                   <PostContainer post={post} setPosts={setPosts} setEditMode={setEditMode} />
                   <div className='mt-8 space-y-4 border rounded-xl px-6 sm:px-10 pb-6 sm:pb-10 pt-2 sm:pt-6 shadow-md'>
                     <CommentForm setComments={setComments} parentId={post._id} />
-                    <Sort sortBy={sortCommentsBy} setSortBy={setSortCommentsBy} name='comments' />
+                    <Sort sortBy={sortCommentsBy} setSortBy={setSortCommentsBy} />
                     {comments.length > 0
                       ? <Comments
                           parentId={post._id}

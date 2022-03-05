@@ -25,12 +25,7 @@ const Forum = () => {
   const [filters, setFilters] = useState([]);
 
   useEffect(() => {
-    const savedSort = JSON.parse(sessionStorage.getItem('sortPostsBy'));
     const savedFilters = JSON.parse(sessionStorage.getItem('filters'));
-
-    if (savedSort) {
-      setSortPostsBy(savedSort);
-    }
 
     if (savedFilters) {
       setFilters(savedFilters);
@@ -61,7 +56,7 @@ const Forum = () => {
           <div className='sm:flex sm:justify-between'>
             <div className='relative flex justify-between items-center sm:justify-start'>
               <Filters filters={filters} setFilters={setFilters} />
-              <Sort sortBy={sortPostsBy} setSortBy={setSortPostsBy} name='posts' />
+              <Sort sortBy={sortPostsBy} setSortBy={setSortPostsBy} />
             </div>
             <Link
               className='fixed sm:relative bottom-3 right-3 sm:inset-0 w-11 sm:w-40 h-11 sm:h-8 border rounded-full border-green-700 flex items-center justify-center text-green-700 text-2xl sm:text-sm shadow-md bg-gray-50 hover:text-white hover:bg-green-700 active:shadow-inner'

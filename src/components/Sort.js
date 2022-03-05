@@ -1,17 +1,5 @@
-const Sort = ({ sortBy, setSortBy, name }) => {
-  const handleSort = (e) => {
-    const { value } = e.target;
-
-    setSortBy(value);
-
-    if (name === 'posts') {
-      sessionStorage.setItem('sortPostsBy', JSON.stringify(value));
-    }
-
-    if (name === 'comments') {
-      sessionStorage.setItem('sortCommentsBy', JSON.stringify(value));
-    }
-  };
+const Sort = ({ sortBy, setSortBy }) => {
+  const handleSort = (e) => setSortBy(e.target.value);
 
   return (
     <div className='flex items-center'>

@@ -2,13 +2,13 @@ const Age = ({ input, handleInput, err }) => {
   return (
     <>
       <p className='subtitle text-center mb-6'>How old would you like your conversation partner to be?</p>
-      <div className='flex flex-col'>
-        <div className='flex flex-col items-center mb-4'>
+      <div className='flex flex-col sm:flex-row sm:space-x-8'>
+        <div className='flex flex-col items-center mb-4 sm:mb-0'>
           <label className='sm:text-sm text-left leading-snug text-gray-900 mb-1' htmlFor='minAge'>
             Minimum age
           </label>
           <input
-            className='text-center py-1 px-1.5 border rounded border-gray-500 focus:border-gray-900 text-gray-900 sm:text-sm bg-transparent focus:outline-none'
+            className='w-14 text-center py-1 px-1.5 border rounded border-gray-500 focus:border-gray-900 text-gray-900 sm:text-sm bg-transparent focus:outline-none'
             id='minAge'
             type='number'
             name='minAge'
@@ -27,7 +27,7 @@ const Age = ({ input, handleInput, err }) => {
             Maximum age
           </label>
           <input
-            className='text-center py-1 px-1.5 border rounded border-gray-500 focus:border-gray-900 text-gray-900 sm:text-sm bg-transparent focus:outline-none'
+            className='w-14 text-center py-1 px-1.5 border rounded border-gray-500 focus:border-gray-900 text-gray-900 sm:text-sm bg-transparent focus:outline-none'
             id='maxAge'
             type='number'
             name='maxAge'
@@ -41,10 +41,10 @@ const Age = ({ input, handleInput, err }) => {
             }}
           />
         </div>
-        <p className='error-msg text-center'>
-          {err && 'Minimum age must be less than maximum age.'}
-        </p>
       </div>
+      <p className='error-msg text-center'>
+        {err && 'Min age must be less than max age.'}
+      </p>
     </>
   )
 }

@@ -43,7 +43,7 @@ const Home = () => {
             <div>
               <p className='mb-4 font-light'>What is <i className='mr-0.5 font-normal text-green-700'>listen</i>?</p>
               <p className='max-w-md font-light text-sm'>
-                Listen is a community built together by people just like you. It's a place where those experiencing or have an understanding of mental health related stuggles can come together to share, discuss, and receive and provide support to overcome many of life's obstacles – whether they've been professionally evaluated or not.
+                Listen is a community built together by people just like you. It's a place where those experiencing or with an understanding of mental health related stuggles can come together to share, discuss, and receive and provide support to overcome many of life's obstacles – whether they've been professionally evaluated or not.
               </p>
             </div>
             <div>
@@ -55,7 +55,7 @@ const Home = () => {
             <div>
               <p className='mb-4 font-light'>What is it <i className='font-normal'>really</i> though?</p>
               <p className='max-w-md font-light text-sm'>
-                Listen is a project by <a className='text-green-700' target='_blank' rel='noreferrer' href='https://www.kaitakeshima.com'>Kai Takeshima</a>. He's an aspiring web developer and hopes to do some good in the world with his newly found skill.
+                Listen is a project by <a className='text-green-700' target='_blank' rel='noreferrer' href='https://github.com/takeshimakai'>Kai Takeshima</a>. He's an aspiring web developer and hopes to do some good in the world with his newly found skill.
               </p>
             </div>
           </div>
