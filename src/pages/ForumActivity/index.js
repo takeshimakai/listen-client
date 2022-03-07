@@ -1,17 +1,23 @@
 import { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import UserContext from "../../contexts/UserContext";
 
 import getData from "../../utils/getData";
 import sortData from '../../utils/sortData';
+import getNewTokensIfExpired from '../../utils/getNewTokensIfExpired';
+import updateTokens from '../../utils/updateTokens';
+import clearTokens from '../../utils/clearTokens';
+import decodeToken from "../../utils/decodeToken";
 
 import Sort from '../../components/Sort';
 import PostPreview from "../../components/PostPreview";
 import YourComment from "./YourComment";
 
 const ForumActivity = () => {
-  const { token } = useContext(UserContext);
+  const history = useHistory();
+  const { token, setToken } = useContext(UserContext);
+  const { id } = decodeToken(token);
 
   const [activity, setActivity] = useState({ posts: [], comments: [] });
   const [sortPostsBy, setSortPostsBy] = useState('newest');
@@ -20,19 +26,37 @@ const ForumActivity = () => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await Promise.all([
+        const newTokens = await getNewTokensIfExpired(token);
+
+        if (newTokens) {
+          return updateTokens(newTokens.token, newTokens.refreshToken, setToken);
+        }
+
+        const [resPost, resComment] = await Promise.all([
           getData('/posts/by-user', token),
           getData('/comments/by-user', token)
         ]);
 
-        const [posts, comments] = await Promise.all([res[0].json(), res[1].json()]);
+        if (!resPost.ok) throw resPost;
+
+        if (!resComment.ok) throw resComment;
+
+        const [posts, comments] = await Promise.all([resPost.json(), resComment.json()]);
 
         setActivity({ posts, comments });
       } catch (err) {
+        if (err.status === 401) {
+          clearTokens(setToken, id);
+          return history.replace({
+            pathname: '/unauthorized',
+            state: { redirected: true }
+          });
+        }
+
         console.log(err);
       }
     })();
-  }, [token]);
+  }, [token, history, setToken, id]);
 
   return (
     <div className='pt-16 sm:pt-20 px-4 sm:px-0 pb-12 sm:w-3/5 sm:mx-auto'>

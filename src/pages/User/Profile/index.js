@@ -6,6 +6,10 @@ import UserContext from "../../../contexts/UserContext";
 import getData from '../../../utils/getData';
 import decodeToken from "../../../utils/decodeToken";
 import formatDateForInput from "../../../utils/formatDateForInput";
+import getNewTokensIfExpired from '../../../utils/getNewTokensIfExpired';
+import updateTokens from '../../../utils/updateTokens';
+import clearTokens from "../../../utils/clearTokens";
+
 import defaultPic from '../../../assets/default-profile.jpg';
 
 import ProfileForm from "../Form";
@@ -21,7 +25,7 @@ import useFriendshipStatus from '../../../hooks/useFriendshipStatus';
 const Profile = () => {
   const history = useHistory();
   const { userId } = useParams();
-  const { token } = useContext(UserContext);
+  const { token, setToken } = useContext(UserContext);
   const { id } = decodeToken(token);
 
   const { friendshipStatus, setFriendshipStatus } = useFriendshipStatus(userId);
@@ -46,7 +50,16 @@ const Profile = () => {
   useEffect(() => {
     (async () => {
       try {
+        const newTokens = await getNewTokensIfExpired(token);
+
+        if (newTokens) {
+          return updateTokens(newTokens.token, newTokens.refreshToken, setToken);
+        }
+
         const res = await getData(`/users/${userId ? userId : id}`, token);
+
+        if (!res.ok) throw res;
+
         const user = await res.json();
 
         setProfile({
@@ -59,10 +72,18 @@ const Profile = () => {
           public: user.profile.public || []
         });
       } catch (err) {
+        if (err.status === 401) {
+          clearTokens(setToken, id);
+          return history.replace({
+            pathname: '/unauthorized',
+            state: { redirected: true }
+          });
+        }
+
         console.log(err);
       }
     })();
-  }, [token, userId, id]);
+  }, [token, userId, id, history, setToken]);
 
   return (
     <>

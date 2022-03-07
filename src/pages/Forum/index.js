@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { Switch, Route, Link, useRouteMatch } from 'react-router-dom';
+import { Switch, Route, Link, useRouteMatch, useHistory } from 'react-router-dom';
 
 import UserContext from '../../contexts/UserContext';
 
@@ -7,6 +7,10 @@ import useWindowWidth from '../../hooks/useWindowWidth';
 
 import getData from '../../utils/getData';
 import sortData from '../../utils/sortData';
+import getNewTokensIfExpired from '../../utils/getNewTokensIfExpired';
+import updateTokens from '../../utils/updateTokens';
+import clearTokens from '../../utils/clearTokens';
+import decodeToken from '../../utils/decodeToken';
 
 import PostPreview from '../../components/PostPreview';
 import Post from '../Post';
@@ -15,9 +19,10 @@ import Filters from './Filters';
 import Sort from '../../components/Sort';
 
 const Forum = () => {
+  const history = useHistory();
   const match = useRouteMatch();
-
-  const { token } = useContext(UserContext);
+  const { token, setToken } = useContext(UserContext);
+  const { id } = decodeToken(token);
 
   const windowWidth = useWindowWidth();
   const [posts, setPosts] = useState([]);
@@ -35,13 +40,30 @@ const Forum = () => {
   useEffect(() => {
     (async () => {
       try {
+        const newTokens = await getNewTokensIfExpired(token);
+
+        if (newTokens) {
+          return updateTokens(newTokens.token, newTokens.refreshToken, setToken);
+        }
+
         const res = await getData('/posts', token);
+
+        if (!res.ok) throw res;
+
         setPosts(await res.json());
       } catch (err) {
+        if (err.status === 401) {
+          clearTokens(setToken, id);
+          return history.replace({
+            pathname: '/unauthorized',
+            state: { redirected: true }
+          });
+        }
+
         console.log(err);
       }
     })();
-  }, [token]);
+  }, [token, history, setToken, id]);
 
   return (
     <Switch>

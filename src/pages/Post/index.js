@@ -1,9 +1,13 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 
 import UserContext from "../../contexts/UserContext";
 
 import getData from '../../utils/getData';
+import getNewTokensIfExpired from '../../utils/getNewTokensIfExpired';
+import updateTokens from '../../utils/updateTokens';
+import clearTokens from "../../utils/clearTokens";
+import decodeToken from "../../utils/decodeToken";
 
 import Sort from '../../components/Sort';
 import Comments from './Comments';
@@ -12,8 +16,10 @@ import CommentForm from "./CommentForm";
 import PostContainer from "./PostContainer";
 
 const Post = ({ posts, setPosts }) => {
+  const history = useHistory();
   const { postId } = useParams();
-  const { token } = useContext(UserContext);
+  const { token, setToken } = useContext(UserContext);
+  const { id } = decodeToken(token);
 
   const [editMode, setEditMode] = useState(false);
   const [post, setPost] = useState();
@@ -35,15 +41,31 @@ const Post = ({ posts, setPosts }) => {
     if (post) {
       (async () => {
         try {
+          const newTokens = await getNewTokensIfExpired(token);
+
+          if (newTokens) {
+            return updateTokens(newTokens.token, newTokens.refreshToken, setToken);
+          }
+
           const res = await getData(`/comments/${post._id}`, token);
+
+          if (!res.ok) throw res;
     
           setComments(await res.json());
         } catch (err) {
+          if (err.status === 401) {
+            clearTokens(setToken, id);
+            return history.replace({
+              pathname: '/unauthorized',
+              state: { redirected: true }
+            });
+          }
+
           console.log(err);
         }
       })();
     }
-  }, [post, token]);
+  }, [post, token, history, setToken, id]);
 
   return (
     <>

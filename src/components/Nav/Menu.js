@@ -4,16 +4,13 @@ import { Link } from "react-router-dom";
 import UserContext from "../../contexts/UserContext";
 
 import decodeToken from "../../utils/decodeToken";
+import clearTokens from '../../utils/clearTokens';
 
 const Menu = ({ numOfFriendReqs, numOfNewDMs }) => {
   const { token, setToken } = useContext(UserContext);
+  const { id, username } = decodeToken(token);
 
   const [isVisible, setIsVisible] = useState(false);
-  const [username, setUsername] = useState('');
-
-  useEffect(() => {
-    token && setUsername(decodeToken(token).username);
-  }, [token]);
 
   useEffect(() => {
     const menu = document.querySelector('#user-menu');
@@ -51,7 +48,7 @@ const Menu = ({ numOfFriendReqs, numOfNewDMs }) => {
         className={`${(numOfFriendReqs > 0 || numOfNewDMs > 0) && 'border border-green-700'} h-7 w-7 bg-gray-50 hover:bg-gray-200 font-medium flex items-center justify-center rounded-full`}
         onClick={toggleVisibility}
       >
-        {username && username[0].toUpperCase()}
+        {username[0].toUpperCase()}
       </button>
       <div
         id='user-menu'
@@ -91,7 +88,7 @@ const Menu = ({ numOfFriendReqs, numOfNewDMs }) => {
             Forum Activity
           </Link>
         </div>
-        <button className='font-light text-sm hover:text-gray-500 w-max' onClick={() => setToken('')}>
+        <button className='font-light text-sm hover:text-gray-500 w-max' onClick={() => clearTokens(setToken, id)}>
           Sign out
         </button>
       </div>

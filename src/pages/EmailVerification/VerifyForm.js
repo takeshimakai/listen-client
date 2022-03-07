@@ -1,11 +1,18 @@
 import { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import UserContext from '../../contexts/UserContext';
 
 import postData from '../../utils/postData';
+import updateTokens from '../../utils/updateTokens';
+import getNewTokensIfExpired from '../../utils/getNewTokensIfExpired';
+import clearTokens from '../../utils/clearTokens';
+import decodeToken from '../../utils/decodeToken';
 
 const VerifyForm = () => {
+  const history = useHistory();
   const { token, setToken } = useContext(UserContext);
+  const { id } = decodeToken(token);
 
   const [input, setInput] = useState(['','','','']);
   const [error, setError] = useState();
@@ -46,22 +53,31 @@ const VerifyForm = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
+
+      const newTokens = await getNewTokensIfExpired(token);
+
       const code = input.join().replace(/,/g, '');
       
       if (code.length !== 4) {
         return setError('Verification code must contain four digits.');
       }
 
-      const res = await postData('/auth/verify', { code }, token);
+      const res = await postData('/auth/verify', { code }, newTokens ? newTokens.token : token);
 
-      if (!res.ok) {
-        throw res;
-      }
+      if (!res.ok) throw res;
 
       const data = await res.json();
       
-      setToken(data);
+      updateTokens(data.token, data.refreshToken, setToken);
     } catch (err) {
+      if (err.status === 401) {
+        clearTokens(setToken, id);
+        return history.replace({
+          pathname: '/unauthorized',
+          state: { redirected: true }
+        });
+      }
+
       if (err.status === 400) {
         const { msg } = await err.json();
         return setError(msg);

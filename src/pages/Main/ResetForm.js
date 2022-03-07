@@ -4,6 +4,7 @@ import UserContext from '../../contexts/UserContext';
 
 import postData from '../../utils/postData';
 import setErrMsgs from '../../utils/setErrMsgs';
+import updateTokens from '../../utils/updateTokens';
 
 const ResetForm = ({ input, setInput, setPage, handleInput, setStep }) => {
   const { setToken } = useContext(UserContext);
@@ -29,11 +30,11 @@ const ResetForm = ({ input, setInput, setPage, handleInput, setStep }) => {
   
       const res = await postData('/auth/reset-password', input);
 
-      if (!res.ok) {
-        throw res;
-      }
+      if (!res.ok) throw res;
 
-      setToken(await res.json());
+      const { token, refreshToken } = await res.json();
+
+      updateTokens(token, refreshToken, setToken);
     } catch (err) {
       if (err.status === 400) {
         const { errors } = await err.json();

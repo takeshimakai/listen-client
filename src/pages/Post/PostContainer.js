@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import UserContext from '../../contexts/UserContext';
 
@@ -7,14 +7,27 @@ import decodeToken from '../../utils/decodeToken';
 import putData from '../../utils/putData';
 import formatDate from '../../utils/formatDate';
 import convertArrToStr from '../../utils/convertArrToStr';
+import getNewTokensIfExpired from '../../utils/getNewTokensIfExpired';
+import updateTokens from '../../utils/updateTokens';
+import clearTokens from '../../utils/clearTokens';
 
 const PostContainer = ({ post, setPosts, setEditMode }) => {
-  const { token } = useContext(UserContext);
+  const history = useHistory();
+  const { token, setToken } = useContext(UserContext);
   const { id } = decodeToken(token);
 
   const votePostRelatability = async () => {
     try {
-      const res = await putData(`/posts/${post._id}/relatability`, undefined, token);
+      const newTokens = await getNewTokensIfExpired(token);
+
+      if (newTokens) {
+        updateTokens(newTokens.token, newTokens.refreshToken, setToken);
+      }
+
+      const res = await putData(`/posts/${post._id}/relatability`, undefined, newTokens ? newTokens.token : token);
+      
+      if (!res.ok) throw res;
+      
       const data = await res.json();
 
       setPosts(prevPosts => {
@@ -23,6 +36,14 @@ const PostContainer = ({ post, setPosts, setEditMode }) => {
         return updated;
       });
     } catch (err) {
+      if (err.status === 401) {
+        clearTokens(setToken, id);
+        return history.replace({
+          pathname: '/unauthorized',
+          state: { redirected: true }
+        });
+      }
+
       console.log(err);
     }
   };

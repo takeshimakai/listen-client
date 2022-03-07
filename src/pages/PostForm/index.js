@@ -11,12 +11,17 @@ import postData from "../../utils/postData";
 import putData from '../../utils/putData';
 import deleteData from "../../utils/deleteData";
 import setErrMsgs from '../../utils/setErrMsgs';
+import getNewTokensIfExpired from '../../utils/getNewTokensIfExpired';
+import updateTokens from '../../utils/updateTokens';
+import clearTokens from '../../utils/clearTokens';
+import decodeToken from "../../utils/decodeToken";
 
 import deleteIcon from '../../assets/delete.png';
 
 const PostForm = ({ post, setPosts, setComments, setEditMode }) => {
   const history = useHistory();
-  const { token } = useContext(UserContext);
+  const { token, setToken } = useContext(UserContext);
+  const { id } = decodeToken(token);
 
   const [errors, setErrors] = useState();
   const [input, setInput] = useState({
@@ -55,47 +60,46 @@ const PostForm = ({ post, setPosts, setComments, setEditMode }) => {
     try {
       e.preventDefault();
 
-      const res = await postData('/posts', input, token);
+      const newTokens = await getNewTokensIfExpired(token);
 
-      if (!res.ok) {
-        throw res;
+      if (newTokens) {
+        updateTokens(newTokens.token, newTokens.refreshToken, setToken);
       }
+
+      let res;
+
+      if (post) {
+        res = await putData(`/posts/${post._id}`, input, newTokens ? newTokens.token : token);
+      } else {
+        res = await postData('/posts', input, newTokens ? newTokens.token : token);
+      }
+
+      if (!res.ok) throw res;
 
       const data = await res.json();
 
-      setPosts(prevPosts => prevPosts.concat(data));
-      history.replace(`/forum/${data._id}`);
+      if (post) {
+        setPosts(prevPosts => {
+          const updated = [...prevPosts];
+          const index = updated.findIndex(post => post._id === data._id);
+          updated.splice(index, 1, data);
+          return updated;
+        });
+  
+        setEditMode(false);
+      } else {
+        setPosts(prevPosts => prevPosts.concat(data));
+        history.replace(`/forum/${data._id}`);
+      }
     } catch (err) {
-      if (err.status === 400) {
-        const { errors } = await err.json();
-        return setErrors(setErrMsgs(errors));
+      if (err.status === 401) {
+        clearTokens(setToken, id);
+        return history.replace({
+          pathname: '/unauthorized',
+          state: { redirected: true }
+        });
       }
 
-      console.log(err);
-    }
-  }
-
-  const handleEditSubmit = async (e) => {
-    try {
-      e.preventDefault();
-
-      const res = await putData(`/posts/${post._id}`, input, token);
-
-      if (!res.ok) {
-        throw res;
-      }
-
-      const data = await res.json();
-
-      setPosts(prevPosts => {
-        const updated = [...prevPosts];
-        const index = updated.findIndex(post => post._id === data._id);
-        updated.splice(index, 1, data);
-        return updated;
-      });
-
-      setEditMode(false);
-    } catch (err) {
       if (err.status === 400) {
         const { errors } = await err.json();
         return setErrors(setErrMsgs(errors));
@@ -107,14 +111,28 @@ const PostForm = ({ post, setPosts, setComments, setEditMode }) => {
 
   const handleDelete = async () => {
     try {
-      const res = await deleteData(`/posts/${post._id}`, token);
+      const newTokens = await getNewTokensIfExpired(token);
 
-      if (res.ok) {
-        setPosts(prevPosts => prevPosts.filter(prevPost => prevPost._id !== post._id));
-        setComments(prevComments => prevComments.filter(comment => comment.postId !== post._id));
-        history.replace('/forum');
+      if (newTokens) {
+        updateTokens(newTokens.token, newTokens.refreshToken, setToken);
       }
+
+      const res = await deleteData(`/posts/${post._id}`, newTokens ? newTokens.token : token);
+
+      if (!res.ok) throw res;
+
+      setPosts(prevPosts => prevPosts.filter(prevPost => prevPost._id !== post._id));
+      setComments(prevComments => prevComments.filter(comment => comment.postId !== post._id));
+      history.replace('/forum');
     } catch (err) {
+      if (err.status === 401) {
+        clearTokens(setToken, id);
+        return history.replace({
+          pathname: '/unauthorized',
+          state: { redirected: true }
+        });
+      }
+
       console.log(err);
     }
   };
@@ -122,7 +140,7 @@ const PostForm = ({ post, setPosts, setComments, setEditMode }) => {
   return (
     <form
       className='flex flex-col justify-between h-screen max-w-md sm:max-w-2xl pt-20 px-10 pb-10 mx-auto'
-      onSubmit={post ? handleEditSubmit : handleSubmit}
+      onSubmit={handleSubmit}
     >
       <div className='flex-grow flex flex-col space-y-3'>
         <TitleInput input={input.title} handleInput={handleInput} errors={errors} />

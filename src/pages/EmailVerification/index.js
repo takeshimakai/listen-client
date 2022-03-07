@@ -5,34 +5,53 @@ import UserContext from '../../contexts/UserContext';
 
 import decodeToken from '../../utils/decodeToken';
 import postData from '../../utils/postData';
+import clearTokens from '../../utils/clearTokens';
+import getNewTokensIfExpired from '../../utils/getNewTokensIfExpired';
+import updateTokens from '../../utils/updateTokens';
 
 import VerifyForm from './VerifyForm';
 
 const EmailVerification = () => {
   const history = useHistory();
   const { token, setToken } = useContext(UserContext);
+  const { id, verified } = decodeToken(token);
 
   const [codeSentTo, setCodeSentTo] = useState('');
 
   useEffect(() => {
     if (token) {
-      decodeToken(token).verified && history.replace('/home');
+      verified && history.replace('/home');
     } else {
       history.replace('/')
     }
-  }, [token, history]);
+  }, [token, history, verified]);
 
   const resendCode = async () => {
     try {
-      const res = await postData('/auth/resend-code', undefined, token);
+      const newTokens = await getNewTokensIfExpired(token);
+
+      if (newTokens) {
+        updateTokens(newTokens.token, newTokens.refreshToken, setToken);
+      }
+      
+      const res = await postData('/auth/resend-code', undefined, newTokens ? newTokens.token : token);
+
+      if (!res.ok) throw res;
 
       if (res.ok) {
         const { email } = await res.json();
         setCodeSentTo(email);
-
         setTimeout(() => setCodeSentTo(''), 3000);
       }
     } catch (err) {
+      if (err.status === 401) {
+        clearTokens(setToken, id);
+        return history.replace({
+          pathname: '/unauthorized',
+          state: { redirected: true }
+        });
+      }
+
       console.log(err);
     }
   };
@@ -40,10 +59,7 @@ const EmailVerification = () => {
   return (
     <div className='w-screen h-screen lg:flex lg:items-center overflow-auto'>
       <div className='bg-image' />
-      <button
-        className='absolute z-10 right-4 top-2 font-light text-sm'
-        onClick={() => setToken('')}
-      >
+      <button className='absolute z-10 right-4 top-2 font-light text-sm' onClick={() => clearTokens(setToken, id)}>
         Sign out
       </button>
       <div className='relative flex items-center justify-center lg:justify-end h-2/6 lg:h-auto lg:flex-1 lg:mr-14'>

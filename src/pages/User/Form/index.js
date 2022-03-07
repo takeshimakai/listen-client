@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
 
 import UserContext from "../../../contexts/UserContext";
 
@@ -15,9 +16,15 @@ import putDataWithFile from "../../../utils/putDataWithFile";
 import putData from '../../../utils/putData';
 import deleteData from '../../../utils/deleteData';
 import formatDateForInput from "../../../utils/formatDateForInput";
+import clearTokens from '../../../utils/clearTokens';
+import getNewTokensIfExpired from "../../../utils/getNewTokensIfExpired";
+import updateTokens from "../../../utils/updateTokens";
+import decodeToken from "../../../utils/decodeToken";
 
 const ProfileForm = ({ profile, setProfile, setEditMode }) => {
+  const history = useHistory();
   const { token, setToken } = useContext(UserContext);
+  const { id } = decodeToken(token);
 
   const [err, setErr] = useState();
   const [newPic, setNewPic] = useState(false);
@@ -35,17 +42,21 @@ const ProfileForm = ({ profile, setProfile, setEditMode }) => {
     try {
       e.preventDefault();
 
+      const newTokens = await getNewTokensIfExpired(token);
+
+      if (newTokens) {
+        updateTokens(newTokens.token, newTokens.refreshToken, setToken);
+      }
+
       let res;
 
       if (newPic) {
-        res = await putDataWithFile('/users', { ...profileInput, img: pic }, token)
+        res = await putDataWithFile('/users', { ...profileInput, img: pic }, newTokens ? newTokens.token : token)
       } else {
-        res = await putData('/users', profileInput, token);
+        res = await putData('/users', profileInput, newTokens ? newTokens.token : token);
       }
 
-      if (!res.ok) {
-        throw res;
-      }
+      if (!res.ok) throw res;
 
       const data = await res.json();
 
@@ -61,6 +72,14 @@ const ProfileForm = ({ profile, setProfile, setEditMode }) => {
 
       setEditMode(false);
     } catch (err) {
+      if (err.status === 401) {
+        clearTokens(setToken, id);
+        return history.replace({
+          pathname: '/unauthorized',
+          state: { redirected: true }
+        });
+      }
+      
       if (err.status === 413) {
         const { msg } = await err.json();
         return setErr(msg);
@@ -88,12 +107,26 @@ const ProfileForm = ({ profile, setProfile, setEditMode }) => {
 
   const deleteAccount = async () => {
     try {
-      const res = await deleteData('/users', undefined, token);
+      const newTokens = await getNewTokensIfExpired(token);
 
-      if (res.ok) {
-        setToken('');
+      if (newTokens) {
+        updateTokens(newTokens.token, newTokens.refreshToken, setToken);
       }
+
+      const res = await deleteData('/users', undefined, newTokens ? newTokens.token : token);
+
+      if (!res.ok) throw res;
+
+      clearTokens(setToken);
     } catch (err) {
+      if (err.status === 401) {
+        clearTokens(setToken, id);
+        return history.replace({
+          pathname: '/unauthorized',
+          state: { redirected: true }
+        });
+      }
+
       console.log(err);
     }
   };

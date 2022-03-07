@@ -6,6 +6,9 @@ import UserContext from '../../contexts/UserContext';
 import decodeToken from '../../utils/decodeToken';
 import postDataWithFile from '../../utils/postDataWithFile';
 import getData from '../../utils/getData';
+import clearTokens from '../../utils/clearTokens';
+import getNewTokensIfExpired from '../../utils/getNewTokensIfExpired';
+import updateTokens from '../../utils/updateTokens';
 
 import UsernameInput from './UsernameInput';
 import ProfilePicInput from './ProfilePicInput';
@@ -23,6 +26,7 @@ import SecondaryBtn from '../../components/SecondaryBtn';
 const AccountSetUp = () => {
   const history = useHistory();
   const { token, setToken } = useContext(UserContext);
+  const { username, verified, id } = decodeToken(token);
 
   const [moreInfo, setMoreInfo] = useState(false);
   const [err, setErr] = useState({ username: '', picture: '' });
@@ -38,14 +42,12 @@ const AccountSetUp = () => {
 
   useEffect(() => {
     if (token) {
-      const { username, verified } = decodeToken(token);
-
       !verified && history.replace('/verify');
       username && history.replace('/home');
     } else {
       history.replace('/');
     }
-  }, [token, history]);
+  }, [token, history, username, verified]);
 
   useEffect(() => {
     const goNext = (e) => {
@@ -121,17 +123,25 @@ const AccountSetUp = () => {
     try {
       e.preventDefault();
 
-      const res = await postDataWithFile('/users', profileInput, token);
+      const newTokens = await getNewTokensIfExpired(token);
 
-      if (!res.ok) {
-        throw res;
-      }
+      const res = await postDataWithFile('/users', profileInput, newTokens ? newTokens.token : token);
+
+      if (!res.ok) throw res;
 
       const data = await res.json();
 
-      setToken(data);
+      updateTokens(data.token, data.refreshToken, setToken);
     } catch (err) {
       const data = await err.json();
+
+      if (err.status === 401) {
+        clearTokens(setToken, id);
+        return history.replace({
+          pathname: '/unauthorized',
+          state: { redirected: true }
+        });
+      }
 
       if (err.status === 413) {
         setErr(prev => ({ ...prev, picture: data.msg }));
@@ -150,11 +160,11 @@ const AccountSetUp = () => {
 
   const usernameValidation = async () => {
     try {
-      const res = await getData(`/users/username/${profileInput.username}`, token);
+      const newToken = await getNewTokensIfExpired(token);
 
-      if (!res.ok) {
-        throw res;
-      }
+      const res = await getData(`/users/username/${profileInput.username}`, newToken ? newToken.token : token);
+
+      if (!res.ok) throw res;
 
       setErr(prev => ({ ...prev, username: '' }));
       setStep('picture');
@@ -162,6 +172,14 @@ const AccountSetUp = () => {
       if (err.status === 400) {
         const { errors } = await err.json();
         return setErr(prev => ({ ...prev, username: errors[0].msg }));
+      }
+
+      if (err.status === 401) {
+        clearTokens(setToken, id);
+        return history.replace({
+          pathname: '/unauthorized',
+          state: { redirected: true }
+        });
       }
 
       console.log(err);
@@ -172,7 +190,7 @@ const AccountSetUp = () => {
     <div className='h-screen flex flex-col'>
       <div className='fixed w-full flex justify-between py-2 px-4'>
         <h1 className='text-gray-800 font-serif text-2xl'>listen</h1>
-        <button className='font-light text-sm' onClick={() => setToken('')}>Sign out</button>
+        <button className='font-light text-sm' onClick={() => clearTokens(setToken, id)}>Sign out</button>
       </div>
       <form className='h-full flex flex-col items-center justify-between px-10 pb-10' onSubmit={handleSubmit}>
         <div className='my-auto w-full sm:max-w-lg relative flex flex-col items-center border max-h-3/4 bg-gray-50 shadow-xl rounded-lg pt-14 pb-10 px-5 sm:px-10 text-center'>

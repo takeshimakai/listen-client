@@ -15,9 +15,7 @@ const EmailForm = ({ email, handleInput, setStep, setPage }) => {
 
       const res = await postData('/auth/forgot-password', { email });
 
-      if (!res.ok) {
-        throw res;
-      }
+      if (!res.ok) throw res;
 
       setStep('reset');
     } catch (err) {

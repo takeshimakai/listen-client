@@ -3,6 +3,8 @@ import { useHistory } from 'react-router-dom';
 
 import UserContext from "../../contexts/UserContext";
 
+import updateTokens from '../../utils/updateTokens';
+
 const GoogleOAuthSuccess = () => {
   const history = useHistory();
   const { setToken } = useContext(UserContext);
@@ -19,7 +21,9 @@ const GoogleOAuthSuccess = () => {
           throw new Error();
         }
 
-        setToken(await res.json());
+        const { token, refreshToken } = await res.json();
+
+        updateTokens(token, refreshToken, setToken);
         history.replace('/home');
       } catch (err) {
         history.replace('/');

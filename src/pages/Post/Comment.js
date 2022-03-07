@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import UserContext from "../../contexts/UserContext";
 
@@ -10,6 +10,9 @@ import formatDate from "../../utils/formatDate";
 import putData from "../../utils/putData";
 import deleteData from "../../utils/deleteData";
 import decodeToken from "../../utils/decodeToken";
+import getNewTokensIfExpired from "../../utils/getNewTokensIfExpired";
+import updateTokens from "../../utils/updateTokens";
+import clearTokens from '../../utils/clearTokens';
 
 import deleteIcon from '../../assets/delete.png';
 
@@ -20,14 +23,28 @@ const Comment = ({
   commentToEditId,
   setCommentToEditId,
 }) => {
-  const { token } = useContext(UserContext);
+  const history = useHistory();
+  const { token, setToken } = useContext(UserContext);
   const { id } = decodeToken(token);
 
   const [reply, setReply] = useState(false);
 
   const voteCommentRelatability = async (e) => {
     try {
-      const res = await putData(`/comments/${e.target.dataset.commentId}/relatability`, undefined, token);
+      const newTokens = await getNewTokensIfExpired(token);
+
+      if (newTokens) {
+        updateTokens(newTokens.token, newTokens.refreshToken, setToken);
+      }
+
+      const res = await putData(
+        `/comments/${e.target.dataset.commentId}/relatability`,
+        undefined,
+        newTokens ? newTokens.token : token
+      );
+
+      if (!res.ok) throw res;
+
       const data = await res.json();
 
       setComments(prevComments => {
@@ -36,18 +53,42 @@ const Comment = ({
         return updated;
       });
     } catch (err) {
+      if (err.status === 401) {
+        clearTokens(setToken, id);
+        return history.replace({
+          pathname: '/unauthorized',
+          state: { redirected: true }
+        });
+      }
+
       console.log(err);
     }
   }
 
   const handleDelete = async () => {
     try {
-      await deleteData(`/comments/${comment._id}`, undefined, token);
+      const newTokens = await getNewTokensIfExpired(token);
+
+      if (newTokens) {
+        updateTokens(newTokens.token, newTokens.refreshToken, setToken);
+      }
+
+      const res = await deleteData(`/comments/${comment._id}`, undefined, newTokens ? newTokens.token : token);
+
+      if (!res.ok) throw res;
 
       setComments(prevComments => prevComments.filter(prevComment => (
         prevComment._id !== comment._id && prevComment.replyTo !== comment._id
       )));
     } catch (err) {
+      if (err.status === 401) {
+        clearTokens(setToken, id);
+        return history.replace({
+          pathname: '/unauthorized',
+          state: { redirected: true }
+        });
+      }
+
       console.log(err);
     }
   }

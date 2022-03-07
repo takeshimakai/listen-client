@@ -21,17 +21,16 @@ import Friends from './pages/Friends';
 import ForumActivity from './pages/ForumActivity';
 import Chat from './pages/Chat';
 import DirectMsgs from './pages/DirectMsgs';
+import Unauthorized from './pages/Unauthorized';
 
 const App = () => {
-  const [token, setToken] = useState(JSON.parse(localStorage.getItem('token')));
+  const [token, setToken] = useState(JSON.parse(localStorage.getItem('listenToken')));
   const [emailVerified, setEmailVerified] = useState(false);
   const [initialized, setInitialized] = useState(false);
 
   const socket = useRef(io('', { autoConnect: false }));
 
   useEffect(() => {
-    localStorage.setItem('token', JSON.stringify(token));
-
     if (token) {
       const { verified, username } = decodeToken(token);
       
@@ -49,7 +48,6 @@ const App = () => {
         return () => socket.current.disconnect();
       };
     } else {
-      localStorage.removeItem('token');
       setEmailVerified(false);
       setInitialized(false);
     }
@@ -80,6 +78,7 @@ const App = () => {
             <Route path='/verify' component={EmailVerification} />
             <Route path='/account-setup' component={AccountSetUp} />
             <Route path='/auth/google/success' component={GoogleOAuthSuccess} />
+            <Route path='/unauthorized' component={Unauthorized} />
             <Route path='/' component={Main} />
           </Switch>
         </BrowserRouter>

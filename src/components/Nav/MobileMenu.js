@@ -3,8 +3,12 @@ import { Link } from "react-router-dom";
 
 import UserContext from "../../contexts/UserContext";
 
+import clearTokens from '../../utils/clearTokens';
+import decodeToken from '../../utils/decodeToken';
+
 const MobileMenu = ({ numOfFriendReqs, numOfNewDMs }) => {
   const { token, setToken } = useContext(UserContext);
+  const { id } = decodeToken(token);
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -81,7 +85,7 @@ const MobileMenu = ({ numOfFriendReqs, numOfNewDMs }) => {
             Forum Activity
           </Link>
         </div>
-        <button className='font-light' onClick={() => setToken('')}>
+        <button className='font-light' onClick={() => clearTokens(setToken, id)}>
           Sign out
         </button>
       </div>

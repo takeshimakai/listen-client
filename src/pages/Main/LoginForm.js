@@ -4,6 +4,8 @@ import UserContext from '../../contexts/UserContext';
 
 import postData from '../../utils/postData';
 import setErrMsgs from '../../utils/setErrMsgs';
+import updateTokens from '../../utils/updateTokens';
+
 import googleIcon from '../../assets/G.png';
 
 const LoginForm = ({ setPage }) => {
@@ -25,9 +27,9 @@ const LoginForm = ({ setPage }) => {
         throw res;
       }
 
-      const data = await res.json();
+      const { token, refreshToken } = await res.json();
 
-      setToken(data);
+      updateTokens(token, refreshToken, setToken);
     } catch (err) {
       if (err.status === 400) {
         const { errors } = await err.json();
