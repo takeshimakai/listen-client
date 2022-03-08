@@ -14,7 +14,7 @@ import GoogleOAuthSuccess from './pages/GoogleOAuthSuccess';
 import Forum from './pages/Forum';
 import Profile from './pages/User/Profile';
 import Home from './pages/Home';
-import AccountSetUp from './pages/AccountSetUp.js';
+import AccountSetUp from './pages/AccountSetUp';
 import Main from './pages/Main';
 import EmailVerification from './pages/EmailVerification';
 import Friends from './pages/Friends';
