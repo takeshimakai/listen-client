@@ -44,7 +44,7 @@ const Home = () => {
               <p className='mb-4 font-light'>What is <i className='mr-0.5 font-normal text-green-700'>listen</i>?</p>
               <p className='max-w-md font-light text-sm'>
                 Listen is a community made up of people just like you. Whether you're struggling with mental health or able to empathize with those that are,
-                it's a place to share and discuss as well as receive and provide support through many of life's obstacles—with or without a diagnosis.
+                it's a place to share and discuss, and to receive and provide support through many of life's obstacles—with or without a diagnosis.
               </p>
             </div>
             <div>
