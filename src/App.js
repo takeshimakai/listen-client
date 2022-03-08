@@ -39,7 +39,7 @@ const App = () => {
       }
       
       if (verified && username) {
-        socket.current = io('http://localhost:5000', {
+        socket.current = io(process.env.REACT_APP_SERVER_URL, {
           extraHeaders: { Authorization: `Bearer ${token}` }
         });
 
