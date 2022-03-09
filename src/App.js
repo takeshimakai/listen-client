@@ -1,5 +1,5 @@
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 
 import UserContext from './contexts/UserContext';
@@ -27,8 +27,7 @@ const App = () => {
   const [token, setToken] = useState(JSON.parse(localStorage.getItem('listenToken')));
   const [emailVerified, setEmailVerified] = useState(false);
   const [initialized, setInitialized] = useState(false);
-
-  const socket = useRef(io('', { autoConnect: false }));
+  const [socket, setSocket] = useState(io('', { autoConnect: false }));
 
   useEffect(() => {
     if (token) {
@@ -39,13 +38,14 @@ const App = () => {
       }
       
       if (verified && username) {
-        socket.current = io(process.env.REACT_APP_SERVER_URL, {
+        const newSocket = io(process.env.REACT_APP_SERVER_URL, {
           extraHeaders: { Authorization: `Bearer ${token}` }
         });
 
+        setSocket(newSocket);
         setInitialized(true);
 
-        return () => socket.current.disconnect();
+        return () => newSocket.disconnect();
       };
     } else {
       setEmailVerified(false);
@@ -63,7 +63,7 @@ const App = () => {
 
   return (
     <UserContext.Provider value={{ token, setToken }}>
-      <SocketContext.Provider value={socket.current}>
+      <SocketContext.Provider value={socket}>
         <BrowserRouter>
           {token && initialized && <Nav />}
           <Switch>

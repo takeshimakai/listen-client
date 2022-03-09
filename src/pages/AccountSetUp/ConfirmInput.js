@@ -46,9 +46,16 @@ const ConfirmInput = ({ profileInput }) => {
             <p className='subtitle mb-1'>Relevant topics</p>
             {profileInput.problemTopics.length > 0
               ? <ul>
-                  {profileInput.problemTopics.map(topic => (
-                    <li className='sm:text-sm text-gray-900' key={topic}>{topic}</li>
-                  ))}
+                  {profileInput.problemTopics
+                    .sort((a, b) => {
+                      if (a === 'Other') return 1;
+                      if (b === 'Other') return -1;
+                      if (a < b) return -1;
+                      if (a > b) return 1;
+                      return 0;
+                    })
+                    .map(topic => <li className='sm:text-sm text-gray-900' key={topic}>{topic}</li>)
+                  }
                 </ul>
               : <p className='sm:text-sm text-gray-900'>Undisclosed</p>
             }

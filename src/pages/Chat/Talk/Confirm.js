@@ -34,9 +34,16 @@ const Confirm = ({ input }) => {
           <p className='subtitle mb-1'>Topics</p>
           {input.problemTopics.length > 0
               ? <ul className='text-center sm:text-sm text-gray-900'>
-                  {input.problemTopics.map(topic => (
-                    <li key={topic}>{topic}</li>
-                  ))}
+                  {input.problemTopics
+                    .sort((a, b) => {
+                      if (a === 'Other') return 1;
+                      if (b === 'Other') return -1;
+                      if (a < b) return -1;
+                      if (a > b) return 1;
+                      return 0;
+                    })
+                    .map(topic => <li key={topic}>{topic}</li>)
+                  }
                 </ul>
               : <p className='sm:text-sm text-gray-900'>No preference</p>
           }

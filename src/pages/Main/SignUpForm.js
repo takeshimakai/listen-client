@@ -55,7 +55,7 @@ const SignUpForm = ({ setPage }) => {
           <label className='label' htmlFor='email-input'>Email</label>
           <input
             className='input'
-            type='text'
+            type='email'
             id='email-input'
             name='email'
             value={input.email}
@@ -100,11 +100,11 @@ const SignUpForm = ({ setPage }) => {
           <div className='flex-grow h-0 border-b border-gray-300 sm:border-gray-500' />
         </div>
         <button
-          className='border active:border-0 active:p-px shadow-md max-w-2xs w-full h-8 rounded-md bg-gray-50 text-sm text-gray-600 hover:bg-gray-200 active:shadow-inner'
+          className='relative border active:border-0 active:p-px shadow-md max-w-2xs w-full h-8 rounded-md bg-gray-50 text-sm text-gray-600 hover:bg-gray-200 active:shadow-inner'
           type="button"
-          onClick={() => window.location.href='http://localhost:5000/api/auth/google'}
+          onClick={() => window.location.href=`${process.env.REACT_APP_API_URL}/auth/google`}
         >
-          <img className='float-left h-3/5 ml-2' src={googleIcon} alt='' />
+          <img className='absolute inset-y-0 my-auto ml-2 h-3/5' src={googleIcon} alt='' />
           Sign up with Google
         </button>
       </form>

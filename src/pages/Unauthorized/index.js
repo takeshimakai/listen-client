@@ -11,7 +11,7 @@ const Unauthorized = ({ location }) => {
   }, [history, location.state]);
 
   return (
-    <div className='h-screen w-screen grid grid-rows-2 justify-items-center'>
+    <div className='bg-gray-50 h-screen w-screen grid grid-rows-2 justify-items-center'>
       <h2 className='self-center text-gray-800 font-serif text-6xl sm:text-8xl '>listen</h2>
       <div className='text-center'>
         <p className='font-light sm:text-sm'>It appears you've requested to perform an unauthorized action.</p>

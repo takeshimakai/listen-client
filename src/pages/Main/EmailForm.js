@@ -44,7 +44,7 @@ const EmailForm = ({ email, handleInput, setStep, setPage }) => {
           className='input'
           id='email'
           name='email'
-          type='text'
+          type='email'
           value={email}
           onChange={handleInput}
         />

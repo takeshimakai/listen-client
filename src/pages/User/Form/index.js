@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import UserContext from "../../../contexts/UserContext";
@@ -30,13 +30,28 @@ const ProfileForm = ({ profile, setProfile, setEditMode }) => {
   const [newPic, setNewPic] = useState(false);
   const [pic, setPic] = useState(profile.img);
   const [profileInput, setProfileInput] = useState({
-    username: profile.username,
-    dob: profile.dob,
-    gender: profile.gender,
-    interests: profile.interests,
-    problemTopics: profile.problemTopics,
-    public: profile.public
+    username: '',
+    dob: '',
+    gender: '',
+    interests: [],
+    problemTopics: [],
+    public: []
   });
+
+  useEffect(() => {
+    if (profile) {
+      const clone = JSON.parse(JSON.stringify(profile));
+      
+      setProfileInput({
+        username: clone.username,
+        dob: clone.dob,
+        gender: clone.gender,
+        interests: clone.interests,
+        problemTopics: clone.problemTopics,
+        public: clone.public
+      });
+    }
+  }, [profile]);
 
   const handleSubmit = async (e) => {
     try {
