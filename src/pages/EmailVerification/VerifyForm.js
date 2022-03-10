@@ -12,7 +12,6 @@ import decodeToken from '../../utils/decodeToken';
 const VerifyForm = () => {
   const history = useHistory();
   const { token, setToken } = useContext(UserContext);
-  const { id } = decodeToken(token);
 
   const [input, setInput] = useState(['','','','']);
   const [error, setError] = useState();
@@ -71,7 +70,7 @@ const VerifyForm = () => {
       updateTokens(data.token, data.refreshToken, setToken);
     } catch (err) {
       if (err.status === 401) {
-        clearTokens(setToken, id);
+        clearTokens(setToken, decodeToken(token).id);
         return history.replace({
           pathname: '/unauthorized',
           state: { redirected: true }
@@ -107,7 +106,9 @@ const VerifyForm = () => {
         ))}
         <p className='error-msg'>{error && error}</p>
       </div>
-      <button className='shadow-md max-w-2xs w-full h-8 rounded-md cursor-pointer bg-green-700 text-sm text-white hover:bg-green-800 active:shadow-inner-2'>Verify</button>
+      <button className='shadow-md max-w-2xs w-full h-8 rounded-md cursor-pointer bg-green-700 text-sm text-white hover:bg-green-800 active:shadow-inner-2'>
+        Verify
+      </button>
     </form>
   )
 }

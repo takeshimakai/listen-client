@@ -14,17 +14,16 @@ import VerifyForm from './VerifyForm';
 const EmailVerification = () => {
   const history = useHistory();
   const { token, setToken } = useContext(UserContext);
-  const { id, verified } = decodeToken(token);
 
   const [codeSentTo, setCodeSentTo] = useState('');
 
   useEffect(() => {
     if (token) {
-      verified && history.replace('/home');
+      decodeToken(token).verified && history.replace('/home');
     } else {
       history.replace('/')
     }
-  }, [token, history, verified]);
+  }, [token, history]);
 
   const resendCode = async () => {
     try {
@@ -45,7 +44,7 @@ const EmailVerification = () => {
       }
     } catch (err) {
       if (err.status === 401) {
-        clearTokens(setToken, id);
+        clearTokens(setToken, decodeToken(token).id);
         return history.replace({
           pathname: '/unauthorized',
           state: { redirected: true }
@@ -59,7 +58,7 @@ const EmailVerification = () => {
   return (
     <div className='w-screen h-screen lg:flex lg:items-center overflow-auto'>
       <div className='bg-image' />
-      <button className='absolute z-10 right-4 top-2 font-light text-sm' onClick={() => clearTokens(setToken, id)}>
+      <button className='absolute z-10 right-4 top-2 font-light text-sm' onClick={() => clearTokens(setToken, decodeToken(token).id)}>
         Sign out
       </button>
       <div className='relative flex items-center justify-center lg:justify-end h-2/6 lg:h-auto lg:flex-1 lg:mr-14'>

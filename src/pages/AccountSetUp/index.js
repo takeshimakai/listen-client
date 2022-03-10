@@ -26,7 +26,6 @@ import SecondaryBtn from '../../components/SecondaryBtn';
 const AccountSetUp = () => {
   const history = useHistory();
   const { token, setToken } = useContext(UserContext);
-  const { username, verified, id } = decodeToken(token);
 
   const [moreInfo, setMoreInfo] = useState(false);
   const [err, setErr] = useState({ username: '', picture: '' });
@@ -42,12 +41,13 @@ const AccountSetUp = () => {
 
   useEffect(() => {
     if (token) {
+      const { username, verified } = decodeToken(token);
       !verified && history.replace('/verify');
       username && history.replace('/home');
     } else {
       history.replace('/');
     }
-  }, [token, history, username, verified]);
+  }, [token, history]);
 
   useEffect(() => {
     const goNext = (e) => {
@@ -136,7 +136,7 @@ const AccountSetUp = () => {
       const data = await err.json();
 
       if (err.status === 401) {
-        clearTokens(setToken, id);
+        clearTokens(setToken, decodeToken(token).id);
         return history.replace({
           pathname: '/unauthorized',
           state: { redirected: true }
@@ -175,7 +175,7 @@ const AccountSetUp = () => {
       }
 
       if (err.status === 401) {
-        clearTokens(setToken, id);
+        clearTokens(setToken, decodeToken(token).id);
         return history.replace({
           pathname: '/unauthorized',
           state: { redirected: true }
@@ -190,7 +190,7 @@ const AccountSetUp = () => {
     <div className='h-screen flex flex-col'>
       <div className='fixed w-full flex justify-between py-2 px-4'>
         <h1 className='text-gray-800 font-serif text-2xl'>listen</h1>
-        <button className='font-light text-sm' onClick={() => clearTokens(setToken, id)}>Sign out</button>
+        <button className='font-light text-sm' onClick={() => clearTokens(setToken, decodeToken(token).id)}>Sign out</button>
       </div>
       <form className='h-full flex flex-col items-center justify-between px-10 pb-10' onSubmit={handleSubmit}>
         <div className='my-auto w-full sm:max-w-lg relative flex flex-col items-center border max-h-3/4 bg-gray-50 shadow-xl rounded-lg pt-14 pb-10 px-5 sm:px-10 text-center'>
