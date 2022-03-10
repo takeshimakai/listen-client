@@ -16,9 +16,8 @@ const MobileMenu = ({ numOfFriendReqs, numOfNewDMs }) => {
     const closeOutside = (e) => {
       const menu = document.querySelector('#mobile-menu');
       const icon = document.querySelector('#mobile-menu-icon');
-      const logo = document.querySelector('#logo');
   
-      if (token && isVisible && ![menu, icon, logo, ...menu.children].includes(e.target)) {
+      if (token && isVisible && ![menu, icon, ...menu.children].includes(e.target)) {
         setIsVisible(false);
       }
     };

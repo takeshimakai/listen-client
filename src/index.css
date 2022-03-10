@@ -60,3 +60,7 @@ input[type=number] {
 .menu-card:hover .menu-card-label > p {
   color: rgb(6, 78, 59);
 }
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
