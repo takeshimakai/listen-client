@@ -12,7 +12,7 @@
   }
 
   .input {
-    @apply max-w-xs block w-full py-1 border-b border-gray-500 text-sm text-gray-900 bg-transparent focus:outline-none focus:border-gray-900;
+    @apply max-w-xs block w-full py-1 border-b border-gray-500 text-sm text-gray-900 bg-transparent focus:outline-none focus:border-gray-900 appearance-none;
   }
 
   .label {

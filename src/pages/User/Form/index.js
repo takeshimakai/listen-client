@@ -148,7 +148,7 @@ const ProfileForm = ({ profile, setProfile, setEditMode }) => {
 
   return (
     <form
-      className='pt-16 sm:pt-20 pb-4 xl:pb-0 px-4 xl:px-0 xl:mb-20 flex flex-col xl:flex-row items-center xl:items-start xl:relative xl:w-max xl:mx-auto'
+      className='pt-16 sm:pt-20 pb-4 sm:pb-10 xl:pb-0 px-4 xl:px-0 xl:mb-20 flex flex-col xl:flex-row items-center xl:items-start xl:relative xl:w-max xl:mx-auto'
       onSubmit={handleSubmit}
     >
       <ProfilePicInput
