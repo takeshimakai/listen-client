@@ -56,7 +56,7 @@ const Friends = () => {
   }, [token, history, setToken, id]);
 
   return (
-    <div className='pt-20 flex flex-col items-center space-y-12 sm:space-y-16'>
+    <div className='pt-16 sm:pt-20 pb-10 flex flex-col items-center space-y-12 sm:space-y-16'>
       <Card title='Friends' users={friends.accepted} />
       <Card title='Received requests' users={friends.received} />
       <Card title='Sent requests' users={friends.sent} />

@@ -1,6 +1,6 @@
 const Intro = () => {
   return (
-    <div className='space-y-4'>
+    <div className='px-6 space-y-4'>
       <p className='font-light sm:text-sm'>
         Life can be hard sometimes. In these moments, we can feel lost and overwhelmed.
         Our instinct might be to cope on our own, but talking to someone might help us find our footing.

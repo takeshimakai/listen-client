@@ -148,7 +148,7 @@ const ProfileForm = ({ profile, setProfile, setEditMode }) => {
 
   return (
     <form
-      className='pt-20 sm:pt-24 pb-10 xl:pb-0 px-10 xl:px-0 xl:mb-20 flex flex-col xl:flex-row items-center xl:items-start xl:relative xl:w-max xl:mx-auto'
+      className='pt-16 sm:pt-20 pb-4 xl:pb-0 px-4 xl:px-0 xl:mb-20 flex flex-col xl:flex-row items-center xl:items-start xl:relative xl:w-max xl:mx-auto'
       onSubmit={handleSubmit}
     >
       <ProfilePicInput
@@ -169,7 +169,7 @@ const ProfileForm = ({ profile, setProfile, setEditMode }) => {
           <ProblemTopicsInput profileInput={profileInput} handleInput={handleInput} />
         </div>
       </div>
-      <div className='text-center xl:absolute xl:left-4 xl:top-80 mt-10 xl:mt-0 w-full xl:w-40 max-w-xs'>
+      <div className='text-center xl:absolute xl:left-4 xl:top-72 mt-10 xl:mt-0 w-full xl:w-40 max-w-xs'>
         <div className='flex xl:flex-col w-full space-x-2 xl:space-x-0 xl:space-y-2.5'>
           <SecondaryBtn label='Cancel' type='button' onClick={() => setEditMode(false)} />
           <PrimaryBtn label='Save' />

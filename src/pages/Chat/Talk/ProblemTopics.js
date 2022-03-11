@@ -9,7 +9,7 @@ const ProblemTopics = ({ input, handleInput }) => {
         Which topics would you prefer them to be familiar with?
       </label>
       <div className='scroll-fade no-scrollbar pt-2 pb-5 overflow-auto w-full'>
-        <div className='sm:w-max mx-auto'>
+        <div className='w-max mx-auto'>
           {data.categories.map(category => (
             <Checkbox
               key={category}

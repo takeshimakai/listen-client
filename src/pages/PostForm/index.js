@@ -139,7 +139,7 @@ const PostForm = ({ post, setPosts, setComments, setEditMode }) => {
 
   return (
     <form
-      className='flex flex-col justify-between h-screen max-w-md sm:max-w-2xl pt-20 px-10 pb-10 mx-auto'
+      className='flex flex-col justify-between h-screen max-w-md sm:max-w-2xl pt-20 px-4 pb-4 sm:pb-10 mx-auto'
       onSubmit={handleSubmit}
     >
       <div className='flex-grow flex flex-col space-y-3'>

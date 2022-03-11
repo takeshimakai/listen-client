@@ -27,7 +27,11 @@ const Home = () => {
 
   return (
     <div className='bg-image w-screen h-screen'>
-      <div className='h-full w-full overflow-auto' onScroll={changeOpacityOnScroll}>
+      <div
+        className='h-full w-full overflow-auto'
+        style={!['login', 'signup'].includes(page) ? { backgroundColor: 'rgba(0, 0, 0, 0)' } : null}
+        onScroll={['login', 'signup'].includes(page) ? changeOpacityOnScroll : null}
+      >
         <div className='min-h-full grid grid-rows-3 lg:flex lg:items-center'>
           <div className='relative flex items-center justify-center lg:justify-end row-span-1 lg:h-auto z-10 lg:flex-1 lg:mr-14'>
             <h1 className='text-gray-800 font-serif text-6xl sm:text-8xl'>listen</h1>

@@ -54,7 +54,7 @@ const DMForm = ({ userId, username, setCompose }) => {
   };
 
   return (
-    <div className='z-10 fixed inset-0 m-auto flex justify-center items-center bg-gray-200 bg-opacity-60'>
+    <div className='z-10 px-4 fixed inset-0 m-auto flex justify-center items-center bg-gray-200 bg-opacity-60'>
       {success
         ? <p className='flex justify-center items-center py-8 px-12 bg-gray-50 border rounded-lg shadow-md font-light sm:text-sm'>
             Message has been sent!

@@ -102,7 +102,7 @@ const Talk = ({ initialize, action }) => {
 
   return (
     <form
-      className='flex flex-col items-center justify-between pb-12 px-12 sm:px-0 h-full sm:max-w-lg mx-auto'
+      className='flex flex-col items-center justify-between pb-4 sm:pb-10 px-4 sm:px-0 h-full sm:max-w-lg mx-auto'
       onSubmit={handleSubmit}
     >
       {step === 'intro'

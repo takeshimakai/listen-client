@@ -45,7 +45,7 @@ const Menu = ({ numOfFriendReqs, numOfNewDMs }) => {
       </div>
       <button
         id='user-icon'
-        className={`${(numOfFriendReqs > 0 || numOfNewDMs > 0) && 'border border-green-700'} h-7 w-7 bg-gray-50 hover:bg-gray-200 font-medium flex items-center justify-center rounded-full`}
+        className={`${(numOfFriendReqs > 0 || numOfNewDMs > 0) && 'bg-green-700 text-white'} h-7 w-7 bg-gray-50 hover:bg-gray-200 font-medium flex items-center justify-center rounded-full`}
         onClick={toggleVisibility}
       >
         {username[0].toUpperCase()}

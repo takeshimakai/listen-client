@@ -61,6 +61,7 @@ input[type=number] {
   color: rgb(6, 78, 59);
 }
 
+a,
 button {
   -webkit-tap-highlight-color: transparent;
 }

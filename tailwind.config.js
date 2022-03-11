@@ -3,6 +3,9 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      screens: {
+        'betterhover': {'raw': '(hover: hover)'},
+      },
       backgroundImage: {
         'base': "url('/src/assets/background.jpg')",
         'chevron-down': "url('/src/assets/chevron-down-solid.svg')"
