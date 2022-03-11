@@ -16,7 +16,7 @@ const DobInput = ({ profileInput, handleInput }) => {
         <p className='absolute text-xs font-thin text-gray-400 -right-px -top-4'>Public</p>
       </div>
       <input
-        className='w-40 py-1 border-b border-gray-500 sm:text-sm text-gray-900 bg-transparent focus:outline-none focus:border-gray-900 mt-1'
+        className='rounded-none w-40 py-1 border-b border-gray-500 sm:text-sm text-gray-900 bg-transparent focus:outline-none focus:border-gray-900 mt-1'
         type='date'
         id='dob'
         name='dob'

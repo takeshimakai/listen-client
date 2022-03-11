@@ -58,7 +58,7 @@ const InterestsInput = ({ profileInput, setProfileInput }) => {
       <p className='font-light sm:text-sm'>Add your interests</p>
       <div className='relative w-full mt-10'>
         <input
-          className='text-center pr-10 w-full py-1 border-b border-gray-500 text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
+          className='rounded-none text-center pr-10 w-full py-1 border-b border-gray-500 text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
           type='text'
           value={input}
           onChange={handleInput}

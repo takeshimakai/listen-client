@@ -3,7 +3,7 @@ const TitleInput = ({ input, handleInput, errors }) => {
     <div className='flex flex-col'>
       <label className='subtitle' htmlFor='title'>Title</label>
       <input
-        className='w-full py-1 border-b border-gray-400 focus:border-gray-700 sm:text-sm text-gray-900 bg-transparent focus:outline-none'
+        className='rounded-none w-full py-1 border-b border-gray-400 focus:border-gray-700 sm:text-sm text-gray-900 bg-transparent focus:outline-none'
         id='title'
         type='text'
         name='title'

@@ -85,7 +85,7 @@ const MsgForm = ({ setThreads, setCompose }) => {
           <label className='subtitle' htmlFor='subject'>Subject</label>
           <input
             id='subject'
-            className='w-full py-1 border-b border-gray-400 focus:border-gray-700 sm:text-sm text-gray-900 bg-transparent focus:outline-none'
+            className='rounded-none w-full py-1 border-b border-gray-400 focus:border-gray-700 sm:text-sm text-gray-900 bg-transparent focus:outline-none'
             name='subject'
             type='text'
             value={newMsg.subject}

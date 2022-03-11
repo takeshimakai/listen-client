@@ -4,7 +4,7 @@ const UsernameInput = ({ profileInput, handleInput, err }) => {
       <p className='font-light sm:text-sm'>Pick a username</p>
       <div className='w-full flex flex-col justify-center items-center mt-10'>
         <input
-          className='text-center w-full py-1 border-b border-gray-500 text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
+          className='rounded-none text-center w-full py-1 border-b border-gray-500 text-gray-900 bg-transparent focus:outline-none focus:border-gray-900'
           type='text'
           name='username'
           value={profileInput.username}

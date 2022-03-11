@@ -20,7 +20,7 @@ const Recipient = ({ friends, err, to, setNewMsg }) => {
     <div className='flex flex-col w-full mb-1'>
       <label className='subtitle' htmlFor='to'>Recipient</label>
       <input
-        className='w-full py-1 border-b border-gray-400 focus:border-gray-700 sm:text-sm text-gray-900 bg-transparent focus:outline-none disabled:text-gray-500'
+        className='rounded-none w-full py-1 border-b border-gray-400 focus:border-gray-700 sm:text-sm text-gray-900 bg-transparent focus:outline-none disabled:text-gray-500'
         list='to-list'
         value={friends && friends.length === 0 ? 'Your friends list is empty' : input}
         disabled={friends && friends.length === 0}
