@@ -1,4 +1,5 @@
 import Toggle from "../../../components/Toggle";
+import formatDateForInput from "../../../utils/formatDateForInput";
 
 const DobInput = ({ profileInput, handleInput }) => {
   return (
@@ -20,6 +21,7 @@ const DobInput = ({ profileInput, handleInput }) => {
         type='date'
         id='dob'
         name='dob'
+        max={formatDateForInput(Date.now())}
         value={profileInput.dob}
         onChange={handleInput}
       />
