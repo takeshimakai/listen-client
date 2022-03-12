@@ -18,7 +18,7 @@ const Sent = ({ threads }) => {
         let msg;
 
         for (let i = thread.msgs.length - 1; i >= 0; i--) {
-          if (thread.msgs[i].from._id === id) {
+          if (thread.msgs[i].from && thread.msgs[i].from._id === id) {
             msg = thread.msgs[i];
             break;
           }
