@@ -137,10 +137,7 @@ const AccountSetUp = () => {
 
       if (err.status === 401) {
         clearTokens(setToken, decodeToken(token).id);
-        return history.replace({
-          pathname: '/unauthorized',
-          state: { redirected: true }
-        });
+        return history.replace('/unauthorized');
       }
 
       if (err.status === 413) {
@@ -176,10 +173,7 @@ const AccountSetUp = () => {
 
       if (err.status === 401) {
         clearTokens(setToken, decodeToken(token).id);
-        return history.replace({
-          pathname: '/unauthorized',
-          state: { redirected: true }
-        });
+        return history.replace('/unauthorized');
       }
 
       console.log(err);

@@ -45,7 +45,7 @@ const App = () => {
       } catch (err) {
         if (err.status === 401) {
           clearTokens(setToken, decodeToken(token).id);
-          window.location.replace('http://localhost:3000/unauthorized');
+          window.location.replace(`${process.env.REACT_APP_SITE_URL}/unauthorized`);
         }
       }
     };

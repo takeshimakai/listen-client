@@ -74,10 +74,7 @@ const Profile = () => {
       } catch (err) {
         if (err.status === 401) {
           clearTokens(setToken, id);
-          return history.replace({
-            pathname: '/unauthorized',
-            state: { redirected: true }
-          });
+          return history.replace('/unauthorized');
         }
 
         console.log(err);

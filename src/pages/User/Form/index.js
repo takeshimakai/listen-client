@@ -89,10 +89,7 @@ const ProfileForm = ({ profile, setProfile, setEditMode }) => {
     } catch (err) {
       if (err.status === 401) {
         clearTokens(setToken, id);
-        return history.replace({
-          pathname: '/unauthorized',
-          state: { redirected: true }
-        });
+        return history.replace('/unauthorized');
       }
       
       if (err.status === 413) {
@@ -136,10 +133,7 @@ const ProfileForm = ({ profile, setProfile, setEditMode }) => {
     } catch (err) {
       if (err.status === 401) {
         clearTokens(setToken, id);
-        return history.replace({
-          pathname: '/unauthorized',
-          state: { redirected: true }
-        });
+        return history.replace('/unauthorized');
       }
 
       console.log(err);
