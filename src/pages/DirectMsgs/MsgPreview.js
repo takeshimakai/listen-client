@@ -12,7 +12,9 @@ const MsgPreview = ({ subject, msg }) => {
   return (
     <div className={`${msg.read.includes(id) ? 'border-gray-200' : 'border-green-700'} border rounded-lg shadow-md px-4 py-3 flex justify-between items-center`}>
       <div className='sm:flex sm:w-4/5'>
-        <p className='sm:w-1/4 sm:text-sm font-light truncate'>{msg.from.profile.username}</p>
+        <p className='sm:w-1/4 sm:text-sm font-light truncate'>
+          {msg.from ? msg.from.profile.username : 'deleted user'}
+        </p>
         <div className='flex sm:w-3/4'>
           <div>
             <p className={`${!subject && 'italic'} text-green-700 truncate sm:text-sm`}>

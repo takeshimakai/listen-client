@@ -14,7 +14,7 @@ const ConfirmInput = ({ profileInput }) => {
           <div>
             <p className='subtitle mb-1'>Profile picture</p>
             <img
-              className='mx-auto mt-3.5 h-28 rounded-full cursor-pointer'
+              className='mx-auto mt-3.5 h-28 w-28 object-cover rounded-full cursor-pointer'
               src={profileInput.img ? URL.createObjectURL(profileInput.img) : defaultPic}
               alt=''
             />

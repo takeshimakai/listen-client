@@ -89,7 +89,7 @@ const Profile = () => {
         ? <ProfileForm profile={profile} setProfile={setProfile} setEditMode={setEditMode} />
         : <div className='h-screen pt-16 sm:pt-20 pb-4 sm:pb-10 px-4 xl:px-0 flex flex-col xl:flex-row items-center xl:items-start xl:relative xl:w-max xl:mx-auto'>
             <img
-              className='h-36 sm:h-48 rounded-full'
+              className='h-36 w-36 sm:h-48 sm:w-48 rounded-full object-cover'
               src={
                 profile && profile.img
                   ? `data:${profile.img.contentType};base64,${profile.img.data}`

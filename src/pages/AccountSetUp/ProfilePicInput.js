@@ -30,7 +30,7 @@ const ProfilePicInput = ({ pic, setProfileInput, err, setErr }) => {
       <p className='font-light sm:text-sm'>Upload a profile picture</p>
       <div className='relative mt-10 mx-auto w-max'>
         <img
-          className='h-36 sm:h-48 rounded-full cursor-pointer'
+          className='h-36 w-36 sm:h-48 sm:w-48 object-cover rounded-full cursor-pointer'
           id='profile-picture'
           src={pic ? URL.createObjectURL(pic) : defaultPic}
           alt=''

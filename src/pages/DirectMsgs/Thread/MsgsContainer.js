@@ -21,7 +21,7 @@ const MsgsContainer = ({ thread }) => {
             className={`${i === thread.msgs.length - 1 ? '' : 'cursor-pointer'} flex justify-between items-center mb-1`}
             onClick={i === thread.msgs.length - 1 ? undefined : focusMsg}
           >
-            <p className='sm:text-sm'>{msg.from.profile.username}</p>
+            <p className='sm:text-sm'>{msg.from ? msg.from.profile.username : 'deleted user'}</p>
             <p className='font-light text-xs'>{displayTimeOrDate(msg.dateSent)}</p>
           </div>
           <p className={`${i === thread.msgs.length - 1 ? 'whitespace-pre-wrap' : 'body truncate text-gray-400'} font-light sm:text-sm`}>

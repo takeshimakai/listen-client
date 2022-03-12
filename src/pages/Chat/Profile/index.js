@@ -10,13 +10,13 @@ const Profile = ({ profile, toggleView }) => {
 
   return (
     <div className='absolute flex flex-col items-center bg-gray-50 border rounded-lg shadow-lg pt-8 px-4 pb-4 mb-4 mx-4 sm:max-w-sm inset-0'>
-      <button className='absolute top-1 right-2 sm:right-1 w-6 h-6 text-3xl sm:text-base rounded-full' onClick={toggleView}>
+      <button className='absolute top-1 right-2 sm:right-1 w-6 h-6 text-3xl sm:text-base rounded-full cursor-pointer' onClick={toggleView}>
         &#x2715;
       </button>
       <div className='flex flex-col items-center h-full w-full'>
         <div className='text-center'>
           <img
-            className='h-24 rounded-full'
+            className='h-24 w-24 object-cover rounded-full'
             src={
               profile && profile.img
                 ? `data:${profile.img.contentType};base64,${profile.img.data}`

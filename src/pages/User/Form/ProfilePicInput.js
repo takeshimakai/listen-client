@@ -33,7 +33,7 @@ const ProfilePicInput = ({ pic, setPic, newPic, setNewPic, setProfileInput, err,
     <div className='flex flex-col items-center xl:w-full'>
       <div className='relative'>
         <img
-          className='h-36 sm:h-48 rounded-full cursor-pointer'
+          className='h-36 w-36 sm:h-48 sm:w-48 object-cover rounded-full cursor-pointer'
           id='profile-picture'
           src={
             newPic
