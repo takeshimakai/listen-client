@@ -1,15 +1,6 @@
-import { Link, useHistory } from 'react-router-dom';
-import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-const Unauthorized = ({ location }) => {
-  const history = useHistory();
-
-  useEffect(() => {
-    if (!location.state) {
-      history.replace('/');
-    }
-  }, [history, location.state]);
-
+const Unauthorized = () => {
   return (
     <div className='bg-gray-50 h-screen w-screen grid grid-rows-2 justify-items-center'>
       <h2 className='self-center text-gray-800 font-serif text-6xl sm:text-8xl '>listen</h2>

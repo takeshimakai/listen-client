@@ -1,4 +1,4 @@
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, useHistory } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 
@@ -6,6 +6,9 @@ import UserContext from './contexts/UserContext';
 import SocketContext from './contexts/SocketContext';
 
 import decodeToken from './utils/decodeToken';
+import getNewTokensIfExpired from './utils/getNewTokensIfExpired';
+import updateTokens from './utils/updateTokens';
+import clearTokens from './utils/clearTokens';
 
 import ProtectedRoute from './components/ProtectedRoute';
 import Nav from './components/Nav';
@@ -24,10 +27,33 @@ import DirectMsgs from './pages/DirectMsgs';
 import Unauthorized from './pages/Unauthorized';
 
 const App = () => {
+  const history = useHistory();
+
   const [token, setToken] = useState(JSON.parse(localStorage.getItem('listenToken')));
   const [emailVerified, setEmailVerified] = useState(false);
   const [initialized, setInitialized] = useState(false);
   const [socket, setSocket] = useState(io('', { autoConnect: false }));
+
+  useEffect(() => {
+    const connectErrorHandler = async () => {
+      try {
+        const newTokens = await getNewTokensIfExpired(token);
+
+        if (newTokens) {
+          return updateTokens(newTokens.token, newTokens.refreshToken, setToken);
+        }
+      } catch (err) {
+        if (err.status === 401) {
+          clearTokens(setToken, decodeToken(token).id);
+          window.location.replace('http://localhost:3000/unauthorized');
+        }
+      }
+    };
+
+    socket.on('connect_error', connectErrorHandler);
+
+    return () => socket.off('connect_error', connectErrorHandler);
+  }, [socket, token, history]);
 
   useEffect(() => {
     if (token) {
@@ -39,7 +65,8 @@ const App = () => {
       
       if (verified && username) {
         const newSocket = io(process.env.REACT_APP_SERVER_URL, {
-          extraHeaders: { Authorization: `Bearer ${token}` }
+          auth: { token },
+          reconnectionAttempts: 10
         });
 
         setSocket(newSocket);
