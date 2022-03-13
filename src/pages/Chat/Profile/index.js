@@ -16,7 +16,7 @@ const Profile = ({ profile, toggleView }) => {
       <div className='flex flex-col items-center h-full w-full'>
         <div className='text-center'>
           <img
-            className='h-24 w-24 object-cover rounded-full'
+            className='h-24 w-24 object-cover rounded-full mx-auto'
             src={
               profile && profile.img
                 ? `data:${profile.img.contentType};base64,${profile.img.data}`
