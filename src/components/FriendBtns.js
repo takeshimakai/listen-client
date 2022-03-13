@@ -40,7 +40,7 @@ const FriendBtns = ({ userId, friendshipStatus, setFriendshipStatus }) => {
       {friendshipStatus === 'sent' && <TertiaryBtn label='Cancel request' onClick={cancel} />}
       {friendshipStatus === 'received' &&
         <>
-          <SecondaryBtn label='Decline requeset' onClick={decline} />
+          <SecondaryBtn label='Decline request' onClick={decline} />
           <PrimaryBtn label='Accept request' onClick={accept} />
         </>
       }
