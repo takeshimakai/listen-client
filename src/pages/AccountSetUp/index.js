@@ -181,7 +181,7 @@ const AccountSetUp = () => {
   };
 
   return (
-    <div className='h-screen flex flex-col'>
+    <div className='h-full flex flex-col'>
       <div className='fixed w-full flex justify-between py-2 px-4'>
         <h1 className='text-gray-800 font-serif text-2xl'>listen</h1>
         <button className='font-light text-sm' onClick={() => clearTokens(setToken, decodeToken(token).id)}>Sign out</button>
