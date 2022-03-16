@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import UserContext from "../../contexts/UserContext";
 
 import updateTokens from '../../utils/updateTokens';
+import postData from '../../utils/postData';
 
 const GoogleOAuthSuccess = () => {
   const history = useHistory();
@@ -12,18 +13,15 @@ const GoogleOAuthSuccess = () => {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch(`${process.env.REACT_APP_API_URL}/auth/google/success`, {
-          method: 'GET',
-          credentials: 'include'
-        });
+        const token = new URLSearchParams(window.location.search).get('token');
+
+        const res = await postData('/auth/google/success', undefined, token);
         
-        if (!res.ok) {
-          throw new Error();
-        }
+        if (!res.ok) throw res;
 
-        const { token, refreshToken } = await res.json();
+        const tokens = await res.json();
 
-        updateTokens(token, refreshToken, setToken);
+        updateTokens(tokens.token, tokens.refreshToken, setToken);
         history.replace('/home');
       } catch (err) {
         history.replace('/');
