@@ -65,3 +65,9 @@ a,
 button {
   -webkit-tap-highlight-color: transparent;
 }
+
+#root {
+  height: 100vh;
+  /* mobile viewport bug fix */
+  height: -webkit-fill-available;
+}

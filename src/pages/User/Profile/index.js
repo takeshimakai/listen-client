@@ -87,7 +87,7 @@ const Profile = () => {
       {compose && <DMForm userId={userId} username={profile.username} setCompose={setCompose} />}
       {editMode
         ? <ProfileForm profile={profile} setProfile={setProfile} setEditMode={setEditMode} />
-        : <div className='h-screen pt-16 sm:pt-20 pb-4 sm:pb-10 px-4 xl:px-0 flex flex-col xl:flex-row items-center xl:items-start xl:relative xl:w-max xl:mx-auto'>
+        : <div className='h-full pt-16 sm:pt-20 pb-4 sm:pb-10 px-4 xl:px-0 flex flex-col xl:flex-row items-center xl:items-start xl:relative xl:w-max xl:mx-auto'>
             <div>
               <img
                 className='h-36 w-36 sm:h-48 sm:w-48 rounded-full object-cover'
