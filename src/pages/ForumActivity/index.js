@@ -56,7 +56,7 @@ const ForumActivity = () => {
   }, [token, history, setToken, id]);
 
   return (
-    <div className='pt-16 sm:pt-20 px-4 sm:px-0 pb-12 sm:w-3/5 sm:mx-auto'>
+    <div className='pt-16 sm:pt-20 px-4 sm:px-0 pb-4 sm:pb-10 sm:w-3/5 sm:mx-auto'>
       <div>
         <div className='mb-4 flex justify-between items-center'>
           <h3 className='text-gray-600 font-light sm:text-sm'>Your posts</h3>
