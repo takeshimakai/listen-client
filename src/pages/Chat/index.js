@@ -44,6 +44,11 @@ const Chat = ({ location }) => {
   useEffect(() => {
     if (connected) {
       unblock.current = history.block(({ pathname, state }) => {
+        if (pathname === '/') {
+          socket.emit('leave room');
+          sessionStorage.removeItem('roomID');
+          return true;
+        }
         setPath({ pathname, state });
         setPreventNav(true);
         return false;
@@ -51,7 +56,7 @@ const Chat = ({ location }) => {
 
       return () => unblock.current();
     }
-  }, [connected, history]);
+  }, [connected, history, socket]);
 
   useEffect(() => {
     const roomID = sessionStorage.getItem('roomID');
@@ -147,7 +152,7 @@ const Chat = ({ location }) => {
         <AwaitMatchModal action={action} setAwaitMatch={setAwaitMatch} setConnected={setConnected} />
       }
       {preventNav &&
-        <BlockModal unblock={unblock} path={path} setPreventNav={setPreventNav} />
+        <BlockModal unblock={unblock} path={path} setPreventNav={setPreventNav} setOtherUserLeft={setOtherUserLeft} />
       }
       {connected &&
         <div className='relative h-full px-4 pb-4 flex flex-col sm:flex-row'>

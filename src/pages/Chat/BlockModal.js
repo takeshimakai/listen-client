@@ -6,11 +6,12 @@ import SocketContext from '../../contexts/SocketContext';
 import PrimaryBtn from '../../components/PrimaryBtn';
 import SecondaryBtn from '../../components/SecondaryBtn';
 
-const BlockModal = ({ unblock, path, setPreventNav }) => {
+const BlockModal = ({ unblock, path, setPreventNav, setOtherUserLeft }) => {
   const history = useHistory();
   const socket = useContext(SocketContext);
 
   const confirmNav = () => {
+    setOtherUserLeft(false);
     socket.emit('leave room');
     sessionStorage.removeItem('roomID');
     unblock.current();
