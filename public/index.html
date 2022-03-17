@@ -6,10 +6,16 @@
     <script>
       const viewport = document.querySelector("meta[name=viewport]");
       viewport.setAttribute("content", viewport.content + ", height=" + window.innerHeight);
+    
+      window.onresize = function() {
+        document.body.height = window.innerHeight;
+      }
+
+      window.onresize();
     </script>
     <title>Listen</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root" style="height: 100%;"></div>
   </body>
 </html>
