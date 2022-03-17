@@ -94,7 +94,7 @@ const Nav = () => {
         : <Menu numOfFriendReqs={numOfFriendReqs} numOfNewDMs={numOfNewDMs} />
       }
       {alert &&
-        <p className='absolute top-2 inset-x-0 mx-auto w-max bg-gray-50 p-5 border rounded-lg shadow-md text-xs'>
+        <p className='z-20 absolute top-2 inset-x-0 mx-auto w-max bg-gray-50 p-5 border rounded-lg shadow-md text-xs'>
           {alert}
         </p>
       }
