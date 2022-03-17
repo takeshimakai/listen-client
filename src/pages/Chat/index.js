@@ -142,7 +142,7 @@ const Chat = ({ location }) => {
   const leaveConversation = () => history.push('/home');
 
   return (
-    <div className='h-full pt-16'>
+    <div className='h-screen pt-16'>
       {awaitMatch &&
         <AwaitMatchModal action={action} setAwaitMatch={setAwaitMatch} setConnected={setConnected} />
       }
