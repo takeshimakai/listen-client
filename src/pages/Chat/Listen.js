@@ -2,7 +2,7 @@ import TertiaryBtn from '../../components/TertiaryBtn';
 
 const Listen = ({ initialize, action }) => {
   return (
-    <div className='h-full flex flex-col items-center justify-between pb-4 sm:pb-10 px-4 sm:px-0 sm:max-w-lg mx-auto'>
+    <div className='flex-grow flex flex-col items-center justify-between pb-4 sm:pb-10 px-4 sm:px-0 sm:max-w-lg mx-auto'>
       <div className='px-6 space-y-4 my-auto flex flex-col justify-center'>
         <p className='font-light sm:text-sm'>
           Thank you for taking the time to listen.

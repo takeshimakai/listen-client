@@ -68,7 +68,7 @@ const Post = ({ posts, setPosts }) => {
     <>
       {editMode
         ? <PostForm post={post} setPosts={setPosts} setComments={setComments} setEditMode={setEditMode} />
-        : <div className='pt-16 sm:pt-20 pb-12 px-4 sm:px-0 sm:w-3/5 sm:mx-auto'>
+        : <div className='pt-16 sm:pt-20 pb-4 sm:pb-10 px-4 sm:px-0 sm:w-4/5 lg:w-3/5 sm:mx-auto'>
             {post
               ? <>
                   <PostContainer post={post} setPosts={setPosts} setEditMode={setEditMode} />

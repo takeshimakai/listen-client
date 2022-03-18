@@ -47,7 +47,7 @@ const DirectMsgs = () => {
   }, [socket]);
 
   return (
-    <div className='pt-16 sm:pt-20 px-4 md:px-0 pb-4 sm:pb-10 md:w-3/5 mx-auto'>
+    <div className='pt-16 sm:pt-20 px-4 sm:px-0 pb-4 sm:pb-10 w-full sm:w-4/5 lg:w-3/5 mx-auto'>
       <Switch>
         <Route path={`${match.path}/:threadId`}>
           <Thread threads={threads} setThreads={setThreads} />

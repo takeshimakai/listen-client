@@ -39,6 +39,22 @@ const Talk = ({ initialize, action }) => {
     return () => window.removeEventListener('keydown', goNext);
   }, [step]);
 
+  useEffect(() => {
+    if (step !== 'intro') {
+      const form = document.querySelector('#talk-form');
+      const box = document.querySelector('#talk-form-box');
+
+      const setMaxHeight = () => {
+        box.style.maxHeight = form.clientHeight * 0.8 + 'px';
+      }
+  
+      setMaxHeight();
+  
+      window.addEventListener('resize', setMaxHeight);
+      return () => window.removeEventListener('resize', setMaxHeight);
+    }
+  }, [step]);
+
   const handleInput = (e) => {
     const { name, value } = e.target;
 
@@ -102,14 +118,15 @@ const Talk = ({ initialize, action }) => {
 
   return (
     <form
-      className='flex flex-col items-center justify-between pb-4 sm:pb-10 px-4 sm:px-0 h-full sm:max-w-lg mx-auto'
+      id='talk-form'
+      className='flex flex-col items-center justify-between pb-4 sm:pb-10 px-4 sm:px-0 flex-grow sm:max-w-lg mx-auto'
       onSubmit={handleSubmit}
     >
       {step === 'intro'
         ? <div className='my-auto'>
             <Intro />
           </div>
-        : <div className='my-auto flex flex-col items-center relative border max-h-3/4 bg-gray-50 shadow-xl rounded-lg w-full pt-14 pb-10 px-5 sm:px-10'>
+        : <div id='talk-form-box' className='my-auto flex flex-col items-center relative border max-h-3/4 bg-gray-50 shadow-xl rounded-lg w-full pt-14 pb-10 px-5 sm:px-10'>
             <ProgressBar step={step} />
             {step === 'age' && <Age input={input} handleInput={handleInput} err={err} setErr={setErr} />}
             {step === 'gender' && <Gender input={input} handleInput={handleInput} />}

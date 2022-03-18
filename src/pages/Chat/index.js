@@ -147,7 +147,7 @@ const Chat = ({ location }) => {
   const leaveConversation = () => history.push('/home');
 
   return (
-    <div className='h-screen pt-16'>
+    <div className='flex-grow pt-16 flex flex-column'>
       {awaitMatch &&
         <AwaitMatchModal action={action} setAwaitMatch={setAwaitMatch} setConnected={setConnected} />
       }
@@ -155,7 +155,7 @@ const Chat = ({ location }) => {
         <BlockModal unblock={unblock} path={path} setPreventNav={setPreventNav} setOtherUserLeft={setOtherUserLeft} />
       }
       {connected &&
-        <div className='relative h-full px-4 pb-4 flex flex-col sm:flex-row'>
+        <div className='relative flex-grow px-4 pb-4 flex flex-col sm:flex-row'>
           <div className='relative sm:flex-grow sm:max-w-sm sm:flex sm:flex-col sm:justify-between sm:items-center'>
             <OtherUser otherUser={otherUser} toggleView={toggleView} />
             <Options leaveConversation={leaveConversation} />
