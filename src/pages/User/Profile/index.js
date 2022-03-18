@@ -87,7 +87,7 @@ const Profile = () => {
       {compose && <DMForm userId={userId} username={profile.username} setCompose={setCompose} />}
       {editMode
         ? <ProfileForm profile={profile} setProfile={setProfile} setEditMode={setEditMode} />
-        : <div className='flex-grow max-h-screen pt-16 sm:pt-20 pb-4 sm:pb-10 px-4 xl:px-0 flex flex-col xl:flex-row items-center xl:items-start xl:relative xl:w-max xl:mx-auto'>
+        : <div className='h-screen pt-16 sm:pt-20 pb-4 sm:pb-10 px-4 xl:px-0 flex flex-col xl:flex-row items-center xl:items-start xl:relative xl:w-max xl:mx-auto'>
             <div>
               <img
                 className='h-36 w-36 sm:h-48 sm:w-48 rounded-full object-cover'
@@ -99,7 +99,7 @@ const Profile = () => {
                 alt=''
               />
             </div>
-            <div className='rounded-xl min-h-0 flex-grow w-full flex flex-col items-center xl:items-start xl:ml-20 xl:w-60'>
+            <div className='rounded-xl min-h-0 h-full w-full flex flex-col items-center xl:items-start xl:ml-20 xl:w-60'>
               <p className='mb-4 mt-4 xl:mt-0 xl:mt-0 text-lg font-bold text-gray-800'>{profile && profile.username}</p>
               <div className='scroll-fade no-scrollbar pt-5 pb-10 overflow-auto h-full w-full space-y-9'>
                 <Card title='Date of birth' data={profile && profile.dob} />
