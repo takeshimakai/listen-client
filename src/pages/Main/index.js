@@ -26,7 +26,7 @@ const Home = () => {
   };
 
   return (
-    <div className='bg-image w-screen h-screen'>
+    <div className='bg-image w-screen flex-grow'>
       <div
         className='h-full w-full overflow-auto'
         style={!['login', 'signup'].includes(page) ? { backgroundColor: 'rgba(0, 0, 0, 0)' } : null}
