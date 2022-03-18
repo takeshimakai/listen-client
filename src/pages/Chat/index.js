@@ -147,7 +147,7 @@ const Chat = ({ location }) => {
   const leaveConversation = () => history.push('/home');
 
   return (
-    <div className='flex-grow pt-16 flex flex-column'>
+    <div className='flex-grow pt-12 sm:pt-16 flex flex-column'>
       {awaitMatch &&
         <AwaitMatchModal action={action} setAwaitMatch={setAwaitMatch} setConnected={setConnected} />
       }

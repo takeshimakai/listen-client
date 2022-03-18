@@ -18,18 +18,23 @@ const Home = () => {
   }, [token, history]);
 
   const changeOpacityOnScroll = (e) => {
+    const bgColor = document.querySelector('#bg-color');
     const { scrollTop, clientHeight } = e.target;
     const opacity = 1 - (clientHeight - scrollTop)/clientHeight;
-    if (opacity > 1) return;
-    e.target.style.backgroundColor = `rgba(239, 234, 226, ${opacity})`;
+    bgColor.style.backgroundColor = `rgba(239, 234, 226, ${opacity})`;
     e.target.querySelector('#information').style.opacity = opacity;
   };
 
   return (
-    <div className='bg-image w-screen flex-grow'>
+    <>
+      <div className='absolute h-screen w-full bg-cover bg-top 2xl:bg-center bg-base' />
       <div
-        className='h-full w-full overflow-auto'
+        id='bg-color'
+        className='absolute h-screen w-full'
         style={!['login', 'signup'].includes(page) ? { backgroundColor: 'rgba(0, 0, 0, 0)' } : null}
+      />
+      <div
+        className='absolute h-screen w-full overflow-auto'
         onScroll={['login', 'signup'].includes(page) ? changeOpacityOnScroll : null}
       >
         <div className='min-h-full grid grid-rows-3 lg:flex lg:items-center'>
@@ -68,7 +73,7 @@ const Home = () => {
           </div>
         }
       </div>
-    </div>
+    </>
   )
 }
 
