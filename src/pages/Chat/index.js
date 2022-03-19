@@ -136,6 +136,19 @@ const Chat = ({ location }) => {
     }
   }, [socket, otherUser, action]);
 
+  useEffect(() => {
+    const chat = document.querySelector('#chat-container');
+
+    const updateMaxHeight = () => {
+      chat.style.maxHeight = window.innerHeight + 'px';
+    }
+
+    updateMaxHeight();
+
+    window.addEventListener('resize', updateMaxHeight);
+    return () => window.removeEventListener('resize', updateMaxHeight);
+  }, []);
+
   const initialize = (role, filters) => {
     setAwaitMatch(true);
     setConnected(true);
@@ -147,7 +160,7 @@ const Chat = ({ location }) => {
   const leaveConversation = () => history.push('/home');
 
   return (
-    <div className='flex-grow max-h-screen pt-12 sm:pt-16 flex flex-column'>
+    <div id='chat-container' className='flex-grow pt-12 sm:pt-16 flex flex-column'>
       {awaitMatch &&
         <AwaitMatchModal action={action} setAwaitMatch={setAwaitMatch} setConnected={setConnected} />
       }
@@ -161,7 +174,7 @@ const Chat = ({ location }) => {
             <Options leaveConversation={leaveConversation} />
             <MobileOptions leaveConversation={leaveConversation} />
           </div>
-          <div className='flex-grow flex flex-col'>
+          <div className='flex-grow flex flex-col overflow-auto'>
             <Messages msgs={msgs} otherUser={otherUser} otherUserLeft={otherUserLeft} />
             <Input setMsgs={setMsgs} otherUserLeft={otherUserLeft} />
           </div>
