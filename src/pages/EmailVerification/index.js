@@ -53,11 +53,11 @@ const EmailVerification = () => {
   };
 
   return (
-    <div className='w-screen flex-grow lg:flex lg:items-center bg-image'>
+    <div className='w-screen flex-grow max-h-screen grid grid-rows-3 lg:flex lg:items-center bg-cover bg-top 2xl:bg-center bg-base'>
       <button className='absolute z-10 right-4 top-2 font-light text-sm' onClick={() => clearTokens(setToken, decodeToken(token).id)}>
         Sign out
       </button>
-      <div className='relative flex items-center justify-center lg:justify-end h-1/3 lg:h-auto lg:flex-1 lg:mr-14'>
+      <div className='relative flex items-center justify-center lg:justify-end lg:h-auto lg:flex-1 lg:mr-14'>
         <h1 className='text-gray-800 font-serif text-6xl sm:text-8xl'>listen</h1>
       </div>
       <div className='relative px-12 lg:px-0 lg:flex-1 lg:ml-14 mb-12 lg:mb-0'>
