@@ -161,7 +161,7 @@ const Chat = ({ location }) => {
             <Options leaveConversation={leaveConversation} />
             <MobileOptions leaveConversation={leaveConversation} />
           </div>
-          <div className='flex-grow flex flex-col overflow-auto'>
+          <div className='flex-grow flex flex-col'>
             <Messages msgs={msgs} otherUser={otherUser} otherUserLeft={otherUserLeft} />
             <Input setMsgs={setMsgs} otherUserLeft={otherUserLeft} />
           </div>

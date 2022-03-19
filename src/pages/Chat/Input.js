@@ -42,7 +42,7 @@ const Input = ({ setMsgs, otherUserLeft }) => {
     <form className='relative flex mt-4 flex-shrink-0' onSubmit={sendMessage}>
       <textarea
         ref={chatInput}
-        className='outline-none resize-none border border-gray-400 rounded-lg flex-grow mr-12 px-3 py-2 sm:text-sm'
+        className='outline-none resize-none border border-gray-400 rounded-lg flex-grow mr-12 px-3 py-2 sm:text-sm max-h-60'
         style={{ 'borderRadius': '20px' }}
         id='chat-input'
         rows={1}
