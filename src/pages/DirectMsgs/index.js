@@ -54,7 +54,7 @@ const DirectMsgs = () => {
         </Route>
         <Route path={match.path}>
           {compose && <MsgForm setThreads={setThreads} setCompose={setCompose} />}
-          <div className='flex justify-between mb-4 px-4 sm:px-0'>
+          <div className='flex justify-between mb-3 px-4 sm:px-0'>
             <div className='flex items-center'>
               <button
                 className={`${page === 'inbox' && 'border-b border-gray-400 -mb-px'} w-max font-light sm:text-sm px-1`}

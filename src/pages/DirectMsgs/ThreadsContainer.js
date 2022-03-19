@@ -35,7 +35,7 @@ const ThreadsContainer = ({ page, threads }) => {
   return (
     <>
       {isEmpty && <p className='font-light sm:text-sm px-4 sm:px-0'>There are no messages to display.</p>}
-      <div id='threads-container' className='space-y-4 overflow-auto pb-4 sm:pb-10 px-4 sm:px-0'>
+      <div id='threads-container' className='space-y-4 overflow-auto pt-1 pb-4 sm:pb-10 px-4 sm:px-0'>
         {page === 'inbox' && <Inbox threads={threads} />}
         {page === 'sent' && <Sent threads={threads} />}
       </div>
