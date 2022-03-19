@@ -68,11 +68,11 @@ const Thread = ({ threads, setThreads }) => {
   }, [socket, setThreads]);
 
   return (
-    <div className='px-4 sm:px-0 pb-4 sm:pb-10'>
+    <>
       <Subject thread={thread} setThreads={setThreads} />
       <MsgsContainer thread={thread} />
       <Input thread={thread} err={err} />
-    </div>
+    </>
   )
 }
 

@@ -47,14 +47,14 @@ const DirectMsgs = () => {
   }, [socket]);
 
   return (
-    <div className='flex-grow max-h-screen flex flex-col pt-16 sm:pt-20 w-full sm:w-4/5 lg:w-3/5 mx-auto'>
+    <div className='pt-16 sm:pt-20 px-4 sm:px-0 pb-4 sm:pb-10 w-full sm:w-4/5 lg:w-3/5 mx-auto'>
       <Switch>
         <Route path={`${match.path}/:threadId`}>
           <Thread threads={threads} setThreads={setThreads} />
         </Route>
         <Route path={match.path}>
           {compose && <MsgForm setThreads={setThreads} setCompose={setCompose} />}
-          <div className='flex justify-between mb-3 px-4 sm:px-0'>
+          <div className='flex justify-between mb-4'>
             <div className='flex items-center'>
               <button
                 className={`${page === 'inbox' && 'border-b border-gray-400 -mb-px'} w-max font-light sm:text-sm px-1`}
