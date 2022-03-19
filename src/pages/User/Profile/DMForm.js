@@ -54,13 +54,13 @@ const DMForm = ({ userId, username, setCompose }) => {
   };
 
   return (
-    <div className='z-10 px-4 fixed inset-0 m-auto flex justify-center items-center bg-gray-200 bg-opacity-60'>
+    <div className='z-10 px-4 sm:px-0 absolute h-screen w-full flex justify-center items-center bg-gray-200 bg-opacity-60'>
       {success
         ? <p className='flex justify-center items-center py-8 px-12 bg-gray-50 border rounded-lg shadow-md font-light sm:text-sm'>
             Message has been sent!
           </p>
         : <form
-            className='flex flex-col items-center bg-gray-50 shadow-md rounded-lg p-4 sm:p-8 h-3/4 w-full sm:w-3/4 lg:w-1/2 mx-4 sm:mx-0'
+            className='flex flex-col items-center bg-gray-50 shadow-md rounded-lg p-4 sm:p-8 h-5/6 w-full sm:w-3/4 lg:w-1/2 mx-4 sm:mx-0'
             onSubmit={handleSubmit}
           >
             <div className='flex flex-col w-full mb-5'>
@@ -97,8 +97,8 @@ const DMForm = ({ userId, username, setCompose }) => {
               <PrimaryBtn label='Send' />
             </div>
           </form>
-          }
-        </div>
+      }
+    </div>
   )
 };
 
