@@ -20,8 +20,17 @@ const VerifyForm = () => {
     const numInputs = document.querySelectorAll('.num-input');
 
     const autoFocus = (e) => {
-      if (e.key !== ' ' && [...Array(10).keys()].includes(Number(e.key))) {
-        e.target.nextElementSibling.focus();
+      const { key, target } = e;
+
+      if (
+        (key !== ' ' && [...Array(10).keys()].includes(Number(key)) && target.dataset.index !== '3') ||
+        (target.value.length > 0 && target.dataset.index !== '3')
+      ) {
+        target.nextElementSibling.focus();
+      }
+
+      if (key === 'Backspace' && !target.value && target.dataset.index !== '0') {
+        target.previousElementSibling.focus();
       }
     };
 
