@@ -199,7 +199,7 @@ const ProfileForm = ({ profile, setProfile, setEditMode }) => {
                 <ProblemTopicsInput profileInput={profileInput} handleInput={handleInput} />
               </div>
             </div>
-            <div className='text-center mt-10 xl:mt-0 w-full max-w-xs'>
+            <div className='text-center mt-10 w-full max-w-xs'>
               <div className='flex w-full space-x-2'>
                 <SecondaryBtn label='Cancel' type='button' onClick={() => setEditMode(false)} />
                 <PrimaryBtn label='Save' />
