@@ -138,15 +138,7 @@ const Chat = ({ location }) => {
 
   useEffect(() => {
     const chat = document.querySelector('#chat-container');
-
-    const updateMaxHeight = () => {
-      chat.style.maxHeight = window.innerHeight + 'px';
-    }
-
-    updateMaxHeight();
-
-    window.addEventListener('resize', updateMaxHeight);
-    return () => window.removeEventListener('resize', updateMaxHeight);
+    chat.style.maxHeight = window.innerHeight + 'px';
   }, []);
 
   const initialize = (role, filters) => {
