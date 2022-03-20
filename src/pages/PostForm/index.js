@@ -114,7 +114,7 @@ const PostForm = ({ post, setPosts, setComments, setEditMode }) => {
         updateTokens(newTokens.token, newTokens.refreshToken, setToken);
       }
 
-      const res = await deleteData(`/posts/${post._id}`, newTokens ? newTokens.token : token);
+      const res = await deleteData(`/posts/${post._id}`, undefined, newTokens ? newTokens.token : token);
 
       if (!res.ok) throw res;
 

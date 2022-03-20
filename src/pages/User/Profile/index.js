@@ -85,11 +85,12 @@ const Profile = () => {
   }, [token, userId, id, history, setToken]);
 
   useEffect(() => {
-    if (windowWidth >= 1280) {
-      const box = document.querySelector('#user-profile');
-      box.style.maxHeight = window.innerHeight * 0.8 + 'px';
+    const box = document.querySelector('#user-profile');
+
+    if (windowWidth >= 1280 && box) {
+      box.style.maxHeight = window.innerHeight * 0.75 + 'px';
     }
-  }, [windowWidth]);
+  }, [windowWidth, editMode]);
 
   return (
     <>
