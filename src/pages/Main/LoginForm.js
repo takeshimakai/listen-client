@@ -8,7 +8,7 @@ import updateTokens from '../../utils/updateTokens';
 
 import googleIcon from '../../assets/G.png';
 
-const LoginForm = ({ setPage }) => {
+const LoginForm = ({ setPage, setWait }) => {
   const { setToken } = useContext(UserContext);
 
   const [input, setInput] = useState({ email: '', password: '' });
@@ -21,7 +21,12 @@ const LoginForm = ({ setPage }) => {
   const handleSignIn = async (e) => {
     try {
       e.preventDefault();
+
+      setWait(true);
+
       const res = await postData('/auth/login', input);
+
+      setWait(false);
 
       if (!res.ok) {
         throw res;

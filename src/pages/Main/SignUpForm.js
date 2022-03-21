@@ -8,7 +8,7 @@ import updateTokens from '../../utils/updateTokens';
 
 import googleIcon from '../../assets/G.png';
 
-const SignUpForm = ({ setPage }) => {
+const SignUpForm = ({ setPage, setWait }) => {
   const { setToken } = useContext(UserContext);
 
   const [error, setError] = useState();
@@ -27,7 +27,11 @@ const SignUpForm = ({ setPage }) => {
     try {
       e.preventDefault();
 
+      setWait(true);
+
       const res = await postData('/auth/signup', input);
+
+      setWait(false);
 
       if (!res.ok) {
         throw res;

@@ -12,6 +12,7 @@ const Home = () => {
   const { token } = useContext(UserContext);
 
   const [page, setPage] = useState('login');
+  const [wait, setWait] = useState(false);
 
   useEffect(() => {
     token && history.replace('/home');
@@ -27,6 +28,7 @@ const Home = () => {
 
   return (
     <>
+      {wait && <div className='z-20 fixed inset-0 cursor-wait' />}
       <div className='absolute h-screen w-full bg-cover bg-top 2xl:bg-center bg-base' />
       <div
         id='bg-color'
@@ -42,8 +44,8 @@ const Home = () => {
             <h1 className='text-gray-800 font-serif text-6xl sm:text-8xl'>listen</h1>
           </div>
           <div className='row-span-2 relative z-10 px-12 lg:px-0 lg:flex-1 lg:ml-14'>
-            {page === 'login' && <LoginForm setPage={setPage} />}
-            {page === 'signup' && <SignUpForm setPage={setPage} />}
+            {page === 'login' && <LoginForm setPage={setPage} setWait={setWait} />}
+            {page === 'signup' && <SignUpForm setPage={setPage} setWait={setWait} />}
             {page === 'forgot' && <ForgotPass setPage={setPage} />}
           </div>
         </div>
