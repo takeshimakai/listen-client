@@ -67,16 +67,7 @@ const AccountSetUp = () => {
 
   useEffect(() => {
     const box = document.querySelector('#question-box');
-
-    const setMaxHeight = () => {
-      const windowHeight = window.innerHeight;
-      box.style.maxHeight = windowHeight * 0.75 + 'px';
-    }
-
-    setMaxHeight();
-
-    window.addEventListener('resize', setMaxHeight);
-    return () => window.removeEventListener('resize', setMaxHeight);
+    box.style.maxHeight = window.innerHeight * 0.75 + 'px';
   }, []);
 
   const handleInput = (e) => {
@@ -196,7 +187,7 @@ const AccountSetUp = () => {
 
   return (
     <div className='flex-grow flex flex-col'>
-      <div className='fixed w-full flex justify-between py-2 px-4'>
+      <div className='z-10 fixed w-full flex justify-between py-2 px-4'>
         <h1 className='text-gray-800 font-serif text-2xl'>listen</h1>
         <button className='font-light text-sm' onClick={() => clearTokens(setToken, decodeToken(token).id)}>Sign out</button>
       </div>
