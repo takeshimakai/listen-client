@@ -23,7 +23,7 @@ const VerifyForm = () => {
       const { key, target } = e;
 
       if (
-        (key !== ' ' && [...Array(10).keys()].includes(Number(key)) && target.dataset.index !== '3') ||
+        (key !== ' ' && Number.isInteger(key) && target.dataset.index !== '3') ||
         (target.value.length > 0 && target.dataset.index !== '3')
       ) {
         target.nextElementSibling.focus();
@@ -34,12 +34,25 @@ const VerifyForm = () => {
       }
     };
 
+    const pasteCode = (e) => {
+      e.preventDefault();
+      const code = e.clipboardData.getData('text');
+
+      if (code.length === 4) {
+        setInput(code.split(''));
+      }
+    };
+
     numInputs.forEach(input => {
       input.addEventListener('keyup', autoFocus);
+      input.addEventListener('paste', pasteCode);
     });
 
     return () => {
-      numInputs.forEach(input => input.removeEventListener('keyup', autoFocus));
+      numInputs.forEach(input => {
+        input.removeEventListener('keyup', autoFocus);
+        input.removeEventListener('paste', pasteCode);
+      });
     }
   }, []);
 
