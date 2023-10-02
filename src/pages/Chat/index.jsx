@@ -60,7 +60,7 @@ const Chat = ({ location }) => {
 
   useEffect(() => {
     const roomID = sessionStorage.getItem('roomID');
-    
+
     if (roomID) {
       setConnected(true);
       socket.emit('reconnect', roomID);
@@ -160,8 +160,8 @@ const Chat = ({ location }) => {
         <BlockModal unblock={unblock} path={path} setPreventNav={setPreventNav} setOtherUserLeft={setOtherUserLeft} />
       }
       {connected &&
-        <div className='relative flex-grow px-4 pb-4 flex flex-col sm:flex-row'>
-          <div className='relative sm:flex-grow sm:max-w-sm sm:flex sm:flex-col sm:justify-between sm:items-center'>
+        <div className='relative flex-grow px-4 pb-4 flex flex-col md:flex-row'>
+          <div className='relative md:flex-grow md:max-w-sm md:min-w-[24rem] md:flex md:flex-col md:justify-between md:items-center'>
             <OtherUser otherUser={otherUser} toggleView={toggleView} />
             <Options leaveConversation={leaveConversation} />
             <MobileOptions leaveConversation={leaveConversation} />

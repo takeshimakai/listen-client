@@ -21,7 +21,7 @@ const MobileOptions = ({ leaveConversation }) => {
   }, [hidden]);
 
   return (
-    <div className='sm:hidden absolute w-full py-2 bg-gray-50'>
+    <div className='md:hidden absolute w-full py-2 bg-gray-50'>
       <div
         id='chat-options'
         className='max-h-0 overflow-hidden transition-all duration-500 ease-out flex justify-center'
@@ -32,7 +32,7 @@ const MobileOptions = ({ leaveConversation }) => {
       </div>
       <img
         id='chevron'
-        className='h-5 opacity-70 mx-auto transition-all duration-500 ease-out'
+        className='h-5 opacity-70 mx-auto transition-all duration-500 ease-out cursor-pointer'
         src={chevronDown}
         alt=''
         onClick={() => setHidden(!hidden)}
