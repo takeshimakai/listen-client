@@ -1,6 +1,6 @@
 const putData = async (path, data, token) => {
   try {
-    return await fetch(`${process.env.REACT_APP_API_URL}${path}`, {
+    return await fetch(`${import.meta.env.VITE_API_URL}${path}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

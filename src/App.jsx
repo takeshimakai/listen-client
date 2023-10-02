@@ -32,13 +32,13 @@ const App = () => {
   useEffect(() => {
     if (token) {
       const { verified, username } = decodeToken(token);
-      
+
       if (verified) {
         setEmailVerified(true);
       }
-      
+
       if (verified && username) {
-        const newSocket = io(process.env.REACT_APP_SERVER_URL, {
+        const newSocket = io(import.meta.env.VITE_SERVER_URL, {
           auth: { token },
           reconnectionAttempts: 10
         });

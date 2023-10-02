@@ -10,7 +10,7 @@ const putDataWithFile = async (path, data, token) => {
       }
     };
 
-    return await fetch(process.env.REACT_APP_API_URL + path, {
+    return await fetch(import.meta.env.VITE_API_URL + path, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`
