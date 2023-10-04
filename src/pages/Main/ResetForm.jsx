@@ -2,11 +2,15 @@ import { useState, useContext } from 'react';
 
 import UserContext from '../../contexts/UserContext';
 
+import Input from '../../components/Input';
+import PrimaryButton from '../../components/PrimaryButton';
+import SecondaryButton from '../../components/SecondaryButton';
+
 import postData from '../../utils/postData';
 import setErrMsgs from '../../utils/setErrMsgs';
 import updateTokens from '../../utils/updateTokens';
 
-const ResetForm = ({ input, setInput, setPage, handleInput, setStep }) => {
+const ResetForm = ({ input, setInput, setAction, handleInput, setStep }) => {
   const { setToken } = useContext(UserContext);
 
   const [err, setErr] = useState({
@@ -27,7 +31,7 @@ const ResetForm = ({ input, setInput, setPage, handleInput, setStep }) => {
           code: 'Verification code must contain four digits.'
         }));
       }
-  
+
       const res = await postData('/auth/reset-password', input);
 
       if (!res.ok) throw res;
@@ -46,73 +50,86 @@ const ResetForm = ({ input, setInput, setPage, handleInput, setStep }) => {
   };
 
   return (
-    <form className='max-w-2xs mx-auto lg:mx-0' onSubmit={handleSubmit}>
-      <p className='font-light sm:text-sm text-center mb-12'>
+    <form
+      className='flex flex-col'
+      onSubmit={handleSubmit}
+    >
+      <h3 className='text-lg mb-6 text-gray-600'>
+        Reset password
+      </h3>
+      <p className='font-light sm:text-sm mb-12'>
         Please enter your verification code to reset your password.
       </p>
-      <div className='mb-1'>
-        <label className='label' htmlFor='code'>Verification code</label>
-        <input
-          className='input'
-          id='code'
-          name='code'
-          type='number'
-          min={0}
-          value={input.code}
-          onChange={handleInput}
-        />
-        <p className='error-msg'>{err.code}</p>
+      <div className='flex flex-col gap-y-4 mb-4'>
+        <div className='flex flex-col gap-y-1'>
+          <label className='label' htmlFor='code'>Verification code</label>
+          <Input
+            id='code'
+            name='code'
+            type='number'
+            min={0}
+            value={input.code}
+            onChange={handleInput}
+          />
+          {err?.code && (
+            <p className='error-msg'>{err.code}</p>
+          )}
+        </div>
+        <div className='flex flex-col gap-y-1'>
+          <label className='label' htmlFor='password'>New password</label>
+          <Input
+            id='password'
+            name='password'
+            type='password'
+            value={input.password}
+            onChange={handleInput}
+          />
+          {err?.password && (
+            <p className='error-msg'>{err.password}</p>
+          )}
+        </div>
+        <div className='flex flex-col gap-y-1'>
+          <label className='label' htmlFor='password-confirm'>Confirm new password</label>
+          <Input
+            id='password-confirm'
+            name='passwordConfirmation'
+            type='password'
+            value={input.passwordConfirmation}
+            onChange={handleInput}
+          />
+          {err?.passwordConfirmation && (
+            <p className='error-msg'>{err.passwordConfirmation}</p>
+          )}
+        </div>
       </div>
-      <div className='mb-1'>
-        <label className='label' htmlFor='password'>New password</label>
-        <input
-          className='input'
-          id='password'
-          name='password'
-          type='password'
-          value={input.password}
-          onChange={handleInput}
-        />
-        <p className='error-msg'>{err.password}</p>
-      </div>
-      <div className='mb-1'>
-        <label className='label' htmlFor='password-confirm'>Confirm new password</label>
-        <input
-          className='input'
-          id='password-confirm'
-          name='passwordConfirmation'
-          type='password'
-          value={input.passwordConfirmation}
-          onChange={handleInput}
-        />
-        <p className='error-msg'>{err.passwordConfirmation}</p>
-      </div>
-      <div className='space-y-2.5'>
-        <button
-          className='border active:border-0 active:p-px shadow-md max-w-2xs w-full h-8 rounded-md bg-gray-50 text-sm text-gray-600 hover:bg-gray-200 active:shadow-inner'
+      <div className='flex flex-col gap-y-2.5'>
+        <PrimaryButton>Reset password</PrimaryButton>
+        <SecondaryButton
           type='button'
-          onClick={() => setPage('login')}
+          onClick={() => setAction('login')}
         >
           Cancel
-        </button>
-        <button className='shadow-md max-w-2xs w-full h-8 rounded-md bg-green-700 text-sm text-white hover:bg-green-800 active:shadow-inner-2'>
-          Reset password
-        </button>
+        </SecondaryButton>
       </div>
-      <p className='text-sm text-center mt-6'>Didn't receive it? <span
-        className='text-blue-700 hover:text-blue-900 cursor-pointer'
-        onClick={() => {
-          setStep('email');
-          setInput(prev => ({
-            ...prev,
-            code: '',
-            password: '',
-            passwordConfirmation: ''
-          }));
-        }}
-      >
-        Send it again.
-      </span></p>
+      <p className='text-xs text-gray-500 mt-11 text-center'>
+        Didn't receive it?
+        {" "}
+        <span
+          className='link'
+          onClick={() => {
+            setStep('email');
+            setInput(prev => ({
+              ...prev,
+              code: '',
+              password: '',
+              passwordConfirmation: ''
+            }));
+          }}
+        >
+          Send it again
+        </span>
+        .
+      </p>
     </form>
   )
 }

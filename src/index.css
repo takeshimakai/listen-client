@@ -16,7 +16,11 @@
   }
 
   .error-msg {
-    @apply text-red-600 text-xs h-4 mt-1;
+    @apply text-red-600 text-xs h-4;
+  }
+
+  .link {
+    @apply text-blue-700 hover:text-blue-900 cursor-pointer font-light transition-colors duration-300 text-xs;
   }
 }
 
@@ -63,13 +67,13 @@ button {
 }
 
 body {
-  min-height: 100vh;
+  min-height: 100dvh;
   /* mobile viewport bug fix */
-  min-height: -webkit-fill-available;
+  /* min-height: -webkit-fill-available; */
   display: flex;
   flex-direction: column;
 }
 
-html {
+/* html {
   height: -webkit-fill-available;
-}
+} */

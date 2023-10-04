@@ -3,7 +3,7 @@ import { useState } from 'react';
 import EmailForm from './EmailForm';
 import ResetForm from './ResetForm';
 
-const ForgotPass = ({ setPage }) => {
+const ForgotPass = ({ setAction }) => {
   const [step, setStep] = useState('email');
   const [input, setInput] = useState({
     email: '',
@@ -29,14 +29,14 @@ const ForgotPass = ({ setPage }) => {
           email={input.email}
           handleInput={handleInput}
           setStep={setStep}
-          setPage={setPage}
+          setAction={setAction}
         />
       }
       {step === 'reset' &&
         <ResetForm
           input={input}
           setInput={setInput}
-          setPage={setPage}
+          setAction={setAction}
           handleInput={handleInput}
           setStep={setStep}
         />
