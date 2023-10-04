@@ -82,10 +82,10 @@ const Home = () => {
           </div>
         </nav>
         <div className='h-screen px-6 sm:px-14 pb-28 flex flex-col justify-end gap-y-6 sm:gap-y-10'>
-          <h2 className='text-white text-5xl sm:text-8xl font-light w-4/5'>
-            Because we're all in it together
+          <h2 className='text-white text-5xl sm:text-8xl font-light sm:w-3/4'>
+            Because we're in it together
           </h2>
-          <p className='text-white sm:w-4/5 sm:text-lg font-light'>
+          <p className='text-white sm:w-3/4 sm:text-lg font-light'>
             Listen is a community made up of people just like you. Whether you're struggling with mental health or able to empathize with those that are,
             it's a place to share and discuss, and to receive and provide support through many of life's obstacles.
           </p>
