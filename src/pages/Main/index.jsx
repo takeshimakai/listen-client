@@ -9,6 +9,7 @@ import ForgotPass from './ForgotPass';
 import PrimaryButton from '../../components/PrimaryButton';
 
 import closeIcon from "../../assets/close.svg";
+import hands from "../../assets/hands.jpg";
 
 const Home = () => {
   const history = useHistory();
@@ -40,13 +41,13 @@ const Home = () => {
   return (
     <>
       <div
-        className='fixed w-full h-screen bg-cover bg-top 2xl:bg-center bg-base -z-10'
+        className='absolute xl:fixed w-full h-screen bg-cover bg-top 2xl:bg-center bg-base -z-10'
       />
       <div
         ref={container}
         style={{ backgroundColor: "rgba(239, 234, 226, 0)" }}
       >
-        <nav className='py-2 px-3 sm:px-6 flex justify-between items-center fixed w-full'>
+        <nav className='py-2 px-3 sm:px-6 flex justify-between items-center fixed w-full z-10'>
           <h1 className='text-gray-800 font-serif text-3xl'>
             listen
           </h1>
@@ -80,31 +81,43 @@ const Home = () => {
             </PrimaryButton>
           </div>
         </nav>
-        <div className='h-screen'>
+        <div className='h-screen px-6 sm:px-14 pb-28 flex flex-col justify-end gap-y-6 sm:gap-y-10'>
+          <h2 className='text-white text-5xl sm:text-8xl font-light w-4/5'>
+            Because we're all in it together
+          </h2>
+          <p className='text-white sm:w-4/5 sm:text-lg font-light'>
+            Listen is a community made up of people just like you. Whether you're struggling with mental health or able to empathize with those that are,
+            it's a place to share and discuss, and to receive and provide support through many of life's obstacles.
+          </p>
         </div>
         <div
           ref={infoContainer}
-          className='flex flex-col items-center justify-evenly px-6 sm:py-28 w-full h-screen opacity-0'
+          className='
+            flex
+            flex-col
+            xl:flex-row
+            h-screen
+            opacity-0
+            px-6
+            sm:px-14
+            py-20
+          '
         >
-          <div>
-            <p className='mb-4 font-light'>What is <i className='mr-0.5 font-normal text-green-700'>listen</i>?</p>
-            <p className='max-w-md font-light text-sm'>
-              Listen is a community made up of people just like you. Whether you're struggling with mental health or able to empathize with those that are,
-              it's a place to share and discuss, and to receive and provide support through many of life's obstacles—with or without a diagnosis.
-            </p>
-          </div>
-          <div>
-            <p className='mb-4 font-light'>What it isn't</p>
-            <p className='max-w-md font-light text-sm'>
-              Listen is <span className='font-bold'>not</span> a substitute for professional help.
-              If you are struggling and require immediate assistance, please contact your local helpline or healthcare provider.
-            </p>
-          </div>
-          <div>
-            <p className='mb-4 font-light'>What is it <i className='font-normal'>really</i> though?</p>
-            <p className='max-w-md font-light text-sm'>
-              Listen is a project by <a className='text-green-700' target='_blank' rel='noreferrer' href='https://github.com/takeshimakai'>Kai Takeshima</a>,
-              an aspiring web developer hoping to do some good with his newly found skills.
+          <img
+            src={hands}
+            className='
+              h-1/2
+              xl:h-auto
+              rounded-3xl
+              object-cover
+            '
+          />
+          <div className='flex flex-col justify-center gap-y-4 sm:px-20 xl:px-40 h-full'>
+            <h4 className='text-2xl md:text-3xl text-green-800'>
+              Seek professional help when necessary
+            </h4>
+            <p className='font-light sm:text-lg text-gray-600'>
+              Listen is <span className='font-bold'>not</span> a substitute for professional help. If you are struggling and require immediate assistance, please contact your local helpline or healthcare provider.
             </p>
           </div>
         </div>
@@ -122,6 +135,7 @@ const Home = () => {
           ${isSidebarOpen ? "right-0" : "-right-full sm:-right-96"}
           transition-[right]
           duration-500
+          z-20
         `}
       >
         <img
