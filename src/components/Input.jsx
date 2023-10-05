@@ -18,7 +18,7 @@ export default function Input({
         px-3
         h-9
         border-gray-500
-        text-sm
+        sm:text-sm
       `}
       name={name}
       value={value}
