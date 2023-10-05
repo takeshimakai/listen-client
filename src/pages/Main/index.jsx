@@ -47,7 +47,7 @@ const Home = () => {
         ref={container}
         style={{ backgroundColor: "rgba(239, 234, 226, 0)" }}
       >
-        <nav className='py-2 px-3 sm:px-6 flex justify-between items-center fixed w-full z-10'>
+        <nav className='py-2 px-4 sm:px-6 flex justify-between items-center fixed w-full z-10'>
           <h1 className='text-gray-800 font-serif text-3xl'>
             listen
           </h1>

@@ -85,9 +85,11 @@ const Nav = () => {
   }, [socket, id]);
 
   return (
-    <div className='z-10 fixed w-full h-12 flex items-center justify-between py-2 px-4 bg-gray-50'>
+    <div className='z-10 fixed w-full flex items-center justify-between py-2 px-4 sm:px-6 bg-gray-50'>
       <Link to='/home'>
-        <h1 id='logo' className='relative text-gray-800 font-serif text-2xl z-10'>listen</h1>
+        <h1 id='logo' className='relative text-gray-800 font-serif text-3xl z-10'>
+          listen
+        </h1>
       </Link>
       {windowWidth < 640
         ? <MobileMenu numOfFriendReqs={numOfFriendReqs} numOfNewDMs={numOfNewDMs} />

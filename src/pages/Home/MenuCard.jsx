@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+import PrimaryButton from "../../components/PrimaryButton";
+
 import useWindowWidth from '../../hooks/useWindowWidth';
 
 const MenuCard = ({ illustration, summary, label, to }) => {
@@ -13,9 +15,13 @@ const MenuCard = ({ illustration, summary, label, to }) => {
       </p>
       {windowWidth < 1024
         ? <Link to={to}>
-            <button className='shadow-md border border-green-700 hover:bg-green-700 active:shadow-inner-2 text-green-700 hover:text-white text-sm w-40 h-8 rounded-full'>
+            <PrimaryButton
+              className="w-40"
+              rounded
+              inverse
+            >
               {label}
-            </button>
+            </PrimaryButton>
           </Link>
         : <div className='menu-card-label space-x-1'>
             <p className='text-sm text-green-700 inline'>{label}</p>

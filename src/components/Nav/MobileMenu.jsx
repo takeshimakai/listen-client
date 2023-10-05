@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 import UserContext from "../../contexts/UserContext";
@@ -6,48 +6,67 @@ import UserContext from "../../contexts/UserContext";
 import clearTokens from '../../utils/clearTokens';
 import decodeToken from '../../utils/decodeToken';
 
+import menuIcon from "../../assets/menu.svg";
+import closeIcon from "../../assets/close.svg";
+
 const MobileMenu = ({ numOfFriendReqs, numOfNewDMs }) => {
   const { token, setToken } = useContext(UserContext);
   const { id } = decodeToken(token);
 
   const [isVisible, setIsVisible] = useState(false);
 
+  const mobileMenu = useRef(null);
+  const menuBtn = useRef(null);
+
   useEffect(() => {
     const closeOutside = (e) => {
-      const menu = document.querySelector('#mobile-menu');
-      const icon = document.querySelector('#mobile-menu-icon');
-  
-      if (token && isVisible && ![menu, icon, ...menu.children].includes(e.target)) {
+      if (
+        token
+        && isVisible
+        && ![
+          mobileMenu.current,
+          menuBtn.current,
+          ...mobileMenu.current.children
+        ].includes(e.target)
+      ) {
         setIsVisible(false);
       }
     };
-    
+
     window.addEventListener('click', closeOutside);
     return () => window.removeEventListener('click', closeOutside);
-  });
-
-  useEffect(() => {
-    const menu = document.querySelector('#mobile-menu');
-
-    isVisible
-      ? menu.classList.remove('hidden')
-      : menu.classList.add('hidden')
-  }, [isVisible]);
+  }, [token, isVisible]);
 
   const toggleMenu = () => setIsVisible(!isVisible);
 
   return (
     <>
       <button
-        id='mobile-menu-icon'
         className='z-10 text-xl text-gray-600'
         onClick={toggleMenu}
       >
-        {isVisible ? <span className='text-3xl'>&#x2715;</span> : <span>&#9776;</span>}
+        {isVisible
+          ? <img src={closeIcon} />
+          : <img src={menuIcon} />
+        }
       </button>
       <div
-        id='mobile-menu'
-        className='hidden w-full absolute flex flex-col items-center bg-gray-50 left-0 top-0 pt-16 pb-10 space-y-10 shadow-lg'
+        ref={mobileMenu}
+        className={`
+          ${isVisible ? "right-0" : "-right-full"}
+          w-full
+          h-full
+          fixed
+          flex
+          flex-col
+          justify-center
+          items-center
+          bg-gray-50
+          top-0
+          space-y-12
+          transition-[right]
+          duration-500
+        `}
       >
         <div id='mobile-app-menu' className='flex flex-col items-center space-y-2'>
           <Link to={{ pathname: '/chat', state: { action: 'listen' } }} className='font-light'>Listen</Link>
