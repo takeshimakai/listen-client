@@ -1,8 +1,19 @@
-const Checkbox = ({ name, data, input, handleInput, selector }) => {
+import { forwardRef } from "react";
+
+const Checkbox = forwardRef(({
+  name,
+  data,
+  input,
+  handleInput,
+  selector,
+}, ref) => {
   return (
-    <div className={`my-2 flex items-center ${selector}`}>
+    <div
+      ref={ref}
+      className={`my-2 flex items-center ${selector}`}
+    >
       <input
-        className={`h-4 w-4 mr-1.5 ${selector}`}
+        className={`h-4 w-4 mr-1.5 cursor-pointer ${selector}`}
         type='checkbox'
         name={name}
         id={data}
@@ -18,6 +29,6 @@ const Checkbox = ({ name, data, input, handleInput, selector }) => {
       </label>
     </div>
   )
-}
+});
 
 export default Checkbox;

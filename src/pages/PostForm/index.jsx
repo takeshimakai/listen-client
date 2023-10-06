@@ -3,9 +3,11 @@ import { useHistory } from 'react-router-dom';
 
 import UserContext from "../../contexts/UserContext";
 
-import TitleInput from "./TitleInput";
 import Categories from "./Categories";
 import ContentInput from "./ContentInput";
+import Input from "../../components/Input";
+import PrimaryButton from "../../components/PrimaryButton";
+import SecondaryButton from "../../components/SecondaryButton";
 
 import postData from "../../utils/postData";
 import putData from '../../utils/putData';
@@ -85,7 +87,7 @@ const PostForm = ({ post, setPosts, setComments, setEditMode }) => {
           updated.splice(index, 1, data);
           return updated;
         });
-  
+
         setEditMode(false);
       } else {
         setPosts(prevPosts => prevPosts.concat(data));
@@ -133,37 +135,56 @@ const PostForm = ({ post, setPosts, setComments, setEditMode }) => {
 
   return (
     <form
-      className='flex flex-col justify-between flex-grow w-full max-w-md sm:max-w-2xl pt-20 px-4 pb-4 sm:pb-10 mx-auto'
+      style={{ height: "100dvh" }}
+      className='flex flex-col w-full max-w-md sm:max-w-2xl pt-16 sm:pt-20 px-4 pb-4 sm:pb-10 mx-auto'
       onSubmit={handleSubmit}
     >
       <div className='flex-grow flex flex-col space-y-3'>
-        <TitleInput input={input.title} handleInput={handleInput} errors={errors} />
-        <Categories input={input.topics} setInput={setInput} handleInput={handleInput} errors={errors} />
-        <ContentInput input={input.content} handleInput={handleInput} errors={errors} />
+        <div className='flex flex-col gap-y-1'>
+          <label className='subtitle' htmlFor='title'>Title</label>
+          <Input
+            id='title'
+            name='title'
+            value={input.title}
+            onChange={handleInput}
+          />
+          {errors?.title && (
+            <p className='error-msg'>{errors.title}</p>
+          )}
+        </div>
+        <Categories
+          input={input.topics}
+          setInput={setInput}
+          handleInput={handleInput}
+          error={errors?.topics}
+        />
+        <ContentInput
+          input={input.content}
+          handleInput={handleInput}
+          error={errors?.content}
+        />
       </div>
-      <div className='flex'>
+      <div className='flex mt-4 justify-between'>
+        <div className='flex-grow sm:max-w-xs grid grid-cols-2 gap-x-2'>
+          <PrimaryButton>
+            Post
+          </PrimaryButton>
+          <SecondaryButton
+            type='button'
+            onClick={() => history.goBack()}
+          >
+            Cancel
+          </SecondaryButton>
+        </div>
         {setEditMode &&
           <button
-            className='mr-10 sm:mr-0 flex-none'
+            className='ml-10 sm:ml-0'
             type='button'
             onClick={handleDelete}
           >
             <img className='h-6' src={deleteIcon} alt='' />
           </button>
         }
-        <div className='flex justify-end w-full space-x-2'>
-          <input
-            className='flex-1 sm:flex-none border active:border-0 active:p-px shadow-md active:shadow-inner sm:w-40 h-8 rounded-md cursor-pointer bg-gray-50 text-sm text-gray-600 hover:bg-gray-200'
-            type='button'
-            value='Cancel'
-            onClick={() => history.goBack()}
-          />
-          <input
-            className='flex-1 sm:flex-none shadow-md sm:w-40 h-8 rounded-md cursor-pointer bg-green-700 text-sm text-white hover:bg-green-800 active:shadow-inner-2'
-            type='submit'
-            value='Post'
-          />
-        </div>
       </div>
     </form>
   )

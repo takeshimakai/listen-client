@@ -11,7 +11,6 @@ export default function SecondaryButton({
         ${className}
         relative
         shadow-md
-        w-full
         px-3
         h-9
         border

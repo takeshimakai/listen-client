@@ -1,42 +1,37 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import data from "../../data/data";
 
 import Checkbox from "../../components/Checkbox";
-import PrimaryBtn from '../../components/PrimaryBtn';
-import SecondaryBtn from '../../components/SecondaryBtn';
+import PrimaryButton from "../../components/PrimaryButton";
+import SecondaryButton from "../../components/SecondaryButton";
 
 const Filters = ({ filters, setFilters }) => {
-  const [filterInput, setFilterInput] = useState([]);
+  const [filterInput, setFilterInput] = useState(filters);
   const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    const filtersContainer = document.querySelector('#filters-container');
-
-    isVisible
-      ? filtersContainer.hidden = false
-      : filtersContainer.hidden = true;
-  }, [isVisible]);
+  const filtersContainer = useRef(null);
+  const filtersBtn = useRef(null);
+  const checkboxes = useRef([]);
 
   useEffect(() => {
     const closeOutside = (e) => {
-      const filterElements = document.querySelectorAll('.filters');
-      const filtersBtn = document.querySelector('#filters-btn');
-
-      if (isVisible && ![filtersBtn, ...filterElements].includes(e.target)) {
+      if (
+        isVisible
+        && ![
+          filtersContainer.current,
+          ...filtersContainer.current.children,
+          filtersBtn.current,
+          ...checkboxes.current.map(c => [...c.children]).flat(),
+        ].includes(e.target)
+      ) {
         setIsVisible(false);
       }
     };
 
     window.addEventListener('click', closeOutside);
     return () => window.removeEventListener('click', closeOutside);
-  });
-
-  useEffect(() => {
-    if (filters) {
-      setFilterInput(filters);
-    }
-  }, [filters]);
+  }, [isVisible]);
 
   const handleCheckbox = (e) => {
     filterInput.includes(e.target.value)
@@ -51,6 +46,7 @@ const Filters = ({ filters, setFilters }) => {
 
   const clearFilters = () => {
     setFilters([]);
+    setFilterInput([]);
     sessionStorage.removeItem('filters');
   };
 
@@ -59,7 +55,7 @@ const Filters = ({ filters, setFilters }) => {
   return (
     <>
       <button
-        id='filters-btn'
+        ref={filtersBtn}
         className='sm:mr-8 text-gray-500 sm:text-sm font-light flex items-center'
         onClick={toggleFiltersVisibility}
       >
@@ -71,22 +67,35 @@ const Filters = ({ filters, setFilters }) => {
         </span>
       </button>
       <div
-        id='filters-container'
-        className='z-10 absolute top-8 bg-gray-50 border shadow-lg rounded-lg p-4 filters'
-        hidden
+        ref={filtersContainer}
+        className={`
+          ${isVisible ? "block" : "hidden"}
+          z-10
+          absolute
+          top-9
+          bg-gray-50
+          border
+          shadow-lg
+          rounded-lg
+          p-4
+        `}
       >
-        <div className='flex mb-6 space-x-2 max-w-2xs filters'>
-          <SecondaryBtn label='Clear' onClick={clearFilters} />
-          <PrimaryBtn label='Apply' onClick={applyFilters} />
+        <div className='grid grid-cols-2 mb-4 gap-x-2'>
+          <PrimaryButton onClick={applyFilters}>
+            Apply
+          </PrimaryButton>
+          <SecondaryButton onClick={clearFilters}>
+            Clear
+          </SecondaryButton>
         </div>
-        {data.categories.map(filter => (
+        {data.categories.map((filter, idx) => (
           <Checkbox
+            ref={(el) => checkboxes.current[idx] = el}
             key={filter}
             name='problemTopics'
             data={filter}
             input={filterInput}
             handleInput={handleCheckbox}
-            selector={'filters'}
           />
         ))}
       </div>

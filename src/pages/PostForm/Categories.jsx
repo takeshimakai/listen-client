@@ -1,40 +1,42 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import Checkbox from "../../components/Checkbox";
 
 import data from "../../data/data";
 
-const Categories = ({ input, setInput, handleInput, errors}) => {
+const Categories = ({ input, setInput, handleInput, error}) => {
   const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    const categoriesContainer = document.querySelector('#categories-container');
-
-    isVisible
-      ? categoriesContainer.classList.remove('hidden')
-      : categoriesContainer.classList.add('hidden');
-  }, [isVisible]);
+  const categoriesBox = useRef(null);
+  const categoriesTitle = useRef(null);
+  const categories = useRef(null);
+  const checkboxes = useRef([]);
 
   useEffect(() => {
     const closeOutside = (e) => {
-      const categoriesTitle = document.querySelector('#categories-title');
-      const categoriesElements = document.querySelectorAll('.categories');
-
-      if (isVisible && ![categoriesTitle, ...categoriesElements].includes(e.target)) {
+      if (
+        isVisible
+        && ![
+          categoriesBox.current,
+          ...categoriesBox.current.children,
+          categoriesTitle.current,
+          ...categories.current.children,
+          ...checkboxes.current.map(c => [...c.children]).flat()
+        ].includes(e.target)
+      ) {
         setIsVisible(false);
       }
     };
 
     window.addEventListener('click', closeOutside);
     return () => window.removeEventListener('click', closeOutside);
-  });
+  }, [isVisible]);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   return (
     <div className='relative flex flex-col'>
       <p
-        id='categories-title'
         className='subtitle flex items-center cursor-pointer w-max'
         onClick={toggleVisibility}
       >
@@ -43,20 +45,37 @@ const Categories = ({ input, setInput, handleInput, errors}) => {
           {input.length}
         </span>
       </p>
-      <p className='error-msg'>{errors && errors.topics}</p>
+      {error && (
+        <p className='error-msg mt-1'>{error}</p>
+      )}
       <div
-        id='categories-container'
-        className='hidden absolute top-7 bg-gray-50 border shadow-lg rounded-lg px-4 pt-2 pb-4 flex flex-col items-center categories'
+        ref={categoriesBox}
+        className={`
+          ${isVisible ? "flex" : "hidden"}
+          absolute
+          top-7
+          bg-gray-50
+          border
+          shadow-lg
+          rounded-lg
+          px-4
+          pt-2
+          pb-4
+          flex-col
+          items-center
+          categories
+          z-10
+        `}
       >
-        <div className='categories'>
-          {data.categories.map(category => (
+        <div ref={categories}>
+          {data.categories.map((category, idx) => (
             <Checkbox
+              ref={(el) => checkboxes.current[idx] = el}
               key={category}
               name={'topics'}
               data={category}
               input={input}
               handleInput={handleInput}
-              selector={'categories'}
             />
           ))}
         </div>

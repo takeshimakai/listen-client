@@ -3,7 +3,7 @@ import { Switch, Route, Link, useRouteMatch, useHistory } from 'react-router-dom
 
 import UserContext from '../../contexts/UserContext';
 
-import useWindowWidth from '../../hooks/useWindowWidth';
+import PrimaryButton from '../../components/PrimaryButton';
 
 import getData from '../../utils/getData';
 import sortData from '../../utils/sortData';
@@ -24,7 +24,6 @@ const Forum = () => {
   const { token, setToken } = useContext(UserContext);
   const { id } = decodeToken(token);
 
-  const windowWidth = useWindowWidth();
   const [posts, setPosts] = useState([]);
   const [sortPostsBy, setSortPostsBy] = useState('newest');
   const [filters, setFilters] = useState([]);
@@ -78,10 +77,18 @@ const Forum = () => {
               <Sort sortBy={sortPostsBy} setSortBy={setSortPostsBy} />
             </div>
             <Link
-              className='fixed sm:relative bottom-3 right-3 sm:inset-0 w-11 sm:w-40 h-11 sm:h-8 border rounded-full border-green-700 flex items-center justify-center text-green-700 text-2xl sm:text-sm shadow-md bg-gray-50 hover:text-white hover:bg-green-700 active:shadow-inner'
+              className='hidden sm:inline-block'
               to={`${match.url}/new`}
             >
-              {windowWidth < 640 ? <span>&#65291;</span> : 'Create new post'}
+              <PrimaryButton rounded inverse>
+                Create new post
+              </PrimaryButton>
+            </Link>
+            <Link
+              className='sm:hidden fixed bottom-3 right-3 w-11 h-11 border rounded-full border-green-700 flex items-center justify-center text-green-700 text-2xl shadow-md bg-gray-50 hover:text-white hover:bg-green-700 active:shadow-inner'
+              to={`${match.url}/new`}
+            >
+              &#65291;
             </Link>
           </div>
           {posts.length > 0
